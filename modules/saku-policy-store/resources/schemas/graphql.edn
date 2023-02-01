@@ -13,7 +13,7 @@
                             policies]
 
   ^{:type IdentityPolicyDocument}
-  upsert-identity-policies [^{:type IdentityPolicInputyDocument
+  upsert-identity-policies [^{:type IdentityPolicyInputDocument
                               :cardinality [0 n]}
                             policies]
 
@@ -41,11 +41,7 @@
     :cardinality [0 n]}
   resource-policies [^{:type ID
                        :cardinality [0 n]}
-                     drns]
-
-  ^{:type EvaluationResponse}
-  evaluate-one [^{:type EvaluationParams}
-                params]]
+                     drns]]
 
 
  ;; ------------------------------
@@ -113,14 +109,20 @@
 
  ^{:implements [PolicyDocument]}
  ResourcePolicyDocument
- [^{:type ResourceStatment
+ [^{:type ID}
+  drn
+
+  ^{:type ResourceStatement
     :cardinality [0 n]}
   statements]
 
 
- ^{:implements [PolicyDocument]}
+ ^{:implements PolicyDocument}
  IdentityPolicyDocument
- [^{:type IdentityStatment
+ [^{:type ID}
+  drn
+
+  ^{:type IdentityStatement
     :cardinality [0 n]}
   statements]
 
@@ -135,67 +137,36 @@
   effect]
 
 
- {:implements [Statement]}
+ ^{:implements [Statement]}
  ResourceStatement
- [^{:type ID
+ [^{:type String
+    :cardinality [0 n]}
+  actionIds
+
+  ^{:type Effect}
+  effect
+
+  ^{:type ID
     :cardinality [0 n]}
   identities]
 
 
- {:implements [Statement]}
+ ^{:implements Statement}
  IdentityStatement
- [^{:type ID
+ [^{:type String
+    :cardinality [0 n]}
+  actionIds
+
+  ^{:type Effect}
+  effect
+
+  ^{:type ID
     :cardinality [0 n]}
   resources]
-
 
  ^{:enum true}
  Effect
  [DENY ALLOW]
 
-
- ^{:enum true}
- Nature
- [IMPLICIT EXPLICIT]
-
-
-
- ;; ------------------------------
- ;; External entities
- ;; ------------------------------
-
-
- MutationResp
- [^{:type ID}
-  client-mutation-uuid
-
-  ^{:type ResponseStatus}
-  status
-
-  ^{:type String
-    :optional true}
-  rejection-reason]
-
-
-
- ^{:enum true}
- ResponseStatus
- [ACCEPTED REJECTED]
-
-
-
- PageInfo
- [^{:type Boolean}
-  has-previous-page
-
-  ^{:type Boolean}
-  has-next-page
-
-  ^{:type String}
-  start-cursor
-
-  ^{:type String}
-  end-cursor]
-
-
+ 
  ]

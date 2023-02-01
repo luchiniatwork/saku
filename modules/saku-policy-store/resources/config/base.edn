@@ -4,9 +4,9 @@
  ;; Schemas
  ;; ------------------------------
 
- ;;:system-datahike.db/schema             {:resource "public/db.edn"}
+ ;;:system-datahike.db/schema             {:resource "schemas/db.edn"}
 
- :system-lacinia.graphql/schema         {:resource "public/graphql.edn"}
+ :system-lacinia.graphql/schema         {:resource "schemas/graphql.edn"}
 
 
  ;; ------------------------------
@@ -382,7 +382,7 @@
  :system-lacinia.graphql/compiled-schema
  {:sdl-schema #ig/ref :system-lacinia.graphql/schema
   :resolvers #ig/ref :saku.system.graphql-resolvers/resolvers
-  ;;:entity-resolvers #ig/ref :saku.system.graphql-resolvers/entity-resolvers
+  :entity-resolvers #ig/ref :saku.system.graphql-resolvers/entity-resolvers
   }
 
  :system-lacinia.graphql/interceptors
