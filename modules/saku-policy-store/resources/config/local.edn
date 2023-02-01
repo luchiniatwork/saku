@@ -1,0 +1,23 @@
+{:system-utils.version/dynamic-gen  {:environment-id :local}
+
+ 'VERSION_SYSTEM #ig/ref :system-utils.version/dynamic-gen
+
+ 'PORT 8080
+
+ 'DB_RESET false
+
+ 'DB_CFG {:store {:backend :mem}
+          :transactor {:rx-buffer-size 51200}}
+ 
+ ;; [:env/kafka-nodes :system-utils.env/edn-parsed-var]
+ ;; {:var :kafka-nodes}
+
+ ;; [:env/kafka-base-config :system-utils.env/edn-parsed-var]
+ ;; {:var :kafka-base-config}
+
+ ;; 'STREAM_ENGINE_OPTS
+ ;; {:engine-id :kafka
+ ;;  :conn {:nodes #ig/ref [:env/kafka-nodes :system-utils.env/edn-parsed-var]}
+ ;;  :config #ig/ref [:env/kafka-base-config :system-utils.env/edn-parsed-var]}
+
+ }

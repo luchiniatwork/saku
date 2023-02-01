@@ -1,0 +1,9 @@
+{:deps {:aliases [:cljs]}
+ :nrepl {:port 9000
+         :middleware []}
+ :builds {:lib
+          {:target :node-library
+           :output-dir "target/"
+           :output-to "target/index.js"
+           :exports {:evaluateOne saku.core/evaluate-one-js
+                     :evaluateMany saku.core/evaluate-many-js}}}}

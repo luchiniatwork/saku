@@ -1,0 +1,405 @@
+{#_:system-utils.log/config          #_:DEFAULT
+
+ ;; ------------------------------
+ ;; Schemas
+ ;; ------------------------------
+
+ ;;:system-datahike.db/schema             {:resource "public/db.edn"}
+
+ :system-lacinia.graphql/schema         {:resource "public/graphql.edn"}
+
+
+ ;; ------------------------------
+ ;; Serdes
+ ;; ------------------------------
+
+ ;; [:serde/string :system-kkiss.stream/serde]
+ ;; {:serde-id :string}
+
+ ;; [:serde/json :system-kkiss.stream/serde]
+ ;; {:serde-id :json
+ ;;  :mapper #ig/ref :system-kkiss.stream/lossless-json-mapper}
+
+ ;; :system-kkiss.stream/lossless-json-mapper :init
+
+
+ ;; ------------------------------
+ ;; Streams
+ ;; ------------------------------
+
+ ;; [:capture.fct.log/stories :system-kkiss.stream/stream]
+ ;; {:engine #ig/ref :system-kkiss.stream/engine
+ ;;  :name :capture.fct.log/stories
+ ;;  :key.serde #ig/ref [:serde/string :system-kkiss.stream/serde]
+ ;;  :value.serde #ig/ref [:serde/json :system-kkiss.stream/serde]
+ ;;  :kkiss.engine.kafka/partitions 5
+ ;;  :kkiss.engine.kafka/replication 3
+ ;;  :kkiss.engine.kafka/topic-config {"retention.ms" "-1"
+ ;;                                    "retention.bytes" "-1"}}
+
+ ;; [:enrichment.fct.assert/story-tags :system-kkiss.stream/stream]
+ ;; {:engine #ig/ref :system-kkiss.stream/engine
+ ;;  :name :enrichment.fct.assert/story-tags
+ ;;  :key.serde #ig/ref [:serde/string :system-kkiss.stream/serde]
+ ;;  :value.serde #ig/ref [:serde/json :system-kkiss.stream/serde]
+ ;;  :kkiss.engine.kafka/partitions 5
+ ;;  :kkiss.engine.kafka/replication 3
+ ;;  :kkiss.engine.kafka/topic-config {"retention.ms" "-1"
+ ;;                                    "retention.bytes" "-1"}
+ ;;  :kkiss.engine.kafka/producer-config {"client.id" "story-tags-producer"
+ ;;                                       "acks" "all"}}
+
+ ;; [:enrichment.fct.log/inspirations :system-kkiss.stream/stream]
+ ;; {:engine #ig/ref :system-kkiss.stream/engine
+ ;;  :name :enrichment.fct.log/inspirations
+ ;;  :key.serde #ig/ref [:serde/string :system-kkiss.stream/serde]
+ ;;  :value.serde #ig/ref [:serde/json :system-kkiss.stream/serde]
+ ;;  :kkiss.engine.kafka/partitions 5
+ ;;  :kkiss.engine.kafka/replication 3
+ ;;  :kkiss.engine.kafka/topic-config {"retention.ms" "-1"
+ ;;                                    "retention.bytes" "-1"}
+ ;;  :kkiss.engine.kafka/producer-config {"client.id" "inspirations-producer"
+ ;;                                       "acks" "all"}}
+
+ ;; [:enrichment.fct.log/ideation-sessions :system-kkiss.stream/stream]
+ ;; {:engine #ig/ref :system-kkiss.stream/engine
+ ;;  :name :enrichment.fct.log/ideation-sessions
+ ;;  :key.serde #ig/ref [:serde/string :system-kkiss.stream/serde]
+ ;;  :value.serde #ig/ref [:serde/json :system-kkiss.stream/serde]
+ ;;  :kkiss.engine.kafka/partitions 5
+ ;;  :kkiss.engine.kafka/replication 3
+ ;;  :kkiss.engine.kafka/topic-config {"retention.ms" "-1"
+ ;;                                    "retention.bytes" "-1"}
+ ;;  :kkiss.engine.kafka/producer-config {"client.id" "ideation-sessions-producer"
+ ;;                                       "acks" "all"}}
+
+ ;; [:enrichment.fct.assert/ideas :system-kkiss.stream/stream]
+ ;; {:engine #ig/ref :system-kkiss.stream/engine
+ ;;  :name :enrichment.fct.assert/ideas
+ ;;  :key.serde #ig/ref [:serde/string :system-kkiss.stream/serde]
+ ;;  :value.serde #ig/ref [:serde/json :system-kkiss.stream/serde]
+ ;;  :kkiss.engine.kafka/partitions 5
+ ;;  :kkiss.engine.kafka/replication 3
+ ;;  :kkiss.engine.kafka/topic-config {"retention.ms" "-1"
+ ;;                                    "retention.bytes" "-1"}
+ ;;  :kkiss.engine.kafka/producer-config {"client.id" "ideas-producer"
+ ;;                                       "acks" "all"}}
+
+ ;; [:svc-saku.err/story-tags-db :system-kkiss.stream/stream]
+ ;; {:engine #ig/ref :system-kkiss.stream/engine
+ ;;  :name :svc-saku.err/story-tags-db
+ ;;  :key.serde #ig/ref [:serde/string :system-kkiss.stream/serde]
+ ;;  :value.serde #ig/ref [:serde/json :system-kkiss.stream/serde]
+ ;;  :kkiss.engine.kafka/partitions 1
+ ;;  :kkiss.engine.kafka/replication 3
+ ;;  :kkiss.engine.kafka/topic-config {"retention.bytes" "-1"}
+ ;;  :kkiss.engine.kafka/producer-config {"client.id" "svc-saku.err-story-tags-producer"
+ ;;                                       "acks" "all"}}
+
+ ;; [:svc-saku.err/inspirations-db :system-kkiss.stream/stream]
+ ;; {:engine #ig/ref :system-kkiss.stream/engine
+ ;;  :name :svc-saku.err/inspirations-db
+ ;;  :key.serde #ig/ref [:serde/string :system-kkiss.stream/serde]
+ ;;  :value.serde #ig/ref [:serde/json :system-kkiss.stream/serde]
+ ;;  :kkiss.engine.kafka/partitions 1
+ ;;  :kkiss.engine.kafka/replication 3
+ ;;  :kkiss.engine.kafka/topic-config {"retention.bytes" "-1"}
+ ;;  :kkiss.engine.kafka/producer-config {"client.id" "svc-saku.err-inspirations-producer"
+ ;;                                       "acks" "all"}}
+
+ ;; [:svc-saku.err/ideation-sessions-db :system-kkiss.stream/stream]
+ ;; {:engine #ig/ref :system-kkiss.stream/engine
+ ;;  :name :svc-saku.err/ideation-sessions-db
+ ;;  :key.serde #ig/ref [:serde/string :system-kkiss.stream/serde]
+ ;;  :value.serde #ig/ref [:serde/json :system-kkiss.stream/serde]
+ ;;  :kkiss.engine.kafka/partitions 1
+ ;;  :kkiss.engine.kafka/replication 3
+ ;;  :kkiss.engine.kafka/topic-config {"retention.bytes" "-1"}
+ ;;  :kkiss.engine.kafka/producer-config {"client.id" "svc-saku.err-ideation-sessions-producer"
+ ;;                                       "acks" "all"}}
+
+ ;; [:svc-saku.err/ideas-db :system-kkiss.stream/stream]
+ ;; {:engine #ig/ref :system-kkiss.stream/engine
+ ;;  :name :svc-saku.err/ideas-db
+ ;;  :key.serde #ig/ref [:serde/string :system-kkiss.stream/serde]
+ ;;  :value.serde #ig/ref [:serde/json :system-kkiss.stream/serde]
+ ;;  :kkiss.engine.kafka/partitions 1
+ ;;  :kkiss.engine.kafka/replication 3
+ ;;  :kkiss.engine.kafka/topic-config {"retention.bytes" "-1"}
+ ;;  :kkiss.engine.kafka/producer-config {"client.id" "svc-saku.err-ideas-producer"
+ ;;                                       "acks" "all"}}
+ ;; ------------------------------
+ ;; DB Consumers
+ ;; ------------------------------
+
+ ;; [:consumers/story-tags-db :system-kkiss.stream/consumer]
+ ;; {:streams [#ig/ref [:enrichment.fct.assert/story-tags :system-kkiss.stream/stream]]
+ ;;  :handler #ig/ref :saku.system.stream-handlers/story-tags-db
+ ;;  :opts {:failed-exception-stream #ig/ref [:svc-saku.err/story-tags-db :system-kkiss.stream/stream]
+ ;;         :kkiss.engine.kafka/commit-behavior :do-not-manually-commit
+ ;;         :kkiss.engine.kafka/config
+ ;;         {"auto.offset.reset" "earliest"
+ ;;          "enable.auto.commit" false
+ ;;          "client.id"          "svc-saku.story-tags-db"
+ ;;          "group.id"           "svc-saku.story-tags-db"
+ ;;          "session.timeout.ms" "60000"}}}
+ 
+ ;; [:consumers/inspirations-db :system-kkiss.stream/consumer]
+ ;; {:streams [#ig/ref [:enrichment.fct.log/inspirations :system-kkiss.stream/stream]]
+ ;;  :handler #ig/ref :saku.system.stream-handlers/inspirations-db
+ ;;  :opts {:failed-exception-stream #ig/ref [:svc-saku.err/inspirations-db :system-kkiss.stream/stream]
+ ;;         :kkiss.engine.kafka/commit-behavior :do-not-manually-commit
+ ;;         :kkiss.engine.kafka/config
+ ;;         {"auto.offset.reset" "earliest"
+ ;;          "enable.auto.commit" false
+ ;;          "client.id"          "svc-saku.inspirations-db"
+ ;;          "group.id"           "svc-saku.inspirations-db"
+ ;;          "session.timeout.ms" "60000"}}}
+
+ ;; [:consumers/ideation-sessions-db :system-kkiss.stream/consumer]
+ ;; {:streams [#ig/ref [:enrichment.fct.log/ideation-sessions :system-kkiss.stream/stream]]
+ ;;  :handler #ig/ref :saku.system.stream-handlers/ideation-sessions-db
+ ;;  :opts {:failed-exception-stream #ig/ref [:svc-saku.err/ideation-sessions-db :system-kkiss.stream/stream]
+ ;;         :kkiss.engine.kafka/commit-behavior :do-not-manually-commit
+ ;;         :kkiss.engine.kafka/config
+ ;;         {"auto.offset.reset" "earliest"
+ ;;          "enable.auto.commit" false
+ ;;          "client.id"          "svc-saku.ideation-sessions-db"
+ ;;          "group.id"           "svc-saku.ideation-sessions-db"
+ ;;          "session.timeout.ms" "60000"}}}
+
+ ;; [:consumers/ideas-db :system-kkiss.stream/consumer]
+ ;; {:streams [#ig/ref [:enrichment.fct.assert/ideas :system-kkiss.stream/stream]]
+ ;;  :handler #ig/ref :saku.system.stream-handlers/ideas-db
+ ;;  :opts {:failed-exception-stream #ig/ref [:svc-saku.err/ideas-db :system-kkiss.stream/stream]
+ ;;         :kkiss.engine.kafka/commit-behavior :do-not-manually-commit
+ ;;         :kkiss.engine.kafka/config
+ ;;         {"auto.offset.reset" "earliest"
+ ;;          "enable.auto.commit" false
+ ;;          "client.id"          "svc-saku.ideas-db"
+ ;;          "group.id"           "svc-saku.ideas-db"
+ ;;          "session.timeout.ms" "60000"}}}
+
+ ;; ;; ------------------------------
+ ;; ;; Enrichment Consumers
+ ;; ;; ------------------------------
+
+ ;; [:consumers/stories-nlp-enrich :system-kkiss.stream/consumer]
+ ;; {:streams [#ig/ref [:capture.fct.log/stories :system-kkiss.stream/stream]]
+ ;;  :handler #ig/ref :saku.system.stream-handlers/stories-nlp-enrich
+ ;;  ;; This consumer's handle emits to other streams so make sure it commits
+ ;;  ;; to avoid repeated events on the target stream
+ ;;  :opts {:kkiss.engine.kafka/commit-behavior :latest-before-failure
+ ;;         :kkiss.engine.kafka/config
+ ;;         {"auto.offset.reset" "earliest"
+ ;;          "enable.auto.commit" false
+ ;;          "client.id"          "stories-nlp-enrich"
+ ;;          "group.id"           "stories-nlp-enrich"
+ ;;          "session.timeout.ms" "300000"}}}
+ 
+ ;; [:consumers/stories-gpt-keyword-v1-enrich :system-kkiss.stream/consumer]
+ ;; {:streams [#ig/ref [:capture.fct.log/stories :system-kkiss.stream/stream]]
+ ;;  :handler #ig/ref :saku.system.stream-handlers/stories-gpt-keyword-v1-enrich
+ ;;  ;; This consumer's handle emits to other streams so make sure it commits
+ ;;  ;; to avoid repeated events on the target stream
+ ;;  :opts {:kkiss.engine.kafka/commit-behavior :latest-before-failure
+ ;;         :kkiss.engine.kafka/config
+ ;;         {"auto.offset.reset" "earliest"
+ ;;          "enable.auto.commit" false
+ ;;          "client.id"          "stories-gpt-keyword-v1-enrich"
+ ;;          "group.id"           "stories-gpt-keyword-v1-enrich"
+ ;;          "session.timeout.ms" "300000"}}}
+
+ ;; [:consumers/ideas-gpt-enrich :system-kkiss.stream/consumer]
+ ;; {:streams [#ig/ref [:enrichment.fct.log/ideation-sessions :system-kkiss.stream/stream]]
+ ;;  :handler #ig/ref :saku.system.stream-handlers/ideas-gpt-enrich
+ ;;  ;; This consumer's handle emits to other streams so make sure it commits
+ ;;  ;; to avoid repeated events on the target stream
+ ;;  :opts {:kkiss.engine.kafka/commit-behavior :latest-before-failure
+ ;;         :kkiss.engine.kafka/config
+ ;;         {"auto.offset.reset" "earliest"
+ ;;          "enable.auto.commit" false
+ ;;          "client.id"          "ideas-gpt-completion-v1-enrich"
+ ;;          "group.id"           "ideas-gpt-completion-v1-enrich"
+ ;;          "session.timeout.ms" "300000"}}}
+
+ 
+ ;; ;; ------------------------------
+ ;; ;; Inspiration Consumers
+ ;; ;; ------------------------------
+
+ ;; [:consumers/tag-gpt-haiku-v1-inspiration :system-kkiss.stream/consumer]
+ ;; {:streams [#ig/ref [:enrichment.fct.assert/story-tags :system-kkiss.stream/stream]]
+ ;;  :handler #ig/ref :saku.system.stream-handlers/tag-gpt-haiku-v1-inspiration
+ ;;  :opts {:kkiss.engine.kafka/commit-behavior :latest-before-failure
+ ;;         :kkiss.engine.kafka/config
+ ;;         {"auto.offset.reset" "earliest"
+ ;;          "enable.auto.commit" false
+ ;;          "client.id"          "tag-gpt-haiku-v1-inspiration"
+ ;;          "group.id"           "tag-gpt-haiku-v1-inspiration"
+ ;;          "session.timeout.ms" "300000"}}}
+
+ ;; [:consumers/tag-gpt-questions-v1-inspiration :system-kkiss.stream/consumer]
+ ;; {:streams [#ig/ref [:enrichment.fct.assert/story-tags :system-kkiss.stream/stream]]
+ ;;  :handler #ig/ref :saku.system.stream-handlers/tag-gpt-questions-v1-inspiration
+ ;;  :opts {:kkiss.engine.kafka/commit-behavior :latest-before-failure
+ ;;         :kkiss.engine.kafka/config
+ ;;         {"auto.offset.reset" "earliest"
+ ;;          "enable.auto.commit" false
+ ;;          "client.id"          "tag-gpt-questions-v1-inspiration"
+ ;;          "group.id"           "tag-gpt-questions-v1-inspiration"
+ ;;          "session.timeout.ms" "300000"}}}
+
+ ;; [:consumers/tag-gpt-narrative-idea-v1-inspiration :system-kkiss.stream/consumer]
+ ;; {:streams [#ig/ref [:enrichment.fct.assert/story-tags :system-kkiss.stream/stream]]
+ ;;  :handler #ig/ref :saku.system.stream-handlers/tag-gpt-narrative-idea-v1-inspiration
+ ;;  :opts {:kkiss.engine.kafka/commit-behavior :latest-before-failure
+ ;;         :kkiss.engine.kafka/config
+ ;;         {"auto.offset.reset" "earliest"
+ ;;          "enable.auto.commit" false
+ ;;          "client.id"          "tag-gpt-narrative-idea-v1-inspiration"
+ ;;          "group.id"           "tag-gpt-narrative-idea-v1-inspiration"
+ ;;          "session.timeout.ms" "300000"}}}
+
+
+ ;; ;; ------------------------------
+ ;; ;; DB Handlers
+ ;; ;; ------------------------------
+
+ ;; :saku.system.stream-handlers/story-tags-db
+ ;; {:db-conn #ig/ref :system-datahike.db/conn}
+
+ ;; :saku.system.stream-handlers/inspirations-db
+ ;; {:db-conn #ig/ref :system-datahike.db/conn}
+
+ ;; :saku.system.stream-handlers/ideation-sessions-db
+ ;; {:db-conn #ig/ref :system-datahike.db/conn}
+
+ ;; :saku.system.stream-handlers/ideas-db
+ ;; {:db-conn #ig/ref :system-datahike.db/conn}
+
+ ;; ;; ------------------------------
+ ;; ;; Enrichment Handlers
+ ;; ;; ------------------------------
+
+ ;; :saku.system.stream-handlers/stories-nlp-enrich
+ ;; {:db-conn #ig/ref :system-datahike.db/conn
+ ;;  :nlp-engine #ig/ref :saku.system.nlp/engine
+ ;;  :story-tags-stream #ig/ref [:enrichment.fct.assert/story-tags :system-kkiss.stream/stream]}
+
+ ;; :saku.system.stream-handlers/stories-gpt-keyword-v1-enrich
+ ;; {:db-conn #ig/ref :system-datahike.db/conn
+ ;;  :gpt-engine #ig/ref :saku.system.gpt/engine
+ ;;  :story-tags-stream #ig/ref [:enrichment.fct.assert/story-tags :system-kkiss.stream/stream]}
+
+ ;; :saku.system.stream-handlers/ideas-gpt-enrich
+ ;; {:db-conn #ig/ref :system-datahike.db/conn
+ ;;  :gpt-engine #ig/ref :saku.system.gpt/engine
+ ;;  :ideas-stream #ig/ref [:enrichment.fct.assert/ideas :system-kkiss.stream/stream]}
+
+
+ ;; ;; ------------------------------
+ ;; ;; Inspiration Handlers
+ ;; ;; ------------------------------
+
+ ;; :saku.system.stream-handlers/tag-gpt-timed-thread
+ ;; {:db-conn #ig/ref :system-datahike.db/conn}
+
+ ;; :saku.system.stream-handlers/tag-gpt-haiku-v1-inspiration
+ ;; {:gpt-engine #ig/ref :saku.system.gpt/engine
+ ;;  :db-conn #ig/ref :system-datahike.db/conn
+ ;;  :inspirations-stream #ig/ref [:enrichment.fct.log/inspirations :system-kkiss.stream/stream]
+ ;;  :timeout 'HAIKU_TIMEOUT}
+
+ ;; :saku.system.stream-handlers/tag-gpt-questions-v1-inspiration
+ ;; {:gpt-engine #ig/ref :saku.system.gpt/engine
+ ;;  :db-conn #ig/ref :system-datahike.db/conn
+ ;;  :inspirations-stream #ig/ref [:enrichment.fct.log/inspirations :system-kkiss.stream/stream]
+ ;;  :timeout 'QUESTIONS_TIMEOUT}
+
+ ;; :saku.system.stream-handlers/tag-gpt-narrative-idea-v1-inspiration
+ ;; {:gpt-engine #ig/ref :saku.system.gpt/engine
+ ;;  :db-conn #ig/ref :system-datahike.db/conn
+ ;;  :inspirations-stream #ig/ref [:enrichment.fct.log/inspirations :system-kkiss.stream/stream]
+ ;;  :timeout 'NARRATIVE_IDEA_TIMEOUT}
+
+
+ ;; ;; ------------------------------
+ ;; ;; Environment Vars
+ ;; ;; ------------------------------
+
+ ;; [:env/google-nlp-key :system-utils.env/var]
+ ;; {:var :google-nlp-key}
+
+ ;; [:env/openai-api-key :system-utils.env/var]
+ ;; {:var :openai-api-key}
+
+
+ ;; ;; ------------------------------
+ ;; ;; AI Engines & Other dependencies (i.e. DB)
+ ;; ;; ------------------------------
+
+ ;; :saku.system.nlp/engine
+ ;; {:api-key #ig/ref [:env/google-nlp-key :system-utils.env/var]}
+
+ ;; :saku.system.gpt/engine
+ ;; {:api-key #ig/ref [:env/openai-api-key :system-utils.env/var]}
+
+ ;; :system-kkiss.stream/engine 'STREAM_ENGINE_OPTS
+
+ ;; :system-datahike.db/conn
+ ;; {:cfg 'DB_CFG
+ ;;  :reset-db? 'DB_RESET
+ ;;  :schema #ig/ref :system-datahike.db/schema
+ ;;  :seed #ig/ref :saku.system.seed/seed}
+
+ ;; :saku.system.seed/seed
+ ;; :init
+
+
+ ;; ------------------------------
+ ;; API Stuff
+ ;; ------------------------------
+
+ :system-lacinia.graphql/log-interceptor :init
+
+ :system-lacinia.graphql/correlation-id-interceptor :init
+
+ :system-lacinia.graphql/error-handling-interceptor :init
+
+ :saku.system.graphql-resolvers/resolvers
+ {;;:db-conn #ig/ref :system-datahike.db/conn
+  ;; FIXME the stories-stream may not be needed by any resolver
+  ;;:stories-stream #ig/ref [:capture.fct.log/stories :system-kkiss.stream/stream]
+  ;;:ideation-sessions-stream #ig/ref [:enrichment.fct.log/ideation-sessions :system-kkiss.stream/stream]
+  ;; Make sure to pass the versioning system in the specialized env config
+  :version 'VERSION_SYSTEM}
+
+ :saku.system.graphql-resolvers/entity-resolvers
+ {;;:db-conn #ig/ref :system-datahike.db/conn
+  }
+
+ :system-lacinia.graphql/compiled-schema
+ {:sdl-schema #ig/ref :system-lacinia.graphql/schema
+  :resolvers #ig/ref :saku.system.graphql-resolvers/resolvers
+  ;;:entity-resolvers #ig/ref :saku.system.graphql-resolvers/entity-resolvers
+  }
+
+ :system-lacinia.graphql/interceptors
+ {:compiled-schema #ig/ref :system-lacinia.graphql/compiled-schema
+  :interceptors [#ig/ref :system-lacinia.graphql/log-interceptor
+                 #ig/ref :system-lacinia.graphql/correlation-id-interceptor
+                 #ig/ref :system-lacinia.graphql/error-handling-interceptor]}
+
+ :system-lacinia.graphql/routes
+ {:graphiql? true
+  :interceptors #ig/ref :system-lacinia.graphql/interceptors}
+
+ :system-lacinia.graphql/service
+ {:graphiql? true
+  :compiled-schema #ig/ref :system-lacinia.graphql/compiled-schema
+  :routes #ig/ref :system-lacinia.graphql/routes}
+
+ :system-lacinia.http/server
+ {:base-service #ig/ref :system-lacinia.graphql/service
+  :port 'PORT}}

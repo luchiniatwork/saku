@@ -1,0 +1,18 @@
+{:paths ["src"]
+
+ :deps {com.taoensso/timbre {:mvn/version "5.2.1"}}
+
+ :aliases
+ {:cljs {:extra-deps {thheller/shadow-cljs {:mvn/version "2.20.20"}}}
+  :test {:extra-paths ["tests"]
+         :extra-deps {lambdaisland/kaocha {:mvn/version "1.76.1230"}
+                      com.lambdaisland/kaocha-cljs {:mvn/version "1.4.130"}}
+         :exec-fn kaocha.runner/exec-fn
+         :exec-args {}}
+
+  :test-watch {:extra-paths ["tests"]
+               :extra-deps {lambdaisland/kaocha {:mvn/version "1.76.1230"}}
+               :exec-fn kaocha.runner/exec-fn
+               :exec-args {:watch? true}
+	       :skip-meta :slow
+	       :fail-fast? true}}}

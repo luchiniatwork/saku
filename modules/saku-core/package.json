@@ -1,0 +1,22 @@
+{
+  "name": "saku-core",
+  "version": "23.1.2",
+  "description": "",
+  "type": "commonjs",
+  "main": "target/index.js",
+  "types": "src/custom-types.d.ts",
+  "files": ["target/", "src/*.d.ts"],
+  "scripts": {
+    "build": "shadow-cljs release lib 2>&1",
+    "dev": "shadow-cljs watch lib",
+    "test": "clojure -X:test"
+  },
+  "author": "Tiago Luchini <tiago@luchini.nyc>",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "shadow-cljs": "~2.20.20",
+    "ws": "~8.12.0"
+  }
+}

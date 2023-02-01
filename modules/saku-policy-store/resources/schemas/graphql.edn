@@ -1,0 +1,201 @@
+[^{:lacinia/tag true}
+ default
+
+ ;; ------------------------------
+ ;; Roots
+ ;; ------------------------------
+
+ ^{:lacinia/mutation true}
+ MutationRoot
+ [^{:type ResourcePolicyDocument}
+  upsert-resource-policies [^{:type ResourcePolicyInputDocument
+                              :cardinality [0 n]}
+                            policies]
+
+  ^{:type IdentityPolicyDocument}
+  upsert-identity-policies [^{:type IdentityPolicInputyDocument
+                              :cardinality [0 n]}
+                            policies]
+
+  ^{:type PolicyDocument}
+  retract-policies [^{:type ID
+                      :cardinality [0 n]}
+                    drns]]
+
+
+ ^{:lacinia/query true}
+ QueryRoot
+ [^{:type PolicyDocument
+    :cardinality [0 n]}
+  policies [^{:type ID
+              :cardinality [0 n]}
+            drns]
+
+  ^{:type IdentityPolicyDocument
+    :cardinality [0 n]}
+  identity-policies [^{:type ID
+                       :cardinality [0 n]}
+                     drns]
+
+  ^{:type ResourcePolicyDocument
+    :cardinality [0 n]}
+  resource-policies [^{:type ID
+                       :cardinality [0 n]}
+                     drns]
+
+  ^{:type EvaluationResponse}
+  evaluate-one [^{:type EvaluationParams}
+                params]]
+
+
+ ;; ------------------------------
+ ;; Mutation Types
+ ;; ------------------------------
+
+ ^{:lacinia/input true}
+ ResourcePolicyInputDocument
+ [^{:type ID}
+  drn
+
+  ^{:type ResourceInputStatement
+    :cardinality [0 n]}
+  statements]
+
+
+ ^{:lacinia/input true}
+ ResourceInputStatement
+ [^{:type String
+    :cardinality [0 n]}
+  actionIds
+
+  ^{:type Effect}
+  effect
+
+  ^{:type ID
+    :cardinality [0 n]}
+  identities]
+
+
+ ^{:lacinia/input true}
+ IdentityInputStatement
+ [^{:type String
+    :cardinality [0 n]}
+  actionIds
+
+  ^{:type Effect}
+  effect
+
+  ^{:type ID
+    :cardinality [0 n]}
+  resources]
+
+
+ ^{:lacinia/input true}
+ IdentityPolicyInputDocument
+ [^{:type ID}
+  drn
+
+  ^{:type IdentityInputStatement
+    :cardinality [0 n]}
+  statements]
+
+
+ 
+ ;; ------------------------------
+ ;; Query Types
+ ;; ------------------------------
+
+ ^{:interface true}
+ PolicyDocument
+ [^{:type ID}
+  drn]
+
+
+ ^{:implements [PolicyDocument]}
+ ResourcePolicyDocument
+ [^{:type ResourceStatment
+    :cardinality [0 n]}
+  statements]
+
+
+ ^{:implements [PolicyDocument]}
+ IdentityPolicyDocument
+ [^{:type IdentityStatment
+    :cardinality [0 n]}
+  statements]
+
+
+ ^{:interface true}
+ Statement
+ [^{:type String
+    :cardinality [0 n]}
+  actionIds
+
+  ^{:type Effect}
+  effect]
+
+
+ {:implements [Statement]}
+ ResourceStatement
+ [^{:type ID
+    :cardinality [0 n]}
+  identities]
+
+
+ {:implements [Statement]}
+ IdentityStatement
+ [^{:type ID
+    :cardinality [0 n]}
+  resources]
+
+
+ ^{:enum true}
+ Effect
+ [DENY ALLOW]
+
+
+ ^{:enum true}
+ Nature
+ [IMPLICIT EXPLICIT]
+
+
+
+ ;; ------------------------------
+ ;; External entities
+ ;; ------------------------------
+
+
+ MutationResp
+ [^{:type ID}
+  client-mutation-uuid
+
+  ^{:type ResponseStatus}
+  status
+
+  ^{:type String
+    :optional true}
+  rejection-reason]
+
+
+
+ ^{:enum true}
+ ResponseStatus
+ [ACCEPTED REJECTED]
+
+
+
+ PageInfo
+ [^{:type Boolean}
+  has-previous-page
+
+  ^{:type Boolean}
+  has-next-page
+
+  ^{:type String}
+  start-cursor
+
+  ^{:type String}
+  end-cursor]
+
+
+ ]

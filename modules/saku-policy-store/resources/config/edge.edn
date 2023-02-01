@@ -1,0 +1,27 @@
+{:system-utils.version/read-from-disk  {:environment-id :edge}
+
+ 'VERSION_SYSTEM #ig/ref :system-utils.version/read-from-disk
+
+ 'PORT 8080
+
+ 'DB_RESET false
+
+ 'DB_CFG {:store {:backend :mem}
+          :transactor {:rx-buffer-size 51200}}
+
+ 'HAIKU_TIMEOUT 300 ;; 5min (5 * 60)
+
+ 'QUESTIONS_TIMEOUT 300 ;; 5min (5 * 60)
+
+ 'NARRATIVE_IDEA_TIMEOUT 300 ;; 5min (5 * 60)
+
+ [:env/kafka-nodes :system-utils.env/edn-parsed-var]
+ {:var :kafka-nodes}
+
+ [:env/kafka-base-config :system-utils.env/edn-parsed-var]
+ {:var :kafka-base-config}
+
+ 'STREAM_ENGINE_OPTS
+ {:engine-id :kafka
+  :conn {:nodes #ig/ref [:env/kafka-nodes :system-utils.env/edn-parsed-var]}
+  :config #ig/ref [:env/kafka-base-config :system-utils.env/edn-parsed-var]}}

@@ -1,0 +1,48 @@
+{:paths ["src" "resources"]
+
+ :deps {org.clojure/clojure                             {:mvn/version "1.11.1"}
+        org.clojure/core.async                          {:mvn/version "1.5.648"}
+
+        ;; Database
+        datalevin/datalevin                             {:mvn/version "0.8.4"}
+        com.cognitect/transit-clj                       {:mvn/version "1.0.329"}
+
+        ;; System components
+        net.clojars.luchiniatwork/system-utils          {:mvn/version "0.0.6"}
+        net.clojars.luchiniatwork/system-lacinia        {:mvn/version "0.0.3"}
+
+        ;; Utilities
+        metosin/jsonista                                {:mvn/version "0.3.5"}
+        camel-snake-kebab/camel-snake-kebab             {:mvn/version "0.4.2"}
+        borkdude/edamame                                {:mvn/version "0.0.19"}
+        luchiniatwork/ambiente                          {:mvn/version "0.1.4"}
+        net.clojars.luchiniatwork/anomalies             {:mvn/version "0.0.2"}}
+
+
+ :aliases
+ {:dev {:extra-paths ["dev"]
+        :extra-deps
+        {integrant/repl                                 {:mvn/version "0.3.2"}}}
+
+  :run {:exec-fn system-utils.initializer/start-system
+        :exec-args {:require-namespaces [te.threadpool]}}
+
+  :gen-sdl {:extra-paths ["scripts"]
+            :main-opts
+            ["-m" "gen-sdl"]}
+
+  :test {:extra-paths ["test"]
+         :extra-deps
+         {lambdaisland/kaocha                           {:mvn/version "1.60.977"}
+          integrant/repl                                {:mvn/version "0.3.2"}}
+         :exec-fn kaocha.runner/exec-fn
+         :exec-args {}}
+
+  :test-watch {:extra-paths ["test"]
+               :extra-deps
+               {lambdaisland/kaocha                           {:mvn/version "1.60.977"}
+                integrant/repl                                {:mvn/version "0.3.2"}}
+               :exec-fn kaocha.runner/exec-fn
+               :exec-args {:watch? true
+                           :randomize? false
+	                   :fail-fast? true}}}}
