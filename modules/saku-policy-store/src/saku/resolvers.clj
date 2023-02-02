@@ -3,7 +3,34 @@
             [com.walmartlabs.lacinia.schema :as schema]
             ;;[kkiss.core :as kkiss]
             ;;[te.dal-queries :as dal]
+            [saku.dal-mutations :as dal-m]
+            [saku.dal-queries :as dal-q]
+            [com.walmartlabs.lacinia.schema :refer [tag-with-type]]
             [system-lacinia.resolvers-util :as util]))
+
+
+(def ^:private statement-map
+  [[:statement/actions :actionIds]
+   [:statement/effect :effect #(-> % :effect csk/->SCREAMING_SNAKE_CASE_KEYWORD)]
+   [:statement/identities :identities]
+   [:statement/resources :resources]])
+
+(def ^:private policy-map
+  [[:policy/drn :drn]
+   [:policy/statements :statements #(->> % (mapv (partial util/transform-ab statement-map)))]])
+
+
+(defn get-policies [{:keys [db-conn] :as opts}]
+  (fn [ctx args obj]
+    (->> (:drns args)
+         (dal-q/get-policies (dal-q/db db-conn))
+         (mapv (partial util/transform-ab policy-map))
+         (mapv #(cond
+                  (some :identities (:statements %))
+                  (tag-with-type % :ResourcePolicyDocument)
+                  (some :resources (:statements %))
+                  (tag-with-type % :IdentityPolicyDocument))))))
+
 
 
 #_(def ^:private inspiration-map

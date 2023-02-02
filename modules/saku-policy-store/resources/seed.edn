@@ -1,9 +1,2 @@
-[#_{:person/uuid #uuid "66ade612-c266-4fb3-81c1-b354e6bc423c"
-    :person/name "Alice"
-    :person/age  20 }
- #_{:person/uuid #uuid "798148e5-96e1-4267-a594-5435bcb63de6"
-    :person/name "Bob"
-    :person/age  30 }
- #_{:person/uuid #uuid "d2c83737-7ceb-47cb-86a3-43d830b56b13"
-    :person/name "Charlie"
-    :person/age  40 }]
+[{:effect :deny}
+ {:effect :allow}]

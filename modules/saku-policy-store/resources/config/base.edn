@@ -4,7 +4,7 @@
  ;; Schemas
  ;; ------------------------------
 
- ;;:system-datahike.db/schema             {:resource "schemas/db.edn"}
+ :saku.system.datalevin/schema          :init
 
  :system-lacinia.graphql/schema         {:resource "schemas/graphql.edn"}
 
@@ -266,6 +266,7 @@
  ;; ;; DB Handlers
  ;; ;; ------------------------------
 
+ 
  ;; :saku.system.stream-handlers/story-tags-db
  ;; {:db-conn #ig/ref :system-datahike.db/conn}
 
@@ -347,14 +348,13 @@
 
  ;; :system-kkiss.stream/engine 'STREAM_ENGINE_OPTS
 
- ;; :system-datahike.db/conn
- ;; {:cfg 'DB_CFG
- ;;  :reset-db? 'DB_RESET
- ;;  :schema #ig/ref :system-datahike.db/schema
- ;;  :seed #ig/ref :saku.system.seed/seed}
+ :saku.system.datalevin/conn
+ {:url 'DB_URL
+  :schema #ig/ref :saku.system.datalevin/schema
+  :seed #ig/ref :saku.system.seed/seed}
 
- ;; :saku.system.seed/seed
- ;; :init
+ :saku.system.seed/seed
+ :init
 
 
  ;; ------------------------------
@@ -368,7 +368,7 @@
  :system-lacinia.graphql/error-handling-interceptor :init
 
  :saku.system.graphql-resolvers/resolvers
- {;;:db-conn #ig/ref :system-datahike.db/conn
+ {:db-conn #ig/ref :saku.system.datalevin/conn
   ;; FIXME the stories-stream may not be needed by any resolver
   ;;:stories-stream #ig/ref [:capture.fct.log/stories :system-kkiss.stream/stream]
   ;;:ideation-sessions-stream #ig/ref [:enrichment.fct.log/ideation-sessions :system-kkiss.stream/stream]
