@@ -6,15 +6,15 @@
 
 (defmethod ig/init-key ::resolvers [_ opts]
   (info {:msg "Initializing Lacinia Resolvers"})
-  {:MutationRoot/upsertResourcePolicies (constantly {})
-   :MutationRoot/upsertIdentityPolicies (constantly {})
-   :MutationRoot/retractPolicies (constantly {})
+  {:MutationRoot/upsertResourcePolicies (resolvers/upsert-resource-policies opts)
+   :MutationRoot/upsertIdentityPolicies (resolvers/upsert-identity-policies opts)
+   :MutationRoot/retractPolicies (resolvers/retract-policies opts)
 
    :QueryRoot/policies (resolvers/get-policies opts)
-   :QueryRoot/identityPolicies (constantly {})
-   :QueryRoot/resourcePolicies (constantly {})
+   :QueryRoot/identityPolicies (resolvers/get-identity-policies opts)
+   :QueryRoot/resourcePolicies (resolvers/get-resource-policies opts)
    ;;:QueryRoot/evaluateOne (constantly {})
-   ;;:QueryRoot/evaluateMany (constantly {})
+   ;;:QueryRoot/evaluateMany (constantly {})xs
    })
 
 

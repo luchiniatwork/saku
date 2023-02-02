@@ -7,17 +7,20 @@
 
  ^{:lacinia/mutation true}
  MutationRoot
- [^{:type ResourcePolicyDocument}
+ [^{:type ResourcePolicyDocument
+    :cardinality [0 n]}
   upsert-resource-policies [^{:type ResourcePolicyInputDocument
                               :cardinality [0 n]}
                             policies]
 
-  ^{:type IdentityPolicyDocument}
+  ^{:type IdentityPolicyDocument
+    :cardinality [0 n]}
   upsert-identity-policies [^{:type IdentityPolicyInputDocument
                               :cardinality [0 n]}
                             policies]
 
-  ^{:type PolicyDocument}
+  ^{:type ID
+    :cardinality [0 n]}
   retract-policies [^{:type ID
                       :cardinality [0 n]}
                     drns]]
