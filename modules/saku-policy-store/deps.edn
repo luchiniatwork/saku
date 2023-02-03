@@ -35,6 +35,13 @@
             :main-opts
             ["-m" "gen-sdl"]}
 
+  :uberjar {:extra-deps
+            {com.github.seancorfield/depstar            {:mvn/version "2.1.303"}}
+            :exec-fn hf.depstar/uberjar
+            :exec-args {:aot true
+                        :main-class saku.main
+                        :jar "target/saku-policy-store.jar"}}
+
   :test {:extra-paths ["test"]
          :extra-deps
          {lambdaisland/kaocha                           {:mvn/version "1.60.977"}
