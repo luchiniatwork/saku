@@ -29,8 +29,7 @@
         :extra-deps
         {integrant/repl                                 {:mvn/version "0.3.2"}}}
 
-  :run {:exec-fn system-utils.initializer/start-system
-        :exec-args {:require-namespaces [te.threadpool]}}
+  :run {:exec-fn system-utils.initializer/start-system}
 
   :gen-sdl {:extra-paths ["scripts"]
             :main-opts

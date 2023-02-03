@@ -30,7 +30,6 @@
 
 (defmethod ig/init-key ::conn [_ {:keys [schema seed url]}]
   (info {:msg "Initializing Datalevin Connection"})
-  (clojure.pprint/pprint schema)
   (let [conn (d/get-conn url schema)]
     (d/transact! conn seed)
     conn))

@@ -124,17 +124,6 @@
                                                (assoc a i (some #(when (= i (:drn %)) %)
                                                                 identity-policies)))
                                              {}))]
-      (println "AQUIIIIII")
-      (clojure.pprint/pprint (->> drns
-                                  (reduce (fn [c drn]
-                                            (let [resource-policy (some #(when (= drn (:drn %) %))
-                                                                        resource-policies)]
-                                              (conj c [{:drn drn
-                                                        :result (core/evaluate-one {:drn drn
-                                                                                    :action actionId
-                                                                                    :resource-policy resource-policy
-                                                                                    :identity-policies-map identity-policies-map})}])))
-                                          [])))
       (->> drns
            (reduce (fn [c drn]
                      (let [resource-policy (some #(when (= drn (:drn %) %))
