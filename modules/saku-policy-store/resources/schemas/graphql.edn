@@ -44,7 +44,31 @@
     :cardinality [0 n]}
   resource-policies [^{:type ID
                        :cardinality [0 n]}
-                     drns]]
+                     drns]
+
+  ^{:type EvaluationResult}
+  evaluate-one [^{:type ID}
+                drn
+
+                ^{:type ID
+                  :cardinality [0 n]}
+                identities
+
+                ^{:type String}
+                actionId]
+
+  ^{:type EvaluationManyResult
+    :cardinality [0 n]}
+  evaluate-many [^{:type ID
+                   :cardinality [0 n]}
+                 drns
+
+                 ^{:type ID
+                   :cardinality [0 n]}
+                 identities
+
+                 ^{:type String}
+                 actionId]]
 
 
  ;; ------------------------------
@@ -171,5 +195,23 @@
  Effect
  [DENY ALLOW]
 
+ ^{:enum true}
+ Nature
+ [IMPLICIT EXPLICIT]
+
+
+ EvaluationResult
+ [^{:type Effect}
+  effect
+
+  ^{:type Nature}
+  nature]
+
+ EvaluationManyResult
+ [^{:type ID}
+  drn
+
+  ^{:type EvaluationResult}
+  result]
  
  ]

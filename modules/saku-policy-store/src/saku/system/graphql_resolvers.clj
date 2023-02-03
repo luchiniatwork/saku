@@ -13,9 +13,9 @@
    :QueryRoot/policies (resolvers/get-policies opts)
    :QueryRoot/identityPolicies (resolvers/get-identity-policies opts)
    :QueryRoot/resourcePolicies (resolvers/get-resource-policies opts)
-   ;;:QueryRoot/evaluateOne (constantly {})
-   ;;:QueryRoot/evaluateMany (constantly {})xs
-   })
+
+   :QueryRoot/evaluateOne (resolvers/evaluate-one opts)
+   :QueryRoot/evaluateMany (resolvers/evaluate-many opts)})
 
 
 (defmethod ig/init-key ::entity-resolvers [_ opts]

@@ -7,9 +7,11 @@
   "types": "src/custom-types.d.ts",
   "files": ["target/", "src/*.d.ts"],
   "scripts": {
-    "build": "shadow-cljs release lib 2>&1",
+    "build": "shadow-cljs release lib 2>&1 && mvn package",
     "dev": "shadow-cljs watch lib",
-    "test": "clojure -X:test"
+    "test": "clojure -X:test",
+    "bump": "scripts/bump-version.clj",
+    "deploy": "npm publish && mvn deploy"
   },
   "author": "Tiago Luchini <tiago@luchini.nyc>",
   "license": "MIT",
