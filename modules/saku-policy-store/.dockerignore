@@ -3,11 +3,10 @@
 .cpcache/
 .dir-locals.el
 .nrepl-port
-.orzo-stage
-.env
-.env.edn
 
 infra/
 target/
 dev/
-resources/public/scripts/go.js
+
+tests/
+tests.edn

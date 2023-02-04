@@ -4,17 +4,4 @@
 
  'PORT 8080
 
- 'DB_URL "/tmp/datalevin/mydb"
- 
- ;; [:env/kafka-nodes :system-utils.env/edn-parsed-var]
- ;; {:var :kafka-nodes}
-
- ;; [:env/kafka-base-config :system-utils.env/edn-parsed-var]
- ;; {:var :kafka-base-config}
-
- ;; 'STREAM_ENGINE_OPTS
- ;; {:engine-id :kafka
- ;;  :conn {:nodes #ig/ref [:env/kafka-nodes :system-utils.env/edn-parsed-var]}
- ;;  :config #ig/ref [:env/kafka-base-config :system-utils.env/edn-parsed-var]}
-
- }
+ 'DB_URL "/tmp/datalevin/mydb"}

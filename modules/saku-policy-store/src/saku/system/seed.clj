@@ -4,10 +4,13 @@
             [integrant.core :as ig]
             [taoensso.timbre :refer [debug info warn error fatal report]]))
 
-(defmethod ig/init-key ::seed [_ _]
-  (info {:msg "Initializing DB seed"
-         :component-id ::seed})
+(defn seed []
   (-> "seed.edn"
       io/resource
       slurp
       edn/read-string))
+
+(defmethod ig/init-key ::seed [_ _]
+  (info {:msg "Initializing DB seed"
+         :component-id ::seed})
+  (seed))

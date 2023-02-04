@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "clojure -X:uberjar",
+    "test": "clojure -X:test",
+    "deploy": "docker buildx build . -t saku-policy-store"
   },
   "author": "",
   "license": "ISC"

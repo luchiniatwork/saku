@@ -23,7 +23,7 @@ RUN clojure -X:uberjar
 ## Server Proper
 ##################################################
 # FROM --platform=linux/x86_64 openjdk:17-alpine as server
-FROM amazoncorretto:11-alpine3.17 as server
+FROM amazoncorretto:19-alpine3.17 as server
 WORKDIR /usr/src/app
 
 # Can be overridden with `docker run --env ENV=staging` for instance

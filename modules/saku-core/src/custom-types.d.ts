@@ -33,7 +33,7 @@ declare module 'saku-core' {
     export type EvaluateParams = {
         drn: Drn,
         action: ActionId,
-        identityPoliciesMap?: Record<Drn, IdentityPolicy>
+        identityPoliciesMap: Record<Drn, IdentityPolicy>
     };
 
     export type EvaluationResult = {

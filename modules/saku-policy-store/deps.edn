@@ -47,13 +47,11 @@
          {lambdaisland/kaocha                           {:mvn/version "1.60.977"}
           integrant/repl                                {:mvn/version "0.3.2"}}
          :exec-fn kaocha.runner/exec-fn
-         :exec-args {}}
+         :exec-args {}
+         :jvm-opts ["--add-opens=java.base/java.nio=ALL-UNNAMED"
+                    "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED"]}
 
-  :test-watch {:extra-paths ["test"]
-               :extra-deps
-               {lambdaisland/kaocha                           {:mvn/version "1.60.977"}
-                integrant/repl                                {:mvn/version "0.3.2"}}
-               :exec-fn kaocha.runner/exec-fn
-               :exec-args {:watch? true
-                           :randomize? false
-	                   :fail-fast? true}}}}
+  ;; To be used with -X:test:watch
+  :watch {:exec-args {:watch? true
+                      :randomize? false
+	              :fail-fast? true}}}}

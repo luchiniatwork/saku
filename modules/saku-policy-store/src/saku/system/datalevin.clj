@@ -4,7 +4,7 @@
             [datalevin.core :as d]))
 
 
-(defmethod ig/init-key ::schema [_ _]
+(defn schema []
   {:effect {:db/valueType :db.type/keyword
             :db/unique :db.unique/identity}
 
@@ -27,12 +27,20 @@
    :statement/resources {:db/valueType :db.type/string
                          :db/cardinality :db.cardinality/many}})
 
+(defmethod ig/init-key ::schema [_ _]
+  (info {:msg "Initializing Dataleving Schema"})
+  (schema))
 
-(defmethod ig/init-key ::conn [_ {:keys [schema seed url]}]
-  (info {:msg "Initializing Datalevin Connection"})
+
+(defn conn [url schema seed]
   (let [conn (d/get-conn url schema)]
     (d/transact! conn seed)
     conn))
+
+
+(defmethod ig/init-key ::conn [_ {:keys [schema seed url]}]
+  (info {:msg "Initializing Datalevin Connection"})
+  (conn url schema seed))
 
 
 (defmethod ig/halt-key! ::conn [_ conn]
