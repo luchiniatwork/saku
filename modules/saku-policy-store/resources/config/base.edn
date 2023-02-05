@@ -9,20 +9,9 @@
  :system-lacinia.graphql/schema         {:resource "schemas/graphql.edn"}
 
 
- ;; ;; ------------------------------
- ;; ;; Environment Vars
- ;; ;; ------------------------------
-
- ;; [:env/google-nlp-key :system-utils.env/var]
- ;; {:var :google-nlp-key}
-
- ;; [:env/openai-api-key :system-utils.env/var]
- ;; {:var :openai-api-key}
-
-
- ;; ;; ------------------------------
- ;; ;; External dependencies (i.e. DB)
- ;; ;; ------------------------------
+ ;; ------------------------------
+ ;; External dependencies (i.e. DB)
+ ;; ------------------------------
 
  :saku.system.datalevin/conn
  {:url 'DB_URL
@@ -32,6 +21,15 @@
  :saku.system.seed/seed
  :init
 
+
+
+ ;; ------------------------------
+ ;; Abstractions (i.e. DAL)
+ ;; ------------------------------
+
+
+ :saku.system.dal/dal-obj
+ {:dn-conn #ig/ref :saku.system.datalevin/conn}
 
  ;; ------------------------------
  ;; API Stuff
@@ -44,19 +42,17 @@
  :system-lacinia.graphql/error-handling-interceptor :init
 
  :saku.system.graphql-resolvers/resolvers
- {:db-conn #ig/ref :saku.system.datalevin/conn
+ {:dal-obj #ig/ref :saku.system.dal/dal-obj
   ;; Make sure to pass the versioning system in the specialized env config
   :version 'VERSION_SYSTEM}
 
  :saku.system.graphql-resolvers/entity-resolvers
- {;;:db-conn #ig/ref :system-datahike.db/conn
-  }
+ {:dal-obj #ig/ref :saku.system.dal/dal-obj}
 
  :system-lacinia.graphql/compiled-schema
  {:sdl-schema #ig/ref :system-lacinia.graphql/schema
   :resolvers #ig/ref :saku.system.graphql-resolvers/resolvers
-  :entity-resolvers #ig/ref :saku.system.graphql-resolvers/entity-resolvers
-  }
+  :entity-resolvers #ig/ref :saku.system.graphql-resolvers/entity-resolvers}
 
  :system-lacinia.graphql/interceptors
  {:compiled-schema #ig/ref :system-lacinia.graphql/compiled-schema

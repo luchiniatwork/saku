@@ -2,7 +2,7 @@
   (:require [datalevin.core :as d]
             [integrant.core :as ig]
             [integrant.repl :refer [clear go halt prep init reset reset-all]]
-            [saku.dal :as dal]
+            #_[saku.dal :as dal]
             [system-utils.initializer :as system]))
 
 (integrant.repl/set-prep! system/read-config)

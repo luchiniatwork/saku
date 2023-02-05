@@ -339,10 +339,6 @@
     {
       "packageName": "saku-policy-store",
       "projectFolder": "modules/saku-policy-store"
-    },
-    {
-      "packageName": "saku",
-      "projectFolder": "modules/saku-core-js"
     }
     // {
     //   /**
