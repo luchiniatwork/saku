@@ -8,35 +8,35 @@
 
 (defmulti get-policies (fn [obj drns & _] (:impl obj)))
 
-(defmethod get-policies :default [_]
+(defmethod get-policies :default [_ drns & _]
   (throw (ex-info "Not Implemented" {:anomaly/category ::not-implemented})))
 
 
 (defmulti get-resource-policies (fn [obj drns & _] (:impl obj)))
 
-(defmethod get-resource-policies :default [_]
+(defmethod get-resource-policies :default [_ drns & _]
   (throw (ex-info "Not Implemented" {:anomaly/category ::not-implemented})))
 
 
 (defmulti get-identity-policies (fn [obj drns & _] (:impl obj)))
 
-(defmethod get-identity-policies :default [_]
+(defmethod get-identity-policies :default [_ drns & _]
   (throw (ex-info "Not Implemented" {:anomaly/category ::not-implemented})))
 
 
 (defmulti upsert-resource-policies (fn [obj policies] (:impl obj)))
 
-(defmethod upsert-resource-policies :default [_]
+(defmethod upsert-resource-policies :default [_ policies]
   (throw (ex-info "Not Implemented" {:anomaly/category ::not-implemented})))
 
 
 (defmulti upsert-identity-policies (fn [obj policies] (:impl obj)))
 
-(defmethod upsert-identity-policies :default [_]
+(defmethod upsert-identity-policies :default [_ policies]
   (throw (ex-info "Not Implemented" {:anomaly/category ::not-implemented})))
 
 
 (defmulti retract-policies (fn [obj drns] (:impl obj)))
 
-(defmethod retract-policies :default [_]
+(defmethod retract-policies :default [_ drns]
   (throw (ex-info "Not Implemented" {:anomaly/category ::not-implemented})))
