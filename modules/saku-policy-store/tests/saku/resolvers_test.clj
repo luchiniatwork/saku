@@ -123,7 +123,14 @@
   (testing "get-identity-policies query"
     (let [r (resolvers/get-identity-policies {:dal-obj dal-obj})]
       (is (= (find-doc-drns ["user1" "user2"])
-             (r nil {:drns ["resourcedrn1" "resource2" "user1" "user2"]} nil))))))
+             (r nil {:drns ["resourcedrn1" "resource2" "user1" "user2"]} nil)))))
+
+  (testing "getting version"
+    (let [r (resolvers/server-meta {:version {:environment-id :test
+                                              :version "1234"}})]
+      (is (= {:environmentId "test"
+              :version "1234"}
+             (r nil nil nil))))))
 
 
 (deftest mutations

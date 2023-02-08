@@ -39,10 +39,11 @@
 
 
 (defmethod ig/init-key ::conn [_ {:keys [schema seed url]}]
-  (info {:msg "Initializing Datalevin Connection"})
+  (info {:msg "Initializing Datalevin Connection"
+         :url url})
   (conn url schema seed))
 
 
 (defmethod ig/halt-key! ::conn [_ conn]
-  (info {:msg "Letting go of Datalevin Connection"})
+  (info {:msg "Closing Datalevin Connection"})
   (d/close conn))

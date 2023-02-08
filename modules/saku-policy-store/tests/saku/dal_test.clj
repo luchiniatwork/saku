@@ -3,9 +3,7 @@
             [saku.dal-interface :as dal]
             [saku.dal-datalevin :as dal-impl]
             [saku.test-utils :as utils]
-            [saku.schemas :as schemas]
-            [saku.system.datalevin :as db-sys]
-            [saku.system.seed :as seed-sys]))
+            [saku.schemas :as schemas]))
 
 
 (def resource-policies [{:policy/drn "drn1"

@@ -1,6 +1,6 @@
-{:system-utils.version/dynamic-gen  {:environment-id :local}
+{:saku.system.version/dynamic-gen  {:environment-id :local}
 
- 'VERSION_SYSTEM #ig/ref :system-utils.version/dynamic-gen
+ 'VERSION_SYSTEM #ig/ref :saku.system.version/dynamic-gen
 
  'PORT 8080
 

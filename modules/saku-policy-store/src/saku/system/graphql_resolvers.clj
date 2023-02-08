@@ -15,7 +15,9 @@
    :QueryRoot/resourcePolicies (resolvers/get-resource-policies opts)
 
    :QueryRoot/evaluateOne (resolvers/evaluate-one opts)
-   :QueryRoot/evaluateMany (resolvers/evaluate-many opts)})
+   :QueryRoot/evaluateMany (resolvers/evaluate-many opts)
+
+   :QueryRoot/serverMeta (resolvers/server-meta opts)})
 
 
 (defmethod ig/init-key ::entity-resolvers [_ opts]

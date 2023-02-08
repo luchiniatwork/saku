@@ -29,7 +29,7 @@
 
 
  :saku.system.dal/dal-obj
- {:dn-conn #ig/ref :saku.system.datalevin/conn}
+ {:db-conn #ig/ref :saku.system.datalevin/conn}
 
  ;; ------------------------------
  ;; API Stuff

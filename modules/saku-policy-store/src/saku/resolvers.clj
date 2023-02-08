@@ -134,3 +134,8 @@
                                                             :resource-policy resource-policy
                                                             :identity-policies-map identity-policies-map})})))
                    [])))))
+
+(defn server-meta [{:keys [version] :as opts}]
+  (fn [ctx args obj]
+    {:environmentId (-> version :environment-id name)
+     :version (-> version :version)}))

@@ -1,15 +1,16 @@
-{:system-utils.version/read-from-disk   {:environment-id :staging}
+{:saku.system.version/read-from-disk   {:environment-id #ig/ref [:env/env-id :system-utils.env/var]}
 
- 'VERSION_SYSTEM #ig/ref :system-utils.version/read-from-disk
+ 'VERSION_SYSTEM #ig/ref :saku.system.version/read-from-disk
 
- 'PORT 8080
-
+ [:env/env-id :system-utils.env/var]
+ {:var :saku-env-id}
+ 
  [:env/port :system-utils.env/edn-parsed-var]
  {:var :saku-port}
  
- 'PORT #ig/ref :env/port
+ 'PORT #ig/ref [:env/port :system-utils.env/edn-parsed-var]
 
- [:env/db-url :system-utils.env/edn-parsed-var]
+ [:env/db-url :system-utils.env/var]
  {:var :saku-db-url}
 
  'DB_URL #ig/ref :env/db-urlk}

@@ -68,7 +68,10 @@
                  identities
 
                  ^{:type String}
-                 actionId]]
+                 actionId]
+
+  ^{:type ServerMeta}
+  server-meta]
 
 
  ;; ------------------------------
@@ -213,5 +216,12 @@
 
   ^{:type EvaluationResult}
   result]
+
+ ServerMeta
+ [^{:type String}
+  environment-id
+
+  ^{:type String}
+  version]
  
  ]

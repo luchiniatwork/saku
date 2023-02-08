@@ -1,13 +1,19 @@
-{:system-utils.version/read-from-disk   {:environment-id :prod}
+{:saku.system.version/read-from-disk
+ {:environment-id 'ENV_ID}
 
- 'VERSION_SYSTEM #ig/ref :system-utils.version/read-from-disk
+ 'VERSION_SYSTEM #ig/ref :saku.system.version/read-from-disk
+
+ [:env/env-id :system-utils.env/var]
+ {:var :saku-env-id}
+
+ 'ENV_ID #ig/ref [:env/env-id :system-utils.env/var]
 
  [:env/port :system-utils.env/edn-parsed-var]
  {:var :saku-port}
  
- 'PORT #ig/ref :env/port
+ 'PORT #ig/ref [:env/port :system-utils.env/edn-parsed-var]
 
- [:env/db-url :system-utils.env/edn-parsed-var]
+ [:env/db-url :system-utils.env/var]
  {:var :saku-db-url}
 
  'DB_URL #ig/ref :env/db-url}

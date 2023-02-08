@@ -1,6 +1,9 @@
 (ns saku.test-utils
   (:require [clojure.java.io :as io]
-            [clojure.walk :as walk])
+            [clojure.walk :as walk]
+            [datalevin.core :as d]
+            [saku.system.datalevin :as db-sys]
+            [saku.system.seed :as seed-sys])
   (:import (java.nio.file Files)
            (java.nio.file.attribute FileAttribute)))
 
@@ -31,7 +34,7 @@
          (let [~(first spec) conn#]
            ~@body)
          (finally
-           #_(d/close conn#))))))
+           (d/close conn#))))))
 
 
 (defn sanitize-from-db [entry]

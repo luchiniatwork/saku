@@ -16,9 +16,15 @@
 
 
   
+  (-> "version.txt"
+      orzo/read-file
+      orzo/calver
+      )
+
+  (orzo/calver "YY.MM")
+
+
   
-
-
   (dal/retract-policies (conn) ["1" "2" "drn2" "user1" "user2" "drn1"])
 
 

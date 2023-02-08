@@ -6,7 +6,8 @@
   "scripts": {
     "build": "clojure -X:uberjar",
     "test": "clojure -X:test",
-    "deploy": "docker buildx build . -t saku-policy-store"
+    "bump": "clojure -M:scripts -m bump-version",
+    "deploy": "clojure -M:scripts -m docker-build && clojure -M:scripts -m docker-push"
   },
   "author": "",
   "license": "ISC"
