@@ -1,6 +1,6 @@
 {
   "name": "saku-core",
-  "version": "23.1.2",
+  "version": "23.2.0",
   "description": "",
   "type": "commonjs",
   "main": "target/index.js",
@@ -10,7 +10,7 @@
     "build": "shadow-cljs release lib 2>&1 && mvn package",
     "dev": "shadow-cljs watch lib",
     "test": "clojure -X:test",
-    "bump": "scripts/bump-version.clj",
+    "bump": "clojure -M:scripts -m bump-version",
     "deploy": "npm publish && mvn deploy"
   },
   "author": "Tiago Luchini <tiago@luchini.nyc>",
