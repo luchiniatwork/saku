@@ -19,7 +19,7 @@
 (def resource-policy
   (m/schema [:map
              [:policy/drn :string]
-             [:policy/statements [:sequential resource-statement]]]))
+             [:policy/statements [:sequential {:min 1} resource-statement]]]))
 
 (def resource-policies
   (m/schema [:sequential resource-policy]))
@@ -27,7 +27,7 @@
 (def identity-policy
   (m/schema [:map
              [:policy/drn :string]
-             [:policy/statements [:sequential identity-statement]]]))
+             [:policy/statements [:sequential {:min 1} identity-statement]]]))
 
 (def identity-policies
   (m/schema [:sequential identity-policy]))

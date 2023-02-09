@@ -55,6 +55,15 @@
       (let [ex (is (thrown? Throwable (dal/upsert-identity-policies dal-obj resource-policies)))]
         (is (= ::schemas/invalid-type (-> ex ex-data :anomaly/category))))
 
+      (let [ex (is (thrown? Throwable (dal/upsert-resource-policies
+                                       dal-obj
+                                       (mapv #(assoc % :policy/statements []) resource-policies))))]
+        (is (= ::schemas/invalid-type (-> ex ex-data :anomaly/category))))
+      (let [ex (is (thrown? Throwable (dal/upsert-identity-policies
+                                       dal-obj
+                                       (mapv #(assoc % :policy/statements []) identity-policies))))]
+        (is (= ::schemas/invalid-type (-> ex ex-data :anomaly/category))))
+
       (let [ex (is (thrown? Throwable (dal/upsert-resource-policies dal-obj (merge resource-policies
                                                                                    identity-policies))))]
         (is (= ::schemas/invalid-type (-> ex ex-data :anomaly/category))))
