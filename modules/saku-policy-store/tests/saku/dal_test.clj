@@ -130,3 +130,23 @@
       (is (= [(some #(when (= "user1" (:policy/drn %)) %) identity-policies)]
              (utils/sanitize-from-db (dal/get-policies dal-obj
                                                        ["drn2" "user1"])))))))
+
+
+(deftest get-calls-can-specify-db-as-first-arg
+  (with-dal [dal-obj]
+    (dal/upsert-resource-policies dal-obj resource-policies)
+    (dal/upsert-identity-policies dal-obj identity-policies)
+    (let [db (dal/db dal-obj)]
+      (is (= (set
+              (conj []
+                    (some #(when (= "drn2" (:policy/drn %)) %) resource-policies)
+                    (some #(when (= "user1" (:policy/drn %)) %) identity-policies)))
+             (set
+              (utils/sanitize-from-db (dal/get-policies dal-obj db
+                                                        ["drn2" "user1"])))))
+      (is (= [(some #(when (= "drn2" (:policy/drn %)) %) resource-policies)]
+             (utils/sanitize-from-db (dal/get-resource-policies dal-obj db
+                                                                ["drn2"]))))
+      (is (= [(some #(when (= "user1" (:policy/drn %)) %) identity-policies)]
+             (utils/sanitize-from-db (dal/get-identity-policies dal-obj db
+                                                                ["user1"])))))))

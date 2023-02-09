@@ -2,7 +2,8 @@
   (:require [datalevin.core :as d]
             [integrant.core :as ig]
             [integrant.repl :refer [clear go halt prep init reset reset-all]]
-            #_[saku.dal :as dal]
+            [saku.dal-interface :as dal]
+            [^:keep saku.dal-datalevin]
             [system-utils.initializer :as system]))
 
 (integrant.repl/set-prep! system/read-config)
@@ -11,6 +12,9 @@
 
 (defn conn []
   (:saku.system.datalevin/conn integrant.repl.state/system))
+
+(defn dal-obj []
+  (:saku.system.dal/dal-obj integrant.repl.state/system))
 
 (comment
 

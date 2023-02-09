@@ -32,6 +32,18 @@
 (def identity-policies
   (m/schema [:sequential identity-policy]))
 
+(def evaluate-one-args
+  (m/schema [:map
+             [:drn :string]
+             [:actionId :string]
+             [:identities [:sequential {:min 1} :string]]]))
+
+(def evaluate-many-args
+  (m/schema [:map
+             [:drns [:sequential {:min 1} :string]]
+             [:actionId :string]
+             [:identities [:sequential {:min 1} :string]]]))
+
 (defn assert*
   ([schema obj]
    (when-not (m/validate schema obj)

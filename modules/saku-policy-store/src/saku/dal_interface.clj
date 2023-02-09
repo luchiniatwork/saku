@@ -6,21 +6,21 @@
   (throw (ex-info "Not Implemented" {:anomaly/category ::not-implemented})))
 
 
-(defmulti get-policies (fn [obj drns & _] (:impl obj)))
+(defmulti get-policies (fn [obj db-or-drns & _] (:impl obj)))
 
-(defmethod get-policies :default [_ drns & _]
+(defmethod get-policies :default [_ db-or-drns & _]
   (throw (ex-info "Not Implemented" {:anomaly/category ::not-implemented})))
 
 
-(defmulti get-resource-policies (fn [obj drns & _] (:impl obj)))
+(defmulti get-resource-policies (fn [obj db-or-drns & _] (:impl obj)))
 
-(defmethod get-resource-policies :default [_ drns & _]
+(defmethod get-resource-policies :default [_ db-or-drns & _]
   (throw (ex-info "Not Implemented" {:anomaly/category ::not-implemented})))
 
 
-(defmulti get-identity-policies (fn [obj drns & _] (:impl obj)))
+(defmulti get-identity-policies (fn [obj db-or-drns & _] (:impl obj)))
 
-(defmethod get-identity-policies :default [_ drns & _]
+(defmethod get-identity-policies :default [_ db-or-drns & _]
   (throw (ex-info "Not Implemented" {:anomaly/category ::not-implemented})))
 
 

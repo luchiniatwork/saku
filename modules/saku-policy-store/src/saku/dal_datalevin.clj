@@ -45,19 +45,19 @@
   (d/db db-conn))
 
 
-(defmethod interface/get-policies :datalevin [obj drns & [db]]
-  (let [db' (or db (interface/db obj))]
-    (impl-get-policies db' drns)))
+(defmethod interface/get-policies :datalevin [obj db-or-drns & [drns]]
+  (let [[db' drns'] (if drns [db-or-drns drns] [(interface/db obj) db-or-drns])]
+    (impl-get-policies db' drns')))
 
 
-(defmethod interface/get-resource-policies :datalevin [obj drns & [db]]
-  (let [db' (or db (interface/db obj))]
-    (impl-get-resource-policies db' drns)))
+(defmethod interface/get-resource-policies :datalevin [obj db-or-drns & [drns]]
+  (let [[db' drns'] (if drns [db-or-drns drns] [(interface/db obj) db-or-drns])]
+    (impl-get-resource-policies db' drns')))
 
 
-(defmethod interface/get-identity-policies :datalevin [obj drns & [db]]
-  (let [db' (or db (interface/db obj))]
-    (impl-get-identity-policies db' drns)))
+(defmethod interface/get-identity-policies :datalevin [obj db-or-drns & [drns]]
+  (let [[db' drns'] (if drns [db-or-drns drns] [(interface/db obj) db-or-drns])]
+    (impl-get-identity-policies db' drns')))
 
 
 (defmethod interface/upsert-resource-policies :datalevin [{:keys [db-conn] :as obj} policies]
@@ -68,10 +68,9 @@
                            [:db/retract [:policy/drn drn] :policy/statements]
                            policy))
                    [] policies)
-        tx-report (d/transact! db-conn tx)]
-    (->> tx-report
-         :db-after
-         (interface/get-resource-policies obj drns))))
+        {:keys [db-after]} (d/transact! db-conn tx)]
+    (->> drns
+         (interface/get-resource-policies obj db-after))))
 
 
 (defmethod interface/upsert-identity-policies :datalevin [{:keys [db-conn] :as obj} policies]
@@ -82,10 +81,9 @@
                            [:db/retract [:policy/drn drn] :policy/statements]
                            policy))
                    [] policies)
-        tx-report (d/transact! db-conn tx)]
-    (->> tx-report
-         :db-after
-         (interface/get-identity-policies obj drns))))
+        {:keys [db-after]}(d/transact! db-conn tx)]
+    (->> drns
+         (interface/get-identity-policies obj db-after))))
 
 
 (defmethod interface/retract-policies :datalevin [{:keys [db-conn]} drns]

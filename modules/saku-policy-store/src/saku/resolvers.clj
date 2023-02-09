@@ -3,6 +3,7 @@
             [com.walmartlabs.lacinia.schema :refer [tag-with-type]]
             [saku.core :as core]
             [saku.dal-interface :as dal]
+            [saku.schemas :as schemas]
             [system-lacinia.resolvers-util :as util]))
 
 
@@ -90,7 +91,8 @@
 
 
 (defn evaluate-one [{:keys [dal-obj] :as opts}]
-  (fn [ctx {:keys [drn identities actionId]} obj]
+  (fn [ctx {:keys [drn identities actionId] :as args} obj]
+    (schemas/assert* schemas/evaluate-one-args args)
     (let [db (dal/db dal-obj)
           resource-policy (->> [drn]
                                (dal/get-resource-policies dal-obj db)
@@ -111,7 +113,8 @@
 
 
 (defn evaluate-many [{:keys [dal-obj] :as opts}]
-  (fn [ctx {:keys [drns identities actionId]} obj]
+  (fn [ctx {:keys [drns identities actionId] :as args} obj]
+    (schemas/assert* schemas/evaluate-many-args args)
     (let [db (dal/db dal-obj)
           resource-policies (->> drns
                                  (dal/get-resource-policies dal-obj db)
@@ -126,7 +129,7 @@
                                              {}))]
       (->> drns
            (reduce (fn [c drn]
-                     (let [resource-policy (some #(when (= drn (:drn %) %))
+                     (let [resource-policy (some #(when (= drn (:drn %)) %)
                                                  resource-policies)]
                        (conj c {:drn drn
                                 :result (core/evaluate-one {:drn drn
@@ -134,6 +137,7 @@
                                                             :resource-policy resource-policy
                                                             :identity-policies-map identity-policies-map})})))
                    [])))))
+
 
 (defn server-meta [{:keys [version] :as opts}]
   (fn [ctx args obj]

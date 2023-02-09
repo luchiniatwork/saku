@@ -1,6 +1,7 @@
 (ns saku.resolvers-test
   (:require [clojure.test :refer [deftest testing is are use-fixtures]]
             [saku.resolvers :as resolvers]
+            [saku.schemas :as schemas]
             [saku.dal-interface :as dal]))
 
 (def dal-obj {:impl :mock})
@@ -82,15 +83,20 @@
           [] drns))
 
 
+(defmethod dal/db :mock [_]
+  nil)
 
-(defmethod dal/get-policies :mock [_ drns & [db]]
-  (find-db-drns drns))
+(defmethod dal/get-policies :mock [obj db-or-drns & [drns]]
+  (let [[db' drns'] (if drns [db-or-drns drns] [(dal/db obj) db-or-drns])]
+    (find-db-drns drns')))
 
-(defmethod dal/get-resource-policies :mock [_ drns & [db]]
-  (find-db-drns (filter #(re-matches regex-resource %) drns)))
+(defmethod dal/get-resource-policies :mock [obj db-or-drns & [drns]]
+  (let [[db' drns'] (if drns [db-or-drns drns] [(dal/db obj) db-or-drns])]
+    (find-db-drns (filter #(re-matches regex-resource %) drns'))))
 
-(defmethod dal/get-identity-policies :mock [_ drns & [db]]
-  (find-db-drns (filter #(re-matches regex-identity %) drns)))
+(defmethod dal/get-identity-policies :mock [obj db-or-drns & [drns]]
+  (let [[db' drns'] (if drns [db-or-drns drns] [(dal/db obj) db-or-drns])]
+    (find-db-drns (filter #(re-matches regex-identity %) drns'))))
 
 (defmethod dal/upsert-resource-policies :mock [_ policies]
   (->> policies
@@ -149,3 +155,120 @@
       (is (= #{} (r nil {:drns ["drn1" "drn2"]} nil)))
       (is (= #{"drn23"} (r nil {:drns ["drn1" "drn23"]} nil)))
       (is (= #{"drn23" "drn69"} (r nil {:drns ["drn1" "drn23" "drn69"]} nil))))))
+
+
+(deftest evaluate-one
+  (testing "should deny implicitely"
+    (let [r (resolvers/evaluate-one {:dal-obj dal-obj})
+          {:keys [effect nature]} (r nil {:drn "nonexistentresource"
+                                          :actionId "anyaction"
+                                          :identities ["anyuser"]}
+                                     nil)]
+      (is (= :DENY effect))
+      (is (= :IMPLICIT nature))))
+
+  (testing "should deny explicitly"
+    (let [r (resolvers/evaluate-one {:dal-obj dal-obj})
+          {:keys [effect nature]} (r nil {:drn "resource1"
+                                          :actionId "a3"
+                                          :identities ["user2"]}
+                                     nil)]
+      (is (= :DENY effect))
+      (is (= :EXPLICIT nature)))
+    (let [r (resolvers/evaluate-one {:dal-obj dal-obj})
+          {:keys [effect nature]} (r nil {:drn "resource2"
+                                          :actionId "a7"
+                                          :identities ["user2"]}
+                                     nil)]
+      (is (= :DENY effect))
+      (is (= :EXPLICIT nature))))
+
+  (testing "should allow explicitly"
+    (let [r (resolvers/evaluate-one {:dal-obj dal-obj})
+          {:keys [effect nature]} (r nil {:drn "resource1"
+                                          :actionId "a1"
+                                          :identities ["user1"]}
+                                     nil)]
+      (is (= :ALLOW effect))
+      (is (= :EXPLICIT nature)))
+    (let [r (resolvers/evaluate-one {:dal-obj dal-obj})
+          {:keys [effect nature]} (r nil {:drn "resource5"
+                                          :actionId "a5"
+                                          :identities ["user1"]}
+                                     nil)]
+      (is (= :ALLOW effect))
+      (is (= :EXPLICIT nature))))
+
+  (testing "should reject wrong calls"
+    (are [invalid-args]
+        (let [r (resolvers/evaluate-one {:dal-obj dal-obj})
+              ex (is (thrown? Throwable (r nil invalid-args nil)))]
+          (= ::schemas/invalid-type (-> ex ex-data :anomaly/category)))
+      nil {} {:drn ""} {:actionId ""})))
+
+
+(deftest evaluate-many
+  (testing "should deny implicitely"
+    (let [r (resolvers/evaluate-many {:dal-obj dal-obj})
+          drns ["nonexistentresource1"
+                "nonexistentresource2"]
+          result-set (r nil {:drns drns
+                             :actionId "anyaction"
+                             :identities ["anyuser"]}
+                        nil)]
+      (doseq [{:keys [drn result]} result-set]
+        (is (get (set drns) drn))
+        (is (= :DENY (:effect result)))
+        (is (= :IMPLICIT (:nature result))))))
+
+  (testing "should deny explicitly"
+    (let [r (resolvers/evaluate-many {:dal-obj dal-obj})
+          drns ["resource1"]
+          result-set (r nil {:drns drns
+                             :actionId "a3"
+                             :identities ["user2"]}
+                        nil)]
+      (println result-set)
+      (doseq [{:keys [drn result]} result-set]
+        (is (get (set drns) drn))
+        (is (= :DENY (:effect result)))
+        (is (= :EXPLICIT (:nature result)))))
+    (let [r (resolvers/evaluate-many {:dal-obj dal-obj})
+          drns ["resource2"]
+          result-set(r nil {:drns drns
+                            :actionId "a7"
+                            :identities ["user2"]}
+                       nil)]
+      (doseq [{:keys [drn result]} result-set]
+        (is (get (set drns) drn))
+        (is (= :DENY (:effect result)))
+        (is (= :EXPLICIT (:nature result))))))
+
+  (testing "should allow explicitly"
+    (let [r (resolvers/evaluate-many {:dal-obj dal-obj})
+          drns ["resource1"]
+          result-set (r nil {:drns drns
+                             :actionId "a1"
+                             :identities ["user1"]}
+                        nil)]
+      (doseq [{:keys [drn result]} result-set]
+        (is (get (set drns) drn))
+        (is (= :ALLOW (:effect result)))
+        (is (= :EXPLICIT (:nature result)))))
+    (let [r (resolvers/evaluate-many {:dal-obj dal-obj})
+          drns ["resource5"]
+          result-set (r nil {:drns drns
+                             :actionId "a5"
+                             :identities ["user1"]}
+                        nil)]
+      (doseq [{:keys [drn result]} result-set]
+        (is (get (set drns) drn))
+        (is (= :ALLOW (:effect result)))
+        (is (= :EXPLICIT (:nature result))))))
+
+  (testing "should reject wrong calls"
+    (are [invalid-args]
+        (let [r (resolvers/evaluate-many {:dal-obj dal-obj})
+              ex (is (thrown? Throwable (r nil invalid-args nil)))]
+          (= ::schemas/invalid-type (-> ex ex-data :anomaly/category)))
+      nil {} {:drns ""} {:actionId ""} {:drns "x" :actionId "a" :identities ["i"]})))
