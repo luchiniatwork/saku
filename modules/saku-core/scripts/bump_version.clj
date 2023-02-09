@@ -11,7 +11,7 @@
                                       #(str "\"version\": \"" % "\""))
                  (orzo/overwrite-file "pom.xml"
                                       #"<artifactId>saku-core</artifactId>\n(\s*)<version>.+</version>"
-                                      #(str "<artifactId>orzo</artifactId>\n$1"
+                                      #(str "<artifactId>saku-core</artifactId>\n$1"
                                             "<version>" % "</version>"))
                  (orzo/save-file "version.txt")
                  (orzo/stage)))

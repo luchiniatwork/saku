@@ -339,6 +339,14 @@
     {
       "packageName": "saku-policy-store",
       "projectFolder": "modules/saku-policy-store"
+    },
+    {
+      "packageName": "saku-policy-store-client",
+      "projectFolder": "modules/saku-policy-store-client"
+    },
+    {
+      "packageName": "saku-ts-playground",
+      "projectFolder": "modules/saku-ts-playground"
     }
     // {
     //   /**
