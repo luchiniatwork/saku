@@ -1,0 +1,16 @@
+{
+  "name": "saku-ts-playground",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "saku-policy-store-client": "workspace:*",
+    "typescript": "~4.9.5"
+  }
+}
