@@ -1,11 +1,11 @@
 {
   "name": "saku-core",
-  "version": "23.2.1",
+  "version": "23.2.2",
   "description": "",
   "type": "commonjs",
   "main": "target/index.js",
   "types": "src/custom-types.d.ts",
-  "files": ["target/", "src/*.d.ts"],
+  "files": ["target/index.js", "src/*.d.ts"],
   "scripts": {
     "build": "shadow-cljs release lib 2>&1 && mvn package",
     "dev": "shadow-cljs watch lib",
