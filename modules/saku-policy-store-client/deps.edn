@@ -1,0 +1,25 @@
+{:paths ["src"]
+
+ :deps {org.clojure/clojure {:mvn/version "1.11.1"}
+        re-graph/re-graph {:mvn/version "0.2.0"}
+        funcool/promesa {:mvn/version "10.0.594"}}
+
+ :aliases
+ {:cljs {:extra-deps {thheller/shadow-cljs {:mvn/version "2.20.20"}}}
+
+  :scripts {:extra-paths ["scripts"]
+            :extra-deps
+            {luchiniatwork/orzo {:mvn/version "23.2.5"}}}
+
+  :test {:extra-paths ["tests"]
+         :extra-deps {lambdaisland/kaocha {:mvn/version "1.76.1230"}
+                      com.lambdaisland/kaocha-cljs {:mvn/version "1.4.130"}}
+         :exec-fn kaocha.runner/exec-fn
+         :exec-args {}}
+
+  :test-watch {:extra-paths ["tests"]
+               :extra-deps {lambdaisland/kaocha {:mvn/version "1.76.1230"}}
+               :exec-fn kaocha.runner/exec-fn
+               :exec-args {:watch? true}
+	       :skip-meta :slow
+	       :fail-fast? true}}}
