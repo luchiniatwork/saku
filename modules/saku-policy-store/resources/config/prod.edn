@@ -8,6 +8,11 @@
 
  'ENV_ID #ig/ref [:env/env-id :system-utils.env/var]
 
+ [:env/access-key :system-utils.env/var]
+ {:var :saku-access-key}
+
+ 'ACCESS_KEY #ig/ref [:env/access-key :system-utils.env/var]
+ 
  [:env/port :system-utils.env/edn-parsed-var]
  {:var :saku-port}
  

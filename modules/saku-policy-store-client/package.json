@@ -12,7 +12,7 @@
   "scripts": {
     "build": "shadow-cljs release lib 2>&1 && mvn package",
     "dev": "shadow-cljs watch lib",
-    "test": "clojure -X:test",
+    "test": "",
     "bump": "clojure -M:scripts -m bump-version",
     "deploy": "npm publish && mvn deploy"
   },

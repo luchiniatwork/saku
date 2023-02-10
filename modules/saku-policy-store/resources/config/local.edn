@@ -2,6 +2,8 @@
 
  'VERSION_SYSTEM #ig/ref :saku.system.version/dynamic-gen
 
+ 'ACCESS_KEY nil
+ 
  'PORT 8080
 
  'DB_URL "/tmp/datalevin/mydb"}

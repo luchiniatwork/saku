@@ -43,7 +43,7 @@
 
  :saku.system.graphql-resolvers/resolvers
  {:dal-obj #ig/ref :saku.system.dal/dal-obj
-  ;; Make sure to pass the versioning system in the specialized env config
+  :access-key 'ACCESS_KEY
   :version 'VERSION_SYSTEM}
 
  :saku.system.graphql-resolvers/entity-resolvers
