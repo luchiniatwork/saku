@@ -19,7 +19,10 @@ or denying access.
   * [Detailed Resource-based Policies](#detailed-resource-based-policies)
   * [Detailed Identity-based Policies](#detailed-identity-based-policies)
 * [Policies Evaluation](#policies-evaluation)
-
+* [Usage](#usage)
+  * [The Basics](#the-basics)
+  * [The Policy Store](#the-policy-store)
+  * [The Policy Store Client](#the-policy-store-client)
 
 ## Overview
 
@@ -435,19 +438,38 @@ above:
 
 ### The Basics
 
-You'll need two stateful components: a `repository` where the system
-will store its security policies and resources and a `principal` which
-acts as an indentity interaction provider.
+The central part of Saku is its evaluation loop. It is available as a
+Clojure(script) library or TypeScript/JS library.
 
-A `principal` depends on one or more `indentiy providers`. These
-providers are responsible validating externally provided tokens and
-converting them into authenticated identities. For instance a JWT
-provider validates JWT `tokens` and returns a `session` for the
-authenticated user.
+Main functions are `evaluateOne` (`evaluate-one` in cljc) and
+`evaluateMany` (`evaluate-many` in cljc) which evaluate identity
+policies against resource policies and returns the resulting action.
 
-Functions that you want to secure need to be wrapped by a context
-aware `secured function` that protects your function call.
+Refer to [modules/saku-core](modules/saku-core) for more info.
 
-A graphical representation of the basics is here:
+### The Policy Store
 
-![](docs/diagrams/conceptual_model.svg)
+A functional policy system needs a place to store its policies. Saku
+is decoupled and any storage system should suffice as long as the data
+types are compatible.
+
+However, in order to keep things simple and plug-and-play, a reference
+policy store is provided.
+
+You can easily run it in your infrastructure within minutes. It also
+embeds saku-core and exposes all operations via a GraphQL API.
+
+Refer to [modules/saku-policy-store](modules/saku-policy-store) for
+more info.
+
+### The Policy Store Client
+
+If you are using the reference policy store above, Saku also provides
+a very simple client wrapper for both Clojure(script) and
+TypeScript/JS.
+
+This library makes it even simpler to integrate Saku onto your system.
+
+Refer to
+[modules/saku-policy-store-client](modules/saku-policy-store-client)
+for more info.
