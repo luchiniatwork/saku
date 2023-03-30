@@ -1,0 +1,21 @@
+digraph {
+  user -> token [label="has a"]
+  user -> "secured function" [label="wants to call"]
+
+  "identity provider(s)" -> principal [label="initializes"]
+  eventstore -> repository [label="initializes"]
+
+  repository -> "resource policy" [label="contains"]
+  repository -> "identity polic(ies)" [label="contains"]
+
+  principal-> token [label="receives per request"]
+  principal -> session [label="generates per request"]
+
+  "secured function" -> repository  [label="depends at request"]
+  "secured function" -> session [label="depends at request"]
+  "secured function" -> "target function" [label="calls when authorized"]
+
+  "secured function" -> user [label="returns when authorized"]
+  "secured function" -> exception [label="trhows when not authorized"]
+  exception -> user
+}

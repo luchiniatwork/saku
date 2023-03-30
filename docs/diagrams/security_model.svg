@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" xmlns:dc="http://purl.org/dc/elements/1.1/" viewBox="43 161 970 731" width="970" height="731">
+  <defs>
+    <font-face font-family="Helvetica Neue" font-size="16" panose-1="2 0 8 3 0 0 0 9 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="975.0061" descent="-216.99524" font-weight="700">
+      <font-face-src>
+        <font-face-name name="HelveticaNeue-Bold"/>
+      </font-face-src>
+    </font-face>
+    <font-face font-family="Helvetica Neue" font-size="16" panose-1="2 0 5 3 0 0 0 2 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="951.9958" descent="-212.99744" font-weight="400">
+      <font-face-src>
+        <font-face-name name="HelveticaNeue"/>
+      </font-face-src>
+    </font-face>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+  </defs>
+  <metadata> Produced by OmniGraffle 7.15.2 
+    <dc:date>2020-06-19 14:07:22 +0000</dc:date>
+  </metadata>
+  <g id="Canvas_1" fill-opacity="1" stroke-dasharray="none" stroke-opacity="1" fill="none" stroke="none">
+    <title>Canvas 1</title>
+    <rect fill="white" x="43" y="161" width="970" height="731"/>
+    <g id="Canvas_1: Layer 1">
+      <title>Layer 1</title>
+      <g id="Graphic_41">
+        <rect x="572.7465" y="162" width="439.2535" height="729" fill="#ccc"/>
+        <rect x="572.7465" y="162" width="439.2535" height="729" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(577.7465 866.5359)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="700" fill="black" x="127.56275" y="16">Identity-based Policies</tspan>
+        </text>
+      </g>
+      <g id="Graphic_40">
+        <rect x="308.25" y="162" width="264.493" height="729" fill="#c0ffff"/>
+        <rect x="308.25" y="162" width="264.493" height="729" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(313.25 866.5359)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="700" fill="black" x="37.0545" y="16">Resource-base Policies</tspan>
+        </text>
+      </g>
+      <g id="Graphic_39">
+        <rect x="43.7535" y="162" width="264.493" height="729" fill="#ffffc0"/>
+        <rect x="43.7535" y="162" width="264.493" height="729" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(48.7535 866.5359)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="700" fill="black" x="65.7585" y="16">Deny Evaluation</tspan>
+        </text>
+      </g>
+      <g id="Graphic_2">
+        <path d="M 123.5 202 L 228.5 202 C 240.92 202 251 218.128 251 238 C 251 257.872 240.92 274 228.5 274 L 123.5 274 C 111.08 274 101 257.872 101 238 C 101 218.128 111.08 202 123.5 202 Z" fill="white"/>
+        <path d="M 123.5 202 L 228.5 202 C 240.92 202 251 218.128 251 238 C 251 257.872 240.92 274 228.5 274 L 123.5 274 C 111.08 274 101 257.872 101 238 C 101 218.128 111.08 202 123.5 202 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(121 209.81995)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="1.96" y="15">Decision starts </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="18.552" y="34.448">with </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="700" fill="black" y="34.448">Deny</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="5.36" y="52.91211">(Implicit deny)</tspan>
+        </text>
+      </g>
+      <g id="Graphic_3">
+        <rect x="98" y="345" width="156" height="125" fill="white"/>
+        <rect x="98" y="345" width="156" height="125" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(103 352.156)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="32.408" y="15">Evaluate all </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="6.776" y="33.448">applicable policies </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="19.504" y="51.895996">(from roles and </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="17.072" y="70.34399">target resource) </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="13.576" y="88.79199">against intended </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="51.072" y="107.23999">action</tspan>
+        </text>
+      </g>
+      <g id="Graphic_4">
+        <path d="M 176 531 L 246.25 593.5 L 176 656 L 105.75 593.5 Z" fill="white"/>
+        <path d="M 176 531 L 246.25 593.5 L 176 656 L 105.75 593.5 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(129.7175 564.06995)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="21.3115" y="15">Is there </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="14.4875" y="33.448">matching </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="700" fill="black" x="23.8235" y="52.895996">Deny</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" y="52.895996">?</tspan>
+        </text>
+      </g>
+      <g id="Graphic_5">
+        <path d="M 123.5 731 L 228.5 731 C 240.92 731 251 747.128 251 767 C 251 786.872 240.92 803 228.5 803 L 123.5 803 C 111.08 803 101 786.872 101 767 C 101 747.128 111.08 731 123.5 731 Z" fill="#ff8080"/>
+        <path d="M 123.5 731 L 228.5 731 C 240.92 731 251 747.128 251 767 C 251 786.872 240.92 803 228.5 803 L 123.5 803 C 111.08 803 101 786.872 101 767 C 101 747.128 111.08 731 123.5 731 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(121 738.81995)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="3.736" y="15">Final decision: </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="700" fill="black" x="35.584" y="34.448">Deny </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="5.816" y="52.91211">(explicit deny)</tspan>
+        </text>
+      </g>
+      <g id="Graphic_6">
+        <path d="M 437.62325 306 L 524.12325 391.5 L 437.62325 477 L 351.12325 391.5 Z" fill="white"/>
+        <path d="M 437.62325 306 L 524.12325 391.5 L 437.62325 477 L 351.12325 391.5 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(379.47825 343.67)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="27.867" y="15">Does the </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="24.011" y="33.448">requested </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="3.123" y="51.895996">resource have a </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="3.715" y="70.34399">resource-based </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="34.243" y="88.79199">policy?</tspan>
+        </text>
+      </g>
+      <g id="Graphic_7">
+        <path d="M 437.62325 531 L 507.87325 593.5 L 437.62325 656 L 367.37325 593.5 Z" fill="white"/>
+        <path d="M 437.62325 531 L 507.87325 593.5 L 437.62325 656 L 367.37325 593.5 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(391.34075 564.06995)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="14.7915" y="15">Is there a </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="14.4875" y="33.448">matching </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="700" fill="black" x="22.2315" y="52.895996">Allow</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" y="52.895996">?</tspan>
+        </text>
+      </g>
+      <g id="Graphic_8">
+        <path d="M 385.12325 731 L 490.12325 731 C 502.54325 731 512.62325 747.128 512.62325 767 C 512.62325 786.872 502.54325 803 490.12325 803 L 385.12325 803 C 372.70325 803 362.62325 786.872 362.62325 767 C 362.62325 747.128 372.70325 731 385.12325 731 Z" fill="#40ff40"/>
+        <path d="M 385.12325 731 L 490.12325 731 C 502.54325 731 512.62325 747.128 512.62325 767 C 512.62325 786.872 502.54325 803 490.12325 803 L 385.12325 803 C 372.70325 803 362.62325 786.872 362.62325 767 C 362.62325 747.128 372.70325 731 385.12325 731 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(382.62325 748.04395)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="3.736" y="15">Final decision: </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="700" fill="black" x="33.992" y="34.448">Allow</tspan>
+        </text>
+      </g>
+      <g id="Graphic_9">
+        <path d="M 684.5 306 L 771 391.5 L 684.5 477 L 598 391.5 Z" fill="white"/>
+        <path d="M 684.5 306 L 771 391.5 L 684.5 477 L 598 391.5 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(626.355 352.894)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="27.867" y="15">Does the </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="10.091" y="33.448">principal have </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="15.715" y="51.895996">any identity-</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="3.867" y="70.34399">based policies?</tspan>
+        </text>
+      </g>
+      <g id="Graphic_10">
+        <path d="M 684.5 531 L 754.75 593.5 L 684.5 656 L 614.25 593.5 Z" fill="white"/>
+        <path d="M 684.5 531 L 754.75 593.5 L 684.5 656 L 614.25 593.5 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(638.2175 564.06995)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="14.7915" y="15">Is there a </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="14.4875" y="33.448">matching </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="700" fill="black" x="22.2315" y="52.895996">Allow</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" y="52.895996">?</tspan>
+        </text>
+      </g>
+      <g id="Graphic_11">
+        <path d="M 632 731 L 737 731 C 749.42 731 759.5 747.128 759.5 767 C 759.5 786.872 749.42 803 737 803 L 632 803 C 619.58 803 609.5 786.872 609.5 767 C 609.5 747.128 619.58 731 632 731 Z" fill="#ff8080"/>
+        <path d="M 632 731 L 737 731 C 749.42 731 759.5 747.128 759.5 767 C 759.5 786.872 749.42 803 737 803 L 632 803 C 619.58 803 609.5 786.872 609.5 767 C 609.5 747.128 619.58 731 632 731 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(629.5 738.81995)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="3.736" y="15">Final decision: </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="700" fill="black" x="35.584" y="34.448">Deny </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="5.36" y="52.91211">(Implicit deny)</tspan>
+        </text>
+      </g>
+      <g id="Graphic_12">
+        <path d="M 855.5 557.5 L 960.5 557.5 C 972.92 557.5 983 573.628 983 593.5 C 983 613.372 972.92 629.5 960.5 629.5 L 855.5 629.5 C 843.08 629.5 833 613.372 833 593.5 C 833 573.628 843.08 557.5 855.5 557.5 Z" fill="#40ff40"/>
+        <path d="M 855.5 557.5 L 960.5 557.5 C 972.92 557.5 983 573.628 983 593.5 C 983 613.372 972.92 629.5 960.5 629.5 L 855.5 629.5 C 843.08 629.5 833 613.372 833 593.5 C 833 573.628 843.08 557.5 855.5 557.5 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(853 574.54395)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="3.736" y="15">Final decision: </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="700" fill="black" x="33.992" y="34.448">Allow</tspan>
+        </text>
+      </g>
+      <g id="Graphic_13">
+        <path d="M 855.5 355.5 L 960.5 355.5 C 972.92 355.5 983 371.628 983 391.5 C 983 411.372 972.92 427.5 960.5 427.5 L 855.5 427.5 C 843.08 427.5 833 411.372 833 391.5 C 833 371.628 843.08 355.5 855.5 355.5 Z" fill="#ff8080"/>
+        <path d="M 855.5 355.5 L 960.5 355.5 C 972.92 355.5 983 371.628 983 391.5 C 983 411.372 972.92 427.5 960.5 427.5 L 855.5 427.5 C 843.08 427.5 833 411.372 833 391.5 C 833 371.628 843.08 355.5 855.5 355.5 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(853 363.31995)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="3.736" y="15">Final decision: </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="700" fill="black" x="35.584" y="34.448">Deny </tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="5.36" y="52.91211">(Implicit deny)</tspan>
+        </text>
+      </g>
+      <g id="Line_16">
+        <line x1="176" y1="274" x2="176" y2="335.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_17">
+        <line x1="176" y1="470" x2="176" y2="521.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_18">
+        <line x1="176" y1="656" x2="176" y2="721.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_19">
+        <path d="M 246.25 593.5 L 284.9375 593.5 L 284.9375 391.5 L 341.22325 391.5" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_20">
+        <line x1="437.62325" y1="477" x2="437.62325" y2="521.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_21">
+        <line x1="437.62325" y1="656" x2="437.62325" y2="721.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_22">
+        <path d="M 507.87325 593.5 L 552.9366 593.5 L 552.9366 391.5 L 588.1 391.5" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_23">
+        <line x1="524.12325" y1="391.5" x2="588.1" y2="391.5" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_24">
+        <line x1="684.5" y1="477" x2="684.5" y2="521.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_25">
+        <line x1="684.5" y1="656" x2="684.5" y2="721.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_26">
+        <line x1="754.75" y1="593.5" x2="823.1" y2="593.5" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_27">
+        <line x1="771" y1="391.5" x2="823.1" y2="391.5" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_28">
+        <rect x="158.408" y="680.93925" width="35.184" height="28.447998" fill="white"/>
+        <text transform="translate(163.408 685.93925)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="552447e-18" y="15">Yes</tspan>
+        </text>
+      </g>
+      <g id="Graphic_29">
+        <rect x="269.5695" y="489.2106" width="30.736" height="28.447998" fill="white"/>
+        <text transform="translate(274.5695 494.2106)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="39257486e-20" y="15">No</tspan>
+        </text>
+      </g>
+      <g id="Graphic_30">
+        <rect x="420.03125" y="483.9491" width="35.184" height="28.447998" fill="white"/>
+        <text transform="translate(425.03125 488.9491)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="552447e-18" y="15">Yes</tspan>
+        </text>
+      </g>
+      <g id="Graphic_31">
+        <rect x="420.03125" y="682.1652" width="35.184" height="28.447998" fill="white"/>
+        <text transform="translate(425.03125 687.1652)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="552447e-18" y="15">Yes</tspan>
+        </text>
+      </g>
+      <g id="Graphic_32">
+        <rect x="537.5686" y="492.29846" width="30.736" height="28.447998" fill="white"/>
+        <text transform="translate(542.5686 497.29846)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="39257486e-20" y="15">No</tspan>
+        </text>
+      </g>
+      <g id="Graphic_33">
+        <rect x="666.908" y="483.051" width="35.184" height="28.447998" fill="white"/>
+        <text transform="translate(671.908 488.051)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="552447e-18" y="15">Yes</tspan>
+        </text>
+      </g>
+      <g id="Graphic_34">
+        <rect x="787.5266" y="377.276" width="30.736" height="28.447998" fill="white"/>
+        <text transform="translate(792.5266 382.276)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="39257486e-20" y="15">No</tspan>
+        </text>
+      </g>
+      <g id="Graphic_35">
+        <rect x="771.48445" y="579.276" width="35.184" height="28.447998" fill="white"/>
+        <text transform="translate(776.48445 584.276)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="552447e-18" y="15">Yes</tspan>
+        </text>
+      </g>
+      <g id="Graphic_36">
+        <rect x="669.132" y="681.873" width="30.736" height="28.447998" fill="white"/>
+        <text transform="translate(674.132 686.873)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" font-weight="400" fill="black" x="39257486e-20" y="15">No</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>
