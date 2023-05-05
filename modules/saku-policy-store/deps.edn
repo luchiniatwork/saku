@@ -51,7 +51,7 @@
                         :main-class saku.main
                         :jar "target/saku-policy-store.jar"}}
 
-  :test {:extra-paths ["test"]
+  :test {:extra-paths ["tests"]
          :extra-deps
          {lambdaisland/kaocha                           {:mvn/version "1.60.977"}
           integrant/repl                                {:mvn/version "0.3.2"}}
