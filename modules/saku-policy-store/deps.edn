@@ -31,6 +31,9 @@
         :extra-deps
         {integrant/repl                                 {:mvn/version "0.3.2"}}}
 
+	:build {:deps {io.github.clojure/tools.build {:mvn/version "0.9.4"}}
+					:ns-default build}
+
   :run {:exec-fn system-utils.initializer/start-system
         :jvm-opts ["--add-opens=java.base/java.nio=ALL-UNNAMED"
                    "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED"]}
@@ -42,14 +45,6 @@
   :scripts {:extra-paths ["scripts"]
             :extra-deps
             {}}
-
-  :uberjar {:extra-deps
-            {com.github.seancorfield/depstar            {:mvn/version "2.1.303"
-																												 :exclusions [org.slf4j/slf4j-nop]}}
-            :exec-fn hf.depstar/uberjar
-            :exec-args {:aot true
-                        :main-class saku.main
-                        :jar "target/saku-policy-store.jar"}}
 
   :test {:extra-paths ["tests"]
          :extra-deps

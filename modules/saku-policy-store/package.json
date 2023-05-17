@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "clojure -X:uberjar",
+    "build": "clojure -T:build uber",
     "test": "clojure -X:test",
     "bump": "clojure -M:scripts -m bump-version",
     "deploy": "clojure -M:scripts -m docker-build && clojure -M:scripts -m docker-push"

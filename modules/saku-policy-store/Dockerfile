@@ -22,7 +22,7 @@ COPY . ./
 
 # RUN clojure -M:gen-sdl > resources/graphql.sdl
 
-RUN clojure -X:uberjar
+RUN clojure -T:build uber
 
 ##################################################
 ## Server Proper
