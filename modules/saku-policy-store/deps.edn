@@ -42,7 +42,8 @@
             {}}
 
   :uberjar {:extra-deps
-            {com.github.seancorfield/depstar            {:mvn/version "2.1.303"}}
+            {com.github.seancorfield/depstar            {:mvn/version "2.1.303"
+																												 :exclusions [org.slf4j/slf4j-nop]}}
             :exec-fn hf.depstar/uberjar
             :exec-args {:aot true
                         :main-class saku.main
