@@ -22,7 +22,9 @@
         borkdude/edamame                                {:mvn/version "0.0.19"}
         luchiniatwork/ambiente                          {:mvn/version "0.1.4"}
         net.clojars.luchiniatwork/anomalies             {:mvn/version "0.0.2"}
-        luchiniatwork/orzo                              {:mvn/version "23.2.5"}}
+        luchiniatwork/orzo                              {:mvn/version "23.2.5"}
+        com.taoensso/timbre                             {:mvn/version "6.1.0"}
+        com.fzakaria/slf4j-timbre                       {:mvn/version "0.3.21"}}
 
  :aliases
  {:dev {:extra-paths ["dev"]
