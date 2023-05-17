@@ -1,7 +1,12 @@
 ##################################################
 ## Server Build
 ##################################################
-FROM --platform=linux/x86_64 clojure:openjdk-17-tools-deps-1.10.3.933-alpine as builder
+FROM azul/zulu-openjdk:17-latest as builder
+
+# Install clojure CLI & required deps
+RUN apt-get update && apt-get install curl tar gzip -y
+RUN curl -O https://download.clojure.org/install/linux-install-1.11.1.1273.sh && chmod +x linux-install-1.11.1.1273.sh && ./linux-install-1.11.1.1273.sh
+
 WORKDIR /usr/src/app
 
 # RUN apk update
@@ -22,9 +27,11 @@ RUN clojure -X:uberjar
 ##################################################
 ## Server Proper
 ##################################################
-# FROM --platform=linux/x86_64 openjdk:17-alpine as server
-FROM amazoncorretto:19-alpine3.17 as server
+FROM azul/zulu-openjdk:17-latest as server
 WORKDIR /usr/src/app
+
+# Add required lmbd package
+RUN apt-get update && apt-get install liblmdb-dev -y
 
 # Can be overridden with `docker run --env ENV=staging` for instance
 ENV ENV=prod
