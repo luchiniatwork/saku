@@ -16,6 +16,7 @@
         net.clojars.luchiniatwork/saku-core             {:mvn/version "23.1.2"}
 
         ;; Utilities
+        com.walmartlabs/lacinia 												{:mvn/version "1.2.1"}
         metosin/jsonista                                {:mvn/version "0.3.5"}
         metosin/malli                                   {:mvn/version "0.10.1"}
         camel-snake-kebab/camel-snake-kebab             {:mvn/version "0.4.2"}
