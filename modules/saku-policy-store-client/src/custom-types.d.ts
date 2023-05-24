@@ -86,6 +86,6 @@ declare module 'saku-policy-store-client' {
 
     export function evaluateOne(params?: EvaluateOneParams): Promise<EvaluationResult>;
 
-    export function evaluateMany(params?: EvaluateManyParams): Promise<EvaluationResultSet>;
+    export function evaluateMany(params?: EvaluateManyParams): Promise<EvaluationResultSet[]>;
 
 }
