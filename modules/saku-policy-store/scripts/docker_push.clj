@@ -4,11 +4,13 @@
 
 (defn -main [& args]
   (try
-    (let [cmd ["docker" "image" "push" "--all-tags" settings/repo]
-          {:keys [exit out err]} (apply sh cmd)]
-      (println out)
-      (when (not= 0 exit)
-        (throw (ex-info "Error running docker build" {:cause err}))))
+    (let [cmd ["docker" "image" "push" "--all-tags" settings/repo]]
+      (apply println cmd)
+      (let [{:keys [exit out err]} (apply sh cmd)]
+        (println out)
+        (when (not= 0 exit)
+          (throw (ex-info "Error running docker build" {:cause err})))))
+
     (System/exit 0)
     (catch Exception e
       (println e)
