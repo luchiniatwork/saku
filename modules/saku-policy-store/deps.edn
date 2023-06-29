@@ -16,7 +16,7 @@
         net.clojars.luchiniatwork/saku-core             {:mvn/version "23.1.2"}
 
         ;; Utilities
-        com.walmartlabs/lacinia 												{:mvn/version "1.2.1"}
+        com.walmartlabs/lacinia                         {:mvn/version "1.2.1"}
         metosin/jsonista                                {:mvn/version "0.3.5"}
         metosin/malli                                   {:mvn/version "0.10.1"}
         camel-snake-kebab/camel-snake-kebab             {:mvn/version "0.4.2"}
@@ -32,8 +32,8 @@
         :extra-deps
         {integrant/repl                                 {:mvn/version "0.3.2"}}}
 
-	:build {:deps {io.github.clojure/tools.build {:mvn/version "0.9.4"}}
-					:ns-default build}
+  :build {:deps {io.github.clojure/tools.build {:mvn/version "0.9.4"}}
+          :ns-default build}
 
   :run {:exec-fn system-utils.initializer/start-system
         :jvm-opts ["--add-opens=java.base/java.nio=ALL-UNNAMED"

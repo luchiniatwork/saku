@@ -1,6 +1,6 @@
 {
   "name": "saku-policy-store-client",
-  "version": "23.2.1",
+  "version": "23.6.0",
   "description": "",
   "type": "commonjs",
   "main": "target/index.js",

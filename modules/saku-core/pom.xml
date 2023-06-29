@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.clojars.luchiniatwork</groupId>
   <artifactId>saku-core</artifactId>
-  <version>23.2.2</version>
+  <version>23.6.0</version>
   <name>saku-core</name>
   <dependencies>
     <dependency>
