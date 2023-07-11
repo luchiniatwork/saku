@@ -11,6 +11,8 @@
     (boolean (or (re-matches (regex-star a) b)
                (re-matches (regex-star b) a)))))
 
+(defn star-match-one-to-many [a coll]
+  (some #(star-match a %) coll))
 
 (defn star-match-many-to-many [coll-a coll-b]
   (some #(some (partial star-match %) coll-a)
