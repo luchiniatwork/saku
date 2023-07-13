@@ -13,7 +13,7 @@
         net.clojars.luchiniatwork/system-lacinia        {:mvn/version "0.0.4"}
 
         ;; Saku Core
-        net.clojars.luchiniatwork/saku-core             {:mvn/version "23.1.2"}
+        net.clojars.luchiniatwork/saku-core             {:mvn/version "23.7.0"}
 
         ;; Utilities
         com.walmartlabs/lacinia                         {:mvn/version "1.2.1"}
