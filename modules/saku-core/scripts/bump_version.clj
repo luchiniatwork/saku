@@ -13,8 +13,7 @@
                                       #"<artifactId>saku-core</artifactId>\n(\s*)<version>.+</version>"
                                       #(str "<artifactId>saku-core</artifactId>\n$1"
                                             "<version>" % "</version>"))
-                 (orzo/save-file "version.txt")
-                 (orzo/stage)))
+                 (orzo/save-file "version.txt")))
     (System/exit 0)
     (catch Exception e
       (println e)
