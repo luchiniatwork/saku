@@ -49,31 +49,26 @@
     (impl-get-*-policies db' drns' :statement/resources)))
 
 
+(defn upsert-*-policies
+  [db-conn policies]
+  (let [tx-data (into []
+                  (mapcat (fn [{:keys [policy/drn] :as policy}]
+                            [[:db/retract [:policy/drn drn] :policy/statements]
+                             policy]))
+                  policies)]
+    (d/transact! db-conn tx-data)))
 
 (defmethod interface/upsert-resource-policies :datalevin [{:keys [db-conn] :as obj} policies]
   (schemas/assert* schemas/resource-policies policies)
-  (let [drns (map :policy/drn policies)
-        tx (reduce (fn [c {:keys [policy/drn] :as policy}]
-                     (conj c
-                           [:db/retract [:policy/drn drn] :policy/statements]
-                           policy))
-                   [] policies)
-        {:keys [db-after]} (d/transact! db-conn tx)]
-    (->> drns
-         (interface/get-resource-policies obj db-after))))
+  (let [{:keys [db-after]} (upsert-*-policies db-conn policies)]
+    (interface/get-resource-policies obj db-after (map :policy/drn policies))))
 
 
 (defmethod interface/upsert-identity-policies :datalevin [{:keys [db-conn] :as obj} policies]
   (schemas/assert* schemas/identity-policies policies)
-  (let [drns (map :policy/drn policies)
-        tx (reduce (fn [c {:keys [policy/drn] :as policy}]
-                     (conj c
-                           [:db/retract [:policy/drn drn] :policy/statements]
-                           policy))
-                   [] policies)
-        {:keys [db-after]}(d/transact! db-conn tx)]
-    (->> drns
-         (interface/get-identity-policies obj db-after))))
+  (let [{:keys [db-after]} (upsert-*-policies db-conn policies)]
+    (interface/get-identity-policies obj db-after (map :policy/drn policies))))
+
 
 
 (defmethod interface/retract-policies :datalevin [{:keys [db-conn]} drns]
