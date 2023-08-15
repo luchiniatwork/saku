@@ -17,28 +17,17 @@
        drns))
 
 
-(defn ^:private impl-get-resource-policies [db drns]
+(defn ^:private impl-get-*-policies [db drns statement-attr]
   (d/q '[:find [(pull ?p pattern) ...]
-         :in $ pattern [?drns ...]
+         :in $ pattern [?drns ...] ?statement-attr
          :where
          [?p :policy/drn ?drns]
          [?p :policy/statements ?s]
-         [?s :statement/identities]]
+         [?s ?statement-attr]]
        db
        pattern
-       drns))
-
-
-(defn ^:private impl-get-identity-policies [db drns]
-  (d/q '[:find [(pull ?p pattern) ...]
-         :in $ pattern [?drns ...]
-         :where
-         [?p :policy/drn ?drns]
-         [?p :policy/statements ?s]
-         [?s :statement/resources]]
-       db
-       pattern
-       drns))
+       drns
+    statement-attr))
 
 
 (defmethod interface/db :datalevin [{:keys [db-conn]}]
@@ -52,12 +41,13 @@
 
 (defmethod interface/get-resource-policies :datalevin [obj db-or-drns & [drns]]
   (let [[db' drns'] (if drns [db-or-drns drns] [(interface/db obj) db-or-drns])]
-    (impl-get-resource-policies db' drns')))
+    (impl-get-*-policies db' drns' :statement/identities)))
 
 
 (defmethod interface/get-identity-policies :datalevin [obj db-or-drns & [drns]]
   (let [[db' drns'] (if drns [db-or-drns drns] [(interface/db obj) db-or-drns])]
-    (impl-get-identity-policies db' drns')))
+    (impl-get-*-policies db' drns' :statement/resources)))
+
 
 
 (defmethod interface/upsert-resource-policies :datalevin [{:keys [db-conn] :as obj} policies]
