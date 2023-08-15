@@ -71,6 +71,7 @@
   (let [{:keys [db-after]} (upsert-*-policies db-conn policies)]
     (interface/get-identity-policies obj db-after (map :policy/drn policies))))
 
+
 (defn tx-fn-retract-statements-from-policy
   [db {:keys [policy/drn statement-ids]}]
   (let [eids-to-retract (d/q '[:find ?s
