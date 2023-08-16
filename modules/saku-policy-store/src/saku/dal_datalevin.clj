@@ -60,6 +60,15 @@
                   policies)]
     (d/transact! db-conn tx-data)))
 
+(defn upsert-*-policies
+  [db-conn policies]
+  (let [tx-data (into []
+                  (mapcat (fn [{:keys [policy/drn] :as policy}]
+                            [[:db/retract [:policy/drn drn] :policy/statements]
+                             policy]))
+                  policies)]
+    (d/transact! db-conn tx-data)))
+
 (defmethod interface/upsert-resource-policies :datalevin [{:keys [db-conn] :as obj} policies]
   (schemas/assert* schemas/resource-policies policies)
   (let [{:keys [db-after]} (upsert-*-policies db-conn policies)]
