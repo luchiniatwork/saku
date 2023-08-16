@@ -25,7 +25,10 @@
                           :db/cardinality :db.cardinality/many}
 
    :statement/resources {:db/valueType :db.type/string
-                         :db/cardinality :db.cardinality/many}})
+                         :db/cardinality :db.cardinality/many}
+
+   :statement/sid {:db/valueType   :db.type/string
+                   :db/cardinality :db.cardinality/one}})
 
 (defmethod ig/init-key ::schema [_ _]
   (info {:msg "Initializing Dataleving Schema"})

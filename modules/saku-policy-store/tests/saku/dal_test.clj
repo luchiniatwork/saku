@@ -71,6 +71,70 @@
                                                                                    identity-policies))))]
         (is (= ::schemas/invalid-type (-> ex ex-data :anomaly/category)))))))
 
+(deftest statement-add-retract
+  (with-dal [dal-obj]
+    (is (= [{:policy/drn        "p1"
+             :policy/statements [{:statement/sid       "sid1"
+                                  :statement/actions   ["a1"]
+                                  :statement/effect    [:effect :allow]
+                                  :statement/resources ["drn1"]}]}]
+          (->> {:policy/drn        "p1"
+                :policy/statements [{:statement/sid       "sid1"
+                                     :statement/actions   ["a1"]
+                                     :statement/effect    [:effect :allow]
+                                     :statement/resources ["drn1"]}]}
+            (dal/add-identity-statements dal-obj)
+            utils/sanitize-from-db))
+      "simple statement add with a sid")
+
+    (is (= [{:policy/drn        "p1"
+             :policy/statements [{:statement/sid       "sid1"
+                                  :statement/actions   ["a2"]
+                                  :statement/effect    [:effect :deny]
+                                  :statement/resources ["drn3"]}]}]
+          (->> {:policy/drn        "p1"
+                :policy/statements [{:statement/sid       "sid1"
+                                     :statement/actions   ["a2"]
+                                     :statement/effect    [:effect :deny]
+                                     :statement/resources ["drn3"]}]}
+            (dal/add-identity-statements dal-obj)
+            utils/sanitize-from-db))
+      "update sid1 replaces full statement")
+
+    (is (= [{:policy/drn        "p1"
+             :policy/statements [{:statement/sid       "sid1"
+                                  :statement/actions   ["a2"]
+                                  :statement/effect    [:effect :deny]
+                                  :statement/resources ["drn3"]}
+                                 {:statement/sid       "sid2"
+                                  :statement/actions   ["a3"]
+                                  :statement/effect    [:effect :allow]
+                                  :statement/resources ["drn3"]}]}]
+          (->> {:policy/drn        "p1"
+                :policy/statements [{:statement/sid       "sid2"
+                                     :statement/actions   ["a3"]
+                                     :statement/effect    [:effect :allow]
+                                     :statement/resources ["drn3"]}]}
+            (dal/add-identity-statements dal-obj)
+            utils/sanitize-from-db))
+      "adds a new sid2")
+
+    (is (= [{:policy/drn        "p1"
+             :policy/statements [{:statement/sid       "sid2"
+                                  :statement/actions   ["a3"]
+                                  :statement/effect    [:effect :allow]
+                                  :statement/resources ["drn3"]}]}]
+          (->> {:policy/drn    "p1"
+                :statement-ids ["sid1"]}
+            (dal/retract-statements dal-obj)
+            utils/sanitize-from-db))
+      "retract sid1 results in one statement")
+    (is (= []
+          (->> {:policy/drn    "p1"
+                :statement-ids ["sid2"]}
+            (dal/retract-statements dal-obj)
+            utils/sanitize-from-db))
+      "retract sid2 results in no statements")))
 
 (deftest retract-policies
   (testing "should retract properly"

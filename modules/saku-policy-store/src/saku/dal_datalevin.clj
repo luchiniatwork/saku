@@ -18,16 +18,18 @@
 
 
 (defn ^:private impl-get-*-policies [db drns statement-attr]
-  (d/q '[:find [(pull ?p pattern) ...]
-         :in $ pattern [?drns ...] ?statement-attr
-         :where
-         [?p :policy/drn ?drns]
-         [?p :policy/statements ?s]
-         [?s ?statement-attr]]
-       db
-       pattern
-       drns
-    statement-attr))
+  (apply d/q
+    (cond-> {:find '[[(pull ?p pattern) ...]]
+             :in   '[$ pattern [?drns ...]]
+             :where
+             '[[?p :policy/drn ?drns]
+               [?p :policy/statements ?s]
+               [?s ?statement-attr]]}
+      statement-attr (->
+                       (update :in conj '?statement-attr)
+                       (update :where conj '[?s ?statement-attr])))
+    (cond-> [db pattern drns]
+      statement-attr (conj statement-attr))))
 
 
 (defmethod interface/db :datalevin [{:keys [db-conn]}]
@@ -69,6 +71,49 @@
   (let [{:keys [db-after]} (upsert-*-policies db-conn policies)]
     (interface/get-identity-policies obj db-after (map :policy/drn policies))))
 
+(defn tx-fn-retract-statements-from-policy
+  [db {:keys [policy/drn statement-ids]}]
+  (let [eids-to-retract (d/q '[:find ?s
+                               :in $ ?policy [?statement-id ...]
+                               :where
+                               [?policy :policy/statements ?s]
+                               [?s :statement/sid ?statement-id]]
+                          db [:policy/drn drn] statement-ids)]
+    (map (fn [[eid]] [:db/retractEntity eid]) eids-to-retract)))
+
+(defn add-statements*
+  [db-conn statements-input]
+  (let [{:keys [policy/drn policy/statements]} statements-input
+        retract-sids (into [] (keep :statement/sid) statements)
+        retract-tx (when (seq retract-sids)
+                     [:db.fn/call tx-fn-retract-statements-from-policy
+                      {:policy/drn    drn
+                       :statement-ids retract-sids}])
+        tx-data (into (cond-> [] retract-tx (conj retract-tx))
+                  (map (fn [statement]
+                         {:policy/drn        drn
+                          :policy/statements statement}))
+                  statements)]
+    (d/transact! db-conn tx-data)))
+
+
+(defmethod interface/add-identity-statements :datalevin [{:keys [db-conn] :as obj} add-statements-input]
+  (schemas/assert* schemas/identity-policy add-statements-input)
+  (let [{:keys [db-after]} (add-statements* db-conn add-statements-input)]
+    (interface/get-identity-policies obj db-after [(:policy/drn add-statements-input)])))
+
+
+(defmethod interface/add-resource-statements :datalevin [{:keys [db-conn] :as obj} add-statements-input]
+  (schemas/assert* schemas/resource-policy add-statements-input)
+  (let [{:keys [db-after]} (add-statements* db-conn add-statements-input)]
+    (interface/get-resource-policies obj db-after [(:policy/drn add-statements-input)])))
+
+(defmethod interface/retract-statements :datalevin [{:keys [db-conn] :as obj} retract-statements-input]
+  (schemas/assert* [:map
+                    [:policy/drn :string]
+                    [:statement-ids [:sequential :string]]] retract-statements-input)
+  (let [{:keys [db-after]} (d/transact! db-conn [[:db.fn/call tx-fn-retract-statements-from-policy retract-statements-input]])]
+    (impl-get-*-policies db-after [(:policy/drn retract-statements-input)] nil)))
 
 
 (defmethod interface/retract-policies :datalevin [{:keys [db-conn]} drns]

@@ -35,6 +35,20 @@
 (defmethod upsert-identity-policies :default [_ policies]
   (throw (ex-info "Not Implemented" {:anomaly/category ::not-implemented})))
 
+(defmulti add-identity-statements (fn [obj _add-identity-statements-input] (:impl obj)))
+
+(defmethod add-identity-statements :default [_ _add-identity-statements-input]
+  (throw (ex-info "Not Implemented" {:anomaly/category ::not-implemented})))
+
+(defmulti add-resource-statements (fn [obj _add-resource-statements-input] (:impl obj)))
+
+(defmethod add-resource-statements :default [_ _add-resource-statements-input]
+  (throw (ex-info "Not Implemented" {:anomaly/category ::not-implemented})))
+
+(defmulti retract-statements (fn [obj _retract-statements-input] (:impl obj)))
+
+(defmethod retract-statements :default [_ _retract-statements-input]
+  (throw (ex-info "Not Implemented" {:anomaly/category ::not-implemented})))
 
 (defmulti retract-policies (fn [obj drns] (:impl obj)))
 
