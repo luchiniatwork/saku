@@ -24,6 +24,13 @@
       "summary": "Bump versions",
       "enableParallelism": true,
       "disableBuildCache": true
+    },
+    {
+      "commandKind": "bulk",
+      "name": "release",
+      "summary": "Release versions",
+      "enableParallelism": true,
+      "disableBuildCache": true
     }
     // {
     //   /**

@@ -7,7 +7,7 @@
     "build": "tsc",
     "test": "",
     "bump": "",
-    "deploy": ""
+    "release": ""
   },
   "author": "",
   "license": "ISC",

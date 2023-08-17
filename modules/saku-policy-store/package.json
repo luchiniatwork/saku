@@ -1,14 +1,17 @@
 {
   "name": "saku-policy-store",
-  "version": "23.7.1",
+  "version": "23.8.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build": "clojure -T:build uber 2>&1",
     "test": "clojure -X:test 2>&1",
     "bump": "clojure -M:scripts -m bump-version",
-    "deploy": "clojure -M:scripts -m docker-build && clojure -M:scripts -m docker-push"
+    "release": "clojure -M:scripts -m docker-build && clojure -M:scripts -m docker-push"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "saku-core": "workspace:*"
+  }
 }
