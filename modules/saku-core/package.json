@@ -7,9 +7,9 @@
   "types": "src/custom-types.d.ts",
   "files": ["target/index.js", "src/*.d.ts"],
   "scripts": {
-    "build": "shadow-cljs release lib 2>&1 && mvn package",
+    "build": "shadow-cljs release lib 2>&1 && mvn package 2>&1",
     "dev": "shadow-cljs watch lib",
-    "test": "clojure -X:test",
+    "test": "clojure -X:test 2>&1",
     "bump": "clojure -M:scripts -m bump-version",
     "deploy": "npm publish && mvn deploy"
   },

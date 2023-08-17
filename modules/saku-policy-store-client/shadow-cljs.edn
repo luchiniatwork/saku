@@ -1,6 +1,4 @@
 {:deps {:aliases [:cljs]}
- :nrepl {:port 9000
-         :middleware []}
  :builds {:lib
           {:target :node-library
            :output-dir "target/"
