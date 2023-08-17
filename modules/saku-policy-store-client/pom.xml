@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.clojars.luchiniatwork</groupId>
   <artifactId>saku-policy-store-client</artifactId>
-  <version>23.7.1</version>
+  <version>23.8.0</version>
   <name>saku-policy-store-client</name>
   <dependencies>
     <dependency>

@@ -14,18 +14,23 @@ importers:
       ws: 8.12.0
 
   ../../modules/saku-policy-store:
-    specifiers: {}
+    specifiers:
+      saku-core: workspace:*
+    dependencies:
+      saku-core: link:../saku-core
 
   ../../modules/saku-policy-store-client:
     specifiers:
       react: 17.0.1
       react-dom: 17.0.1
+      saku-policy-store: workspace:*
       shadow-cljs: ~2.20.20
       ws: ~8.12.0
       xhr2: ~0.2.1
     dependencies:
       react: 17.0.1
       react-dom: 17.0.1_react@17.0.1
+      saku-policy-store: link:../saku-policy-store
       xhr2: 0.2.1
     devDependencies:
       shadow-cljs: 2.20.20

@@ -1,6 +1,6 @@
 {
   "name": "saku-policy-store-client",
-  "version": "23.7.1",
+  "version": "23.8.0",
   "description": "",
   "type": "commonjs",
   "main": "target/index.js",
@@ -14,14 +14,15 @@
     "dev": "shadow-cljs watch lib",
     "test": "",
     "bump": "clojure -M:scripts -m bump-version",
-    "deploy": "npm publish 2>&1 && mvn deploy 2>&1"
+    "release": "npm publish && mvn deploy"
   },
   "author": "Tiago Luchini <tiago@luchini.nyc>",
   "license": "MIT",
   "dependencies": {
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "xhr2": "~0.2.1"
+    "xhr2": "~0.2.1",
+    "saku-policy-store": "workspace:*"
   },
   "devDependencies": {
     "shadow-cljs": "~2.20.20",
