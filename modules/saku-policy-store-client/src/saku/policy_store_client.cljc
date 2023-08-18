@@ -83,6 +83,42 @@
   }
 }"])
 
+(def ^:private add-identity-statements-mutation
+  [:addIdentityStatements "mutation AddIdentityStatements($policy: IdentityPolicyInputDocument!) {
+  addIdentityStatements(inputPolicy: $policy) {
+    drn
+    statements {
+      actionIds
+      effect
+      resources
+    }
+  }
+}"])
+
+(def ^:private add-resource-statements-mutation
+  [:addResourceStatements "mutation AddResourceStatements($policy: IdentityPolicyInputDocument!) {
+  addResourceStatements(inputPolicy: $policy) {
+    drn
+    statements {
+      actionIds
+      effect
+      resources
+    }
+  }
+}"])
+
+(def ^:private retract-statements-mutation
+  [:retractStatements "mutation RetractStatements($retractStatementsInput: RetractStatementsInput!) {
+  retractStatements(retractStatementsInput: $retractStatementsInput) {
+    drn
+    statements {
+      actionIds
+      effect
+      resources
+    }
+  }
+}"])
+
 (def ^:private retract-policies-mutation
   [:retractPolicies "mutation RetractPolicies($drns: [ID!]!) {
   retractPolicies(drns: $drns)
@@ -168,6 +204,30 @@
                       :callback (callback-fn :mutation promise field)})
     promise))
 
+(defn add-identity-statements [policy]
+  (let [promise (p/deferred)
+        [field mutation] add-identity-statements-mutation]
+    (re-graph/mutate {:query mutation
+                      :variables {:policy policy}
+                      :callback (callback-fn :mutation promise field)})
+    promise))
+
+(defn add-resource-statements [policy]
+  (let [promise (p/deferred)
+        [field mutation] add-resource-statements-mutation]
+    (re-graph/mutate {:query mutation
+                      :variables {:policy policy}
+                      :callback (callback-fn :mutation promise field)})
+    promise))
+
+(defn retract-statements [retract-statements-input]
+  (let [promise (p/deferred)
+        [field mutation] retract-statements-mutation]
+    (re-graph/mutate {:query mutation
+                      :variables retract-statements-input
+                      :callback (callback-fn :mutation promise field)})
+    promise))
+
 (defn retract-policies [drns]
   (let [promise (p/deferred)
         [field mutation] retract-policies-mutation]
@@ -223,6 +283,21 @@
 #?(:cljs
    (defn upsert-identity-policies-js [policies]
      (p/let [out (upsert-identity-policies (js->clj policies :keywordize true))]
+       (p/promise (clj->js out)))))
+
+#?(:cljs
+   (defn add-identity-statements-js [policy]
+     (p/let [out (add-identity-statements (js->clj policy :keywordize true))]
+       (p/promise (clj->js out)))))
+
+#?(:cljs
+   (defn add-resource-statements-js [policy]
+     (p/let [out (add-resource-statements (js->clj policy :keywordize true))]
+       (p/promise (clj->js out)))))
+
+#?(:cljs
+   (defn retract-statements-js [retract-statements-input]
+     (p/let [out (retract-statements (js->clj retract-statements-input :keywordize true))]
        (p/promise (clj->js out)))))
 
 #?(:cljs

@@ -30,6 +30,11 @@ declare module 'saku-policy-store-client' {
         statements: IdentityStatement[]
     }
 
+    export type RetractStatementsInput = {
+        drn: Drn;
+        statementIds: string[]
+    }
+
     export type PolicyDocument = { drn: Drn } & (IdentityPolicy | ResourceStatement);
 
     export function isIdentityPolicy(type: unknown): type is IdentityPolicy;
@@ -81,6 +86,12 @@ declare module 'saku-policy-store-client' {
     export function upsertResourcePolicies(policies: ResourcePolicy[]): Promise<ResourcePolicy[]>
 
     export function upsertIdentityPolicies(policies: IdentityPolicy[]): Promise<IdentityPolicy[]>
+
+    export function addIdentityStatements(policy: IdentityPolicy): Promise<IdentityPolicy[]>
+
+    export function addResourceStatements(policy: IdentityPolicy): Promise<IdentityPolicy[]>
+
+    export function retractStatements(retractStatementsInput: RetractStatementsInput): Promise<IdentityPolicy[]>
 
     export function retractPolicies(drns: Drn[]): Promise<Drn[]>
 
