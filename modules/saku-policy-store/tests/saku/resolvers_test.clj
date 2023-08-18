@@ -104,6 +104,15 @@
        (map (fn [p] (:policy/drn p)))
        find-db-drns))
 
+(defmethod dal/add-identity-statements :mock [_ policy]
+  (find-db-drns [(:policy/drn policy)]))
+
+(defmethod dal/add-resource-statements :mock [_ policy]
+  (find-db-drns [(:policy/drn policy)]))
+
+(defmethod dal/retract-statements :mock [_ retract-policies-input]
+  (find-db-drns [(:policy/drn retract-policies-input)]))
+
 (defmethod dal/retract-policies :mock [_ drns]
   (->> drns
        (filter #(or (= "drn23" %)
@@ -145,6 +154,21 @@
     (let [r (resolvers/upsert-identity-policies {:dal-obj dal-obj})]
       (is (= (find-doc-drns ["user3" "user6"])
              (r nil {:policies (find-doc-drns ["user3" "user6"])} nil)))))
+
+  (testing "add-identity-statements"
+    (let [r (resolvers/add-identity-statements {:dal-obj dal-obj})]
+      (is (= (find-doc-drns ["user3"])
+            (r nil (first (find-doc-drns ["user3"])) nil)))))
+
+  (testing "add-resource-statements"
+    (let [r (resolvers/add-resource-statements {:dal-obj dal-obj})]
+      (is (= (find-doc-drns ["user3"])
+            (r nil (first (find-doc-drns ["user3"])) nil)))))
+
+  (testing "add-resource-statements"
+    (let [r (resolvers/retract-statements {:dal-obj dal-obj})]
+      (is (= (find-doc-drns ["user3"])
+            (r nil {:drn "user3" :statement-ids ["sid1"]} nil)))))
 
   (testing "retract-policies"
     (let [r (resolvers/retract-policies {:dal-obj dal-obj})]
