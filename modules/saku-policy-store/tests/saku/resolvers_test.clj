@@ -62,25 +62,21 @@
     identity-doc]})
 
 
+(defn find-*-drns [drns get-doc entry-k]
+  (into []
+    (keep (fn [drn]
+            (when-let [entry (some (fn [[re db-vals]]
+                                     (when (re-matches re drn)
+                                       (get-doc db-vals)))
+                               db)]
+              (assoc entry entry-k drn))))
+    drns))
+
 (defn find-db-drns [drns]
-  (reduce (fn [c drn]
-            (let [entry (some (fn [[k [payload _]]]
-                                (when (re-matches k drn)
-                                  payload))
-                              db)]
-              (cond-> c
-                entry (conj (assoc entry :policy/drn drn)))))
-          [] drns))
+  (find-*-drns drns first :policy/drn))
 
 (defn find-doc-drns [drns]
-  (reduce (fn [c drn]
-            (let [entry (some (fn [[k [_ payload]]]
-                                (when (re-matches k drn)
-                                  payload))
-                              db)]
-              (cond-> c
-                entry (conj (assoc entry :drn drn)))))
-          [] drns))
+  (find-*-drns drns second :drn))
 
 
 (defmethod dal/db :mock [_]
