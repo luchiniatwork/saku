@@ -28,6 +28,10 @@
   [[:drn :policy/drn]
    [:statements :policy/statements #(->> % (mapv (partial util/transform-ab statement-input-map)))]])
 
+(def ^:private retract-statements-input-map
+  [[:drn :policy/drn]
+   [:statement-ids :statement-ids]])
+
 
 (def ^:private evaluation-statement-map
   [[:statement/actions :actions]
@@ -82,6 +86,29 @@
          (mapv (partial util/transform-ab policy-input-map))
          (dal/upsert-identity-policies dal-obj)
          (mapv (partial util/transform-ab policy-map)))))
+
+(defn add-*-statements [dal-obj add-fn args]
+  (->> args
+    (util/transform-ab policy-input-map)
+    (add-fn dal-obj)
+    (mapv (partial util/transform-ab policy-map))))
+
+(defn add-identity-statements [{:keys [dal-obj] :as opts}]
+  (fn [ctx args obj]
+    (add-*-statements dal-obj dal/add-identity-statements args)))
+
+
+(defn add-resource-statements [{:keys [dal-obj] :as opts}]
+  (fn [ctx args obj]
+    (add-*-statements dal-obj dal/add-resource-statements args)))
+
+
+(defn retract-statements [{:keys [dal-obj] :as opts}]
+  (fn [ctx args obj]
+    (->> args
+      (util/transform-ab retract-statements-input-map)
+      (dal/retract-statements dal-obj)
+      (mapv (partial util/transform-ab policy-map)))))
 
 
 (defn retract-policies [{:keys [dal-obj] :as opts}]

@@ -9,6 +9,9 @@
   {:MutationRoot/upsertResourcePolicies (resolvers/upsert-resource-policies opts)
    :MutationRoot/upsertIdentityPolicies (resolvers/upsert-identity-policies opts)
    :MutationRoot/retractPolicies (resolvers/retract-policies opts)
+   :MutationRoot/addIdentityStatements (resolvers/add-identity-statements opts)
+   :MutationRoot/addResourceStatements (resolvers/add-resource-statements opts)
+   :MutationRoot/retractStatements (resolvers/retract-statements opts)
 
    :QueryRoot/policies (resolvers/get-policies opts)
    :QueryRoot/identityPolicies (resolvers/get-identity-policies opts)
