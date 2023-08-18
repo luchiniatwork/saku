@@ -11,6 +11,9 @@
                      :identityPolicies saku.policy-store-client/identity-policies-js
                      :upsertResourcePolicies saku.policy-store-client/upsert-resource-policies-js
                      :upsertIdentityPolicies saku.policy-store-client/upsert-identity-policies-js
+                     :addIdentityStatements saku.policy-store-client/add-identity-statements-js
+                     :addResourceStatements saku.policy-store-client/add-resource-statements-js
+                     :retractStatements saku.policy-store-client/retract-statements-js
                      :retractPolicies saku.policy-store-client/retract-policies-js
                      :evaluateOne saku.policy-store-client/evaluate-one-js
                      :evaluateMany saku.policy-store-client/evaluate-many-js
