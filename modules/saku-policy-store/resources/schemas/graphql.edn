@@ -19,6 +19,21 @@
                               :cardinality [0 n]}
                             policies]
 
+  ^{:type IdentityPolicyDocument
+    :cardinality [0 n]}
+  add-identity-statements [^{:type IdentityPolicyInputDocument}
+                            input-policy]
+
+  ^{:type IdentityPolicyDocument
+    :cardinality [0 n]}
+  add-resource-statements [^{:type IdentityPolicyInputDocument}
+                           input-policy]
+
+  ^{:type IdentityPolicyDocument
+    :cardinality [0 n]}
+  retract-statements [^{:type RetractStatementsInput}
+                      retract-statements-input]
+
   ^{:type ID
     :cardinality [0 n]}
   retract-policies [^{:type ID
@@ -125,7 +140,14 @@
     :cardinality [0 n]}
   statements]
 
+ ^{:lacinia/input true}
+ RetractStatementsInput
+ [^{:type ID}
+  drn
 
+  ^{:type String
+    :cardinality [0 n]}
+  statement-ids]
  
  ;; ------------------------------
  ;; Query Types
