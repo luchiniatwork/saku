@@ -1,4 +1,19 @@
-import { connect, disconnect, evaluateMany, evaluateOne, isIdentityPolicy, isPolicyDocument, isResourcePolicy, policies, PolicyDocument, retractPolicies, serverMeta, upsertIdentityPolicies, upsertResourcePolicies } from "saku-policy-store-client";
+import {
+  addIdentityStatements, addResourceStatements,
+  connect,
+  disconnect,
+  evaluateMany,
+  evaluateOne,
+  isIdentityPolicy,
+  isPolicyDocument,
+  isResourcePolicy,
+  policies,
+  PolicyDocument,
+  retractPolicies, retractStatements,
+  serverMeta,
+  upsertIdentityPolicies,
+  upsertResourcePolicies
+} from "saku-policy-store-client";
 
 connect("http://localhost:8080/api");
 
@@ -41,7 +56,34 @@ Promise.all([
       identities: ["drn:identity:example:1"]
     }]
   }]),
-  
+
+  addIdentityStatements({
+    drn: "drn:identity:example:1",
+    statements: [{
+      sid: "i1",
+      effect: "ALLOW",
+      actionIds: ["read"],
+      resources: ["drn:resource:example:2"]
+    }]
+  }),
+  addResourceStatements({
+    drn: "drn:resource:example:2",
+    statements: [{
+      sid: "r1",
+      effect: "ALLOW",
+      actionIds: ["read"],
+      identities: ["drn:identity:example:1"]
+    }]
+  }),
+  retractStatements({
+    drn: "drn:identity:example:1",
+    statementIds: ["i1"]
+  }),
+  retractStatements({
+    drn: "drn:resource:example:2",
+    statementIds: ["r1"]
+  }),
+
 
   evaluateOne({
     drn: "drn:resource:example:1",
