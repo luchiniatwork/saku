@@ -19,6 +19,7 @@
     ... on IdentityPolicyDocument {
       drn
       statements {
+        sid
         actionIds
         effect
         resources
@@ -27,6 +28,7 @@
     ... on ResourcePolicyDocument {
       drn
       statements {
+        sid
         actionIds
         effect
         identities
@@ -39,6 +41,7 @@
   resourcePolicies(drns: $drns) {
     drn
     statements {
+      sid
       actionIds
       effect
       identities
@@ -52,6 +55,7 @@
   identityPolicies(drns: $drns) {
     drn
     statements {
+      sid
       actionIds
       effect
       resources
@@ -64,6 +68,7 @@
   upsertResourcePolicies(policies: $policies) {
     drn
     statements {
+      sid
       actionIds
       effect
       identities
@@ -76,6 +81,7 @@
   upsertIdentityPolicies(policies: $policies) {
     drn
     statements {
+      sid
       actionIds
       effect
       resources
@@ -88,6 +94,7 @@
   addIdentityStatements(inputPolicy: $policy) {
     drn
     statements {
+      sid
       actionIds
       effect
       resources
@@ -96,26 +103,22 @@
 }"])
 
 (def ^:private add-resource-statements-mutation
-  [:addResourceStatements "mutation AddResourceStatements($policy: IdentityPolicyInputDocument!) {
+  [:addResourceStatements "mutation AddResourceStatements($policy: ResourcePolicyInputDocument!) {
   addResourceStatements(inputPolicy: $policy) {
     drn
     statements {
+      sid
       actionIds
       effect
-      resources
+      identities
     }
   }
 }"])
 
 (def ^:private retract-statements-mutation
-  [:retractStatements "mutation RetractStatements($retractStatementsInput: RetractStatementsInput!) {
-  retractStatements(retractStatementsInput: $retractStatementsInput) {
+  [:retractStatements "mutation RetractStatements($drn: ID!, $statementIds: [String!]!) {
+  retractStatements(drn: $drn, statementIds: $statementIds) {
     drn
-    statements {
-      actionIds
-      effect
-      resources
-    }
   }
 }"])
 
@@ -351,9 +354,18 @@
 
  (deref (upsert-resource-policies [{:drn "drn1"
                                     :statements
-                                    [{:actionIds ["a" "b"]
+                                    [{:sid "a1"
+                                      :actionIds ["a" "b"]
                                       :effect :ALLOW
                                       :identities ["i1"]}]}]))
+
+  @(retract-statements {:drn           "drn1"
+                        :statementIds ["a1" "a2"]})
+  @(add-resource-statements {:drn          "drn1"
+                             :statements [{:sid "a2"
+                                           :actionIds ["a2" "b2"]
+                                           :effect :ALLOW
+                                           :identities ["i2"]}]})
 
 
  @(retract-policies ["drn2" "drn1"])
@@ -362,7 +374,15 @@
                               :statements [{:actionIds ["*"]
                                             :resources ["*"]
                                             :effect :ALLOW}]}])
- 
+
+  @(add-identity-statements {:drn          "userdrn"
+                             :statements [{:sid "u1"
+                                           :actionIds ["a2" "b2"]
+                                           :effect :ALLOW
+                                           :resources ["r1"]}]})
+  @(retract-statements {:drn           "userdrn"
+                        :statementIds ["r1"]})
+
  @(evaluate-one {:drn "resdrn"
                  :actionId "action"
                  :identities ["userdrn"]})
@@ -374,5 +394,5 @@
  @(evaluate-many {:drns ["resdrn", "resdrn2"]
                   :actionId "action"
                   :identities ["userdrn"]})
- 
+
  (disconnect))

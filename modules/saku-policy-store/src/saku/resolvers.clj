@@ -8,7 +8,8 @@
 
 
 (def ^:private statement-map
-  [[:statement/actions :actionIds]
+  [[:statement/sid :sid]
+   [:statement/actions :actionIds]
    [:statement/effect :effect #(-> % :effect csk/->SCREAMING_SNAKE_CASE_KEYWORD)]
    [:statement/identities :identities]
    [:statement/resources :resources]])
@@ -19,7 +20,8 @@
 
 
 (def ^:private statement-input-map
-  [[:actionIds :statement/actions]
+  [[:sid :statement/sid]
+   [:actionIds :statement/actions]
    [:effect :statement/effect (fn [x] [:effect (csk/->kebab-case-keyword x)])]
    [:identities :statement/identities]
    [:resources :statement/resources]])
@@ -30,7 +32,7 @@
 
 (def ^:private retract-statements-input-map
   [[:drn :policy/drn]
-   [:statement-ids :statement-ids]])
+   [:statementIds :statement-ids]])
 
 
 (def ^:private evaluation-statement-map
@@ -88,7 +90,7 @@
          (mapv (partial util/transform-ab policy-map)))))
 
 (defn add-*-statements [dal-obj add-fn args]
-  (->> args
+  (->> (:inputPolicy args)
     (util/transform-ab policy-input-map)
     (add-fn dal-obj)
     (mapv (partial util/transform-ab policy-map))))

@@ -9,6 +9,7 @@ declare module 'saku-policy-store-client' {
     export type ActionId = string;
 
     export type ResourceStatement = {
+        sid?: string,
         actionIds: ActionId[],
         identities: Drn[],
         effect: Effect,
@@ -20,6 +21,7 @@ declare module 'saku-policy-store-client' {
     }
 
     export type IdentityStatement = {
+        sid?: string,
         actionIds: ActionId[],
         resources: Drn[],
         effect: Effect,
@@ -89,7 +91,7 @@ declare module 'saku-policy-store-client' {
 
     export function addIdentityStatements(policy: IdentityPolicy): Promise<IdentityPolicy[]>
 
-    export function addResourceStatements(policy: IdentityPolicy): Promise<IdentityPolicy[]>
+    export function addResourceStatements(policy: ResourcePolicy): Promise<IdentityPolicy[]>
 
     export function retractStatements(retractStatementsInput: RetractStatementsInput): Promise<IdentityPolicy[]>
 

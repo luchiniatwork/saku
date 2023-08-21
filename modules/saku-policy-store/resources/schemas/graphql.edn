@@ -24,15 +24,19 @@
   add-identity-statements [^{:type IdentityPolicyInputDocument}
                             input-policy]
 
-  ^{:type IdentityPolicyDocument
+  ^{:type ResourcePolicyDocument
     :cardinality [0 n]}
-  add-resource-statements [^{:type IdentityPolicyInputDocument}
+  add-resource-statements [^{:type ResourcePolicyInputDocument}
                            input-policy]
 
   ^{:type IdentityPolicyDocument
     :cardinality [0 n]}
-  retract-statements [^{:type RetractStatementsInput}
-                      retract-statements-input]
+  retract-statements [^{:type ID}
+                      drn
+
+                      ^{:type String
+                        :cardinality [0 n]}
+                      statement-ids]
 
   ^{:type ID
     :cardinality [0 n]}
@@ -106,6 +110,10 @@
  ^{:lacinia/input true}
  ResourceInputStatement
  [^{:type String
+    :optional true}
+  sid
+
+  ^{:type String
     :cardinality [0 n]}
   actionIds
 
@@ -120,6 +128,10 @@
  ^{:lacinia/input true}
  IdentityInputStatement
  [^{:type String
+    :optional true}
+  sid
+
+  ^{:type String
     :cardinality [0 n]}
   actionIds
 
@@ -139,15 +151,6 @@
   ^{:type IdentityInputStatement
     :cardinality [0 n]}
   statements]
-
- ^{:lacinia/input true}
- RetractStatementsInput
- [^{:type ID}
-  drn
-
-  ^{:type String
-    :cardinality [0 n]}
-  statement-ids]
  
  ;; ------------------------------
  ;; Query Types
@@ -182,6 +185,10 @@
  ^{:interface true}
  Statement
  [^{:type String
+    :optional true}
+  sid
+
+  ^{:type String
     :cardinality [0 n]}
   actionIds
 
@@ -192,6 +199,10 @@
  ^{:implements [Statement]}
  ResourceStatement
  [^{:type String
+    :optional true}
+  sid
+
+  ^{:type String
     :cardinality [0 n]}
   actionIds
 
@@ -206,6 +217,10 @@
  ^{:implements Statement}
  IdentityStatement
  [^{:type String
+    :optional true}
+  sid
+
+  ^{:type String
     :cardinality [0 n]}
   actionIds
 

@@ -158,12 +158,12 @@
   (testing "add-identity-statements"
     (let [r (resolvers/add-identity-statements {:dal-obj dal-obj})]
       (is (= (find-doc-drns ["user3"])
-            (r nil (first (find-doc-drns ["user3"])) nil)))))
+            (r nil {:inputPolicy (first (find-doc-drns ["user3"]))} nil)))))
 
   (testing "add-resource-statements"
     (let [r (resolvers/add-resource-statements {:dal-obj dal-obj})]
       (is (= (find-doc-drns ["user3"])
-            (r nil (first (find-doc-drns ["user3"])) nil)))))
+            (r nil {:inputPolicy (first (find-doc-drns ["user3"]))} nil)))))
 
   (testing "add-resource-statements"
     (let [r (resolvers/retract-statements {:dal-obj dal-obj})]
