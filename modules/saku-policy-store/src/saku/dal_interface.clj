@@ -5,52 +5,51 @@
 (defmethod db :default [_]
   (throw (ex-info "Not Implemented" {:anomaly/category ::not-implemented})))
 
+(defn- interface-dispatch
+  [ctx _argm]
+  (-> ctx :dal-obj :impl))
 
-(defmulti get-policies (fn [obj db-or-drns & _] (:impl obj)))
+(defmulti -get-policies interface-dispatch)
 
-(defmethod get-policies :default [_ db-or-drns & _]
+(defmethod -get-policies :default [_ _]
   (throw (ex-info "Not Implemented" {:anomaly/category ::not-implemented})))
 
+(defn get-policies
+  [ctx argm]
+  (-get-policies ctx argm))
 
-(defmulti get-resource-policies (fn [obj db-or-drns & _] (:impl obj)))
+(defmulti -upsert-policies interface-dispatch)
 
-(defmethod get-resource-policies :default [_ db-or-drns & _]
+(defmethod -upsert-policies :default [_ _]
   (throw (ex-info "Not Implemented" {:anomaly/category ::not-implemented})))
 
+(defn upsert-policies
+  [ctx argm]
+  (-upsert-policies ctx argm))
 
-(defmulti get-identity-policies (fn [obj db-or-drns & _] (:impl obj)))
+(defmulti -add-statements interface-dispatch)
 
-(defmethod get-identity-policies :default [_ db-or-drns & _]
+(defmethod -add-statements :default [_ _]
   (throw (ex-info "Not Implemented" {:anomaly/category ::not-implemented})))
 
+(defn add-statements
+  [ctx argm]
+  (-add-statements ctx argm))
 
-(defmulti upsert-resource-policies (fn [obj policies] (:impl obj)))
+(defmulti -retract-statements interface-dispatch)
 
-(defmethod upsert-resource-policies :default [_ policies]
+(defmethod -retract-statements :default [_ _]
   (throw (ex-info "Not Implemented" {:anomaly/category ::not-implemented})))
 
+(defn retract-statements
+  [ctx argm]
+  (-retract-statements ctx argm))
 
-(defmulti upsert-identity-policies (fn [obj policies] (:impl obj)))
+(defmulti -retract-policies interface-dispatch)
 
-(defmethod upsert-identity-policies :default [_ policies]
+(defmethod -retract-policies :default [_ _]
   (throw (ex-info "Not Implemented" {:anomaly/category ::not-implemented})))
 
-(defmulti add-identity-statements (fn [obj _add-identity-statements-input] (:impl obj)))
-
-(defmethod add-identity-statements :default [_ _add-identity-statements-input]
-  (throw (ex-info "Not Implemented" {:anomaly/category ::not-implemented})))
-
-(defmulti add-resource-statements (fn [obj _add-resource-statements-input] (:impl obj)))
-
-(defmethod add-resource-statements :default [_ _add-resource-statements-input]
-  (throw (ex-info "Not Implemented" {:anomaly/category ::not-implemented})))
-
-(defmulti retract-statements (fn [obj _retract-statements-input] (:impl obj)))
-
-(defmethod retract-statements :default [_ _retract-statements-input]
-  (throw (ex-info "Not Implemented" {:anomaly/category ::not-implemented})))
-
-(defmulti retract-policies (fn [obj drns] (:impl obj)))
-
-(defmethod retract-policies :default [_ drns]
-  (throw (ex-info "Not Implemented" {:anomaly/category ::not-implemented})))
+(defn retract-policies
+  [ctx argm]
+  (-retract-policies ctx argm))

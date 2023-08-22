@@ -21,4 +21,6 @@
  [:env/db-url :system-utils.env/var]
  {:var :saku-db-url}
 
- 'DB_URL #ig/ref :env/db-url}
+ 'DB_URL #ig/ref :env/db-url
+
+ 'HTTP_JOIN true}

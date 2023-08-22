@@ -4,9 +4,7 @@
  ;; Schemas
  ;; ------------------------------
 
- :saku.system.datalevin/schema          :init
-
- :system-lacinia.graphql/schema         {:resource "schemas/graphql.edn"}
+ :saku.system.datalevin/schema :init
 
 
  ;; ------------------------------
@@ -14,9 +12,9 @@
  ;; ------------------------------
 
  :saku.system.datalevin/conn
- {:url 'DB_URL
+ {:url    'DB_URL
   :schema #ig/ref :saku.system.datalevin/schema
-  :seed #ig/ref :saku.system.seed/seed}
+  :seed   #ig/ref :saku.system.seed/seed}
 
  :saku.system.seed/seed
  :init
@@ -35,40 +33,7 @@
  ;; API Stuff
  ;; ------------------------------
 
- :system-lacinia.graphql/log-interceptor :init
-
- :system-lacinia.graphql/correlation-id-interceptor :init
-
- :system-lacinia.graphql/error-handling-interceptor :init
-
- :saku.system.graphql-resolvers/resolvers
- {:dal-obj #ig/ref :saku.system.dal/dal-obj
-  :access-key 'ACCESS_KEY
-  :version 'VERSION_SYSTEM}
-
- :saku.system.graphql-resolvers/entity-resolvers
- {:dal-obj #ig/ref :saku.system.dal/dal-obj}
-
- :system-lacinia.graphql/compiled-schema
- {:sdl-schema #ig/ref :system-lacinia.graphql/schema
-  :resolvers #ig/ref :saku.system.graphql-resolvers/resolvers
-  :entity-resolvers #ig/ref :saku.system.graphql-resolvers/entity-resolvers}
-
- :system-lacinia.graphql/interceptors
- {:compiled-schema #ig/ref :system-lacinia.graphql/compiled-schema
-  :interceptors [#ig/ref :system-lacinia.graphql/log-interceptor
-                 #ig/ref :system-lacinia.graphql/correlation-id-interceptor
-                 #ig/ref :system-lacinia.graphql/error-handling-interceptor]}
-
- :system-lacinia.graphql/routes
- {:graphiql? true
-  :interceptors #ig/ref :system-lacinia.graphql/interceptors}
-
- :system-lacinia.graphql/service
- {:graphiql? true
-  :compiled-schema #ig/ref :system-lacinia.graphql/compiled-schema
-  :routes #ig/ref :system-lacinia.graphql/routes}
-
- :system-lacinia.http/server
- {:base-service #ig/ref :system-lacinia.graphql/service
-  :port 'PORT}}
+ :handler/ring                 {:saku.system.dal/dal-obj #ig/ref :saku.system.dal/dal-obj}
+ :saku.system/server           {:handler    #ig/ref :handler/ring
+                                :jetty-opts {:port  'PORT
+                                             :join? 'HTTP_JOIN}}}

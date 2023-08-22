@@ -2,10 +2,9 @@
   (:require [clojure.java.io :as io]
             [clojure.walk :as walk]
             [datalevin.core :as d]
+            [saku.dal-datalevin :as dal-impl]
             [saku.system.datalevin :as db-sys]
-            [saku.system.seed :as seed-sys])
-  (:import (java.nio.file Files)
-           (java.nio.file.attribute FileAttribute)))
+            [saku.system.seed :as seed-sys]))
 
 (defn create-temp-dir []
   (Files/createTempDirectory "saku-policy-store"
@@ -35,6 +34,12 @@
            ~@body)
          (finally
            (d/close conn#))))))
+
+(defmacro with-dal-ctx [[binding opts] & body]
+  `(with-conn [conn#]
+     (let [dal-obj# (dal-impl/dal-obj {:db-conn conn#})
+           ~binding {:dal-obj dal-obj#}]
+       ~@body)))
 
 
 (defn sanitize-from-db [entry]
