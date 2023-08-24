@@ -1,6 +1,6 @@
 {
   "name": "saku-core",
-  "version": "23.8.0",
+  "version": "23.8.1",
   "description": "",
   "type": "commonjs",
   "main": "target/index.js",

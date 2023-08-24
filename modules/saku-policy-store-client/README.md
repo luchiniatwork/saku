@@ -6,7 +6,7 @@ On your `deps.edn`:
 
 ``` clojure
 {...
- :deps {net.clojars.luchiniatwork/saku-policy-store-client {:mvn/version "23.8.0"}}
+ :deps {net.clojars.luchiniatwork/saku-policy-store-client {:mvn/version "23.8.1"}}
 ```
 
 For TypeScript/JavaScript:

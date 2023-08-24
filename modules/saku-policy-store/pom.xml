@@ -4,7 +4,7 @@
   <packaging>jar</packaging>
   <groupId>saku-policy-store</groupId>
   <artifactId>saku-policy-store</artifactId>
-  <version>23.8.0</version>
+  <version>23.8.1</version>
   <name>saku-policy-store</name>
   <dependencies>
     <dependency>
