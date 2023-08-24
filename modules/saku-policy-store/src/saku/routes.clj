@@ -152,6 +152,14 @@
                   (fn [request]
                     (handler (assoc request :saku/ctx ctx))))})
 
+(def wrap-request-id
+  {:name        ::request-id
+   :description "Add request-id to the log mdc"
+   :wrap        (fn [handler]
+                  (fn [request]
+                    (log/with-context+ {:request_id (random-uuid)}
+                      (handler request))))})
+
 (defn exception-handler [message status exception request]
   (when (>= status 500)
     ;; You can optionally use this to report error to an external service
@@ -175,7 +183,8 @@
    :muuntaja   (-> muuntaja/default-options
                  (update :formats select-keys ["application/json"])
                  muuntaja/create)
-   :middleware [[wrap-ctx ctx]
+   :middleware [wrap-request-id
+                [wrap-ctx ctx]
                 ;; query-params & form-params
                 parameters/parameters-middleware
                 ;; content-negotiation
