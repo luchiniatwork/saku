@@ -3,8 +3,7 @@
             [clojure.walk :as walk]
             [datalevin.core :as d]
             [saku.dal-datalevin :as dal-impl]
-            [saku.system.datalevin :as db-sys]
-            [saku.system.seed :as seed-sys]))
+            [saku.system.datalevin :as db-sys]))
 
 (defn create-temp-dir []
   (Files/createTempDirectory "saku-policy-store"
@@ -28,7 +27,7 @@
 
 (defmacro with-conn [spec & body]
   `(with-temp-dir [dir#]
-     (let [conn# (db-sys/conn (.toString dir#) (db-sys/schema) (seed-sys/seed))]
+     (let [conn# (db-sys/conn (.toString dir#) (db-sys/schema) db-sys/db-seed)]
        (try
          (let [~(first spec) conn#]
            ~@body)

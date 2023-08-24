@@ -13,12 +13,7 @@
 
  :saku.system.datalevin/conn
  {:url    'DB_URL
-  :schema #ig/ref :saku.system.datalevin/schema
-  :seed   #ig/ref :saku.system.seed/seed}
-
- :saku.system.seed/seed
- :init
-
+  :schema #ig/ref :saku.system.datalevin/schema}
 
 
  ;; ------------------------------

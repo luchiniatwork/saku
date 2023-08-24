@@ -3,6 +3,10 @@
             [taoensso.timbre :refer [debug info warn error fatal report] :as timbre]
             [datalevin.core :as d]))
 
+(def db-seed
+  "Data necessary for Saku to function."
+  [{:effect :deny}
+   {:effect :allow}])
 
 (defn schema []
   {:effect {:db/valueType :db.type/keyword
@@ -41,10 +45,10 @@
     conn))
 
 
-(defmethod ig/init-key ::conn [_ {:keys [schema seed url]}]
+(defmethod ig/init-key ::conn [_ {:keys [schema url]}]
   (info {:msg "Initializing Datalevin Connection"
          :url url})
-  (conn url schema seed))
+  (conn url schema db-seed))
 
 
 (defmethod ig/halt-key! ::conn [_ conn]
