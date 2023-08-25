@@ -3,7 +3,9 @@
             [clojure.walk :as walk]
             [datalevin.core :as d]
             [saku.dal-datalevin :as dal-impl]
-            [saku.system.datalevin :as db-sys]))
+            [saku.system.datalevin :as db-sys])
+  (:import (java.nio.file Files)
+           (java.nio.file.attribute FileAttribute)))
 
 (defn create-temp-dir []
   (Files/createTempDirectory "saku-policy-store"
