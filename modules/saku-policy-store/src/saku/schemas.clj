@@ -1,6 +1,8 @@
 (ns saku.schemas
+  "Malli schemas for all Saku API operations."
   (:require
     [camel-snake-kebab.core :as csk]
+    [clojure.string :as str]
     [malli.core :as m]
     [malli.transform :as mt]
     [malli.util :as mu]))
@@ -69,15 +71,32 @@
     [:map
      [:resources {:output-k :statement/resources} [:sequential string?]]]))
 
+(defn unique-sids?
+  [statements]
+  ;; we ignore `nil` sids since those do not need to be unique
+  (let [sids (keep :sid statements)]
+    (= (distinct sids) sids)))
+
+(def UniqueSids
+  [:fn {:error/fn (fn [{:keys [value]} _]
+                    (str "policy must have unique statement ids, got duplicate `sid`s: " (str/join ", " (keep :sid value))))}
+   unique-sids?])
+
 (def ResourcePolicyInput
   [:map
    [:drn {:output-k :policy/drn} string?]
-   [:statements {:output-k :policy/statements} [:sequential {:min 1} ResourceStatementInput]]])
+   [:statements {:output-k :policy/statements}
+    [:and
+     [:sequential {:min 1} ResourceStatementInput]
+     UniqueSids]]])
 
 (def IdentityPolicyInput
   [:map
    [:drn {:output-k :policy/drn} string?]
-   [:statements {:output-k :policy/statements} [:sequential {:min 1} IdentityStatementInput]]])
+   [:statements {:output-k :policy/statements}
+    [:and
+     [:sequential {:min 1} IdentityStatementInput]
+     UniqueSids]]])
 
 (def UpsertPoliciesInput
   [:multi {:dispatch :policyType}
