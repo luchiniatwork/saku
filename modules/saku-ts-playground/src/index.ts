@@ -1,6 +1,6 @@
 import * as saku from "saku-policy-store-client";
 
-const client = saku.client({url: "http://localhost:8080"})
+const client = saku.client({url: "http://localhost:8080", debug: true})
 
 const identityPolicy1 = await saku.upsertIdentityPolicies(client, {
     policies: [{

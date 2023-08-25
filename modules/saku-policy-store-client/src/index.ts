@@ -137,14 +137,17 @@ export type EvaluateManyOutput = EvaluationResultSet[]
 
 interface ClientArgm {
     url: string
+    debug?: boolean
 }
 
 class Client {
     public readonly url: string
+    public readonly debug: boolean
 
     constructor(argm: ClientArgm) {
-        const { url } = argm
+        const { url, debug } = argm
         this.url = url
+        this.debug = debug ?? false
     }
 }
 
@@ -164,10 +167,20 @@ async function send<RequestData, ResponseData>(
         request: RequestData
     }
 ): Promise<ResponseData | Error> {
+    const debug = client.debug
+
     const { op, request } = argm
 
     try {
-        const response = await fetch(`${client.url}/api/${op}`, {
+        const url = `${client.url}/api/${op}`
+
+        if (debug) {
+            console.debug(
+                `[SAKU] fetch - ${JSON.stringify({ url, request }, null, 2)}`
+            )
+        }
+
+        const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json;charset=UTF-8',
@@ -175,6 +188,14 @@ async function send<RequestData, ResponseData>(
             body: JSON.stringify(request),
         })
         const { status } = response
+
+        if (debug) {
+            console.debug(
+                `[SAKU] response - ${status} request-id:${response.headers.get(
+                    'x-request-id'
+                )}`
+            )
+        }
 
         if (status === 200) {
             return (await response.json()) as ResponseData
