@@ -13,7 +13,7 @@
     [saku.core :as core]
     [saku.dal-interface :as dal]
     [saku.schemas :as schemas]
-    [taoensso.timbre :as log]))
+    [kwill.logger :as log]))
 
 (defn health-handler
   [_]
@@ -163,7 +163,8 @@
 (defn exception-handler [message status exception request]
   (when (>= status 500)
     ;; You can optionally use this to report error to an external service
-    (log/error exception))
+    (log/error {:msg       "Encountered error while processing request."
+                :throwable exception}))
   {:status status
    :body   {:message   message
             :exception (.getName (.getClass exception))}})

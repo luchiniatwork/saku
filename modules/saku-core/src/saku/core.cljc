@@ -1,6 +1,6 @@
 (ns saku.core
   (:require [saku.utils :as utils]
-            [taoensso.timbre :refer [debug info warn error fatal report]]))
+            [kwill.logger :as log]))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -11,7 +11,7 @@
                                           drn
                                           resource-policy
                                           identity-policies-map] :as request}]
-  (debug {:msg "Evaluating explicit deny"})
+  (log/debug {:msg "Evaluating explicit deny"})
   (or (some (fn [{:keys [actions identities effect]:as statement}]
               (and (= :DENY (keyword effect))
                    (utils/star-match-one-to-many action actions)
@@ -29,12 +29,12 @@
                                                drn
                                                resource-policy
                                                identity-policies-map] :as request}]
-  (debug {:msg "Evaluating resource-based explicit allow"
-          :action action
-          :drn drn
-          :resource-policy resource-policy
-          :identity-drns (keys identity-policies-map)
-          :identity-policies-map identity-policies-map})
+  (log/debug {:msg                   "Evaluating resource-based explicit allow"
+              :action                action
+              :drn                   drn
+              :resource-policy       resource-policy
+              :identity-drns         (keys identity-policies-map)
+              :identity-policies-map identity-policies-map})
   (some (fn [{:keys [actions identities effect]:as statement}]
           (and (= :ALLOW (keyword effect))
                (utils/star-match-one-to-many action actions)
@@ -45,12 +45,12 @@
                                                drn
                                                resource-policy
                                                identity-policies-map] :as request}]
-  (debug {:msg "Evaluating identity-based explicit allow"
-          :action action
-          :drn drn
-          :resource-policy resource-policy
-          :identity-drns (keys identity-policies-map)
-          :identity-policies-map identity-policies-map})
+  (log/debug {:msg                   "Evaluating identity-based explicit allow"
+              :action                action
+              :drn                   drn
+              :resource-policy       resource-policy
+              :identity-drns         (keys identity-policies-map)
+              :identity-policies-map identity-policies-map})
   (some (fn [[identity-drn identity-policy]]
           (some (fn [{:keys [actions resources effect]:as statement}]
                   (and (= :ALLOW (keyword effect))
@@ -64,27 +64,27 @@
                             drn
                             resource-policy
                             identity-policies-map] :as request}]
-  (debug {:msg "Evaluating effect"
-          :action action
-          :drn drn
-          :identity-drns (keys identity-policies-map)
-          :resource-policy resource-policy
-          :identity-policies-map identity-policies-map})
+  (log/debug {:msg                   "Evaluating effect"
+              :action                action
+              :drn                   drn
+              :identity-drns         (keys identity-policies-map)
+              :resource-policy       resource-policy
+              :identity-policies-map identity-policies-map})
   (cond
     (deny-evaluation? request)
-    (do (debug {:msg "Effect: explicit DENY" :effect :DENY :nature :EXPLICIT})
+    (do (log/debug {:msg "Effect: explicit DENY" :effect :DENY :nature :EXPLICIT})
         {:effect :DENY :nature :EXPLICIT})
 
     (resource-based-allow? request)
-    (do (debug {:msg "Effect: explicit resource-based ALLOW" :effect :ALLOW :nature :EXPLICIT})
+    (do (log/debug {:msg "Effect: explicit resource-based ALLOW" :effect :ALLOW :nature :EXPLICIT})
         {:effect :ALLOW :nature :EXPLICIT})
 
     (identity-based-allow? request)
-    (do (debug {:msg "Effect: explicit identity-based ALLOW" :effect :ALLOW :nature :EXPLICIT})
+    (do (log/debug {:msg "Effect: explicit identity-based ALLOW" :effect :ALLOW :nature :EXPLICIT})
         {:effect :ALLOW :nature :EXPLICIT})
 
     :else
-    (do (debug {:msg "Effect: implicit DENY" :effect :DENY :nature :IMPLICIT})
+    (do (log/debug {:msg "Effect: implicit DENY" :effect :DENY :nature :IMPLICIT})
         {:effect :DENY :nature :IMPLICIT})))
 
 (defn evaluate-many [{:keys [action

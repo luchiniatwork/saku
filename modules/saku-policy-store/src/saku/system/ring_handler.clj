@@ -1,7 +1,7 @@
 (ns saku.system.ring-handler
   (:require
     [integrant.core :as ig]
-    [taoensso.timbre :as log]
+    [kwill.logger :as log]
     [saku.routes :as routes]
     [reitit.ring]))
 

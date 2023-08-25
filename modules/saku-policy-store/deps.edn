@@ -1,36 +1,37 @@
 {:paths ["src" "resources"]
 
- :deps  {org.clojure/clojure                       {:mvn/version "1.11.1"}
+ :deps  {org.clojure/clojure                           {:mvn/version "1.11.1"}
 
          ;; Database
-         datalevin/datalevin                       {:mvn/version "0.8.19"}
-         com.cognitect/transit-clj                 {:mvn/version "1.0.333"}
+         datalevin/datalevin                           {:mvn/version "0.8.19"}
+         com.cognitect/transit-clj                     {:mvn/version "1.0.333"}
 
          ;; http
-         metosin/reitit-core                       {:mvn/version "0.7.0-alpha5"}
-         metosin/reitit-ring                       {:mvn/version "0.7.0-alpha5"}
-         metosin/reitit-malli                      {:mvn/version "0.7.0-alpha5"}
-         metosin/reitit-middleware                 {:mvn/version "0.7.0-alpha5"}
-         ring/ring-jetty-adapter                   {:mvn/version "1.10.0"}
+         metosin/reitit-core                           {:mvn/version "0.7.0-alpha5"}
+         metosin/reitit-ring                           {:mvn/version "0.7.0-alpha5"}
+         metosin/reitit-malli                          {:mvn/version "0.7.0-alpha5"}
+         metosin/reitit-middleware                     {:mvn/version "0.7.0-alpha5"}
+         ring/ring-jetty-adapter                       {:mvn/version "1.10.0"}
 
 
          ;; System components
-         net.clojars.luchiniatwork/system-datahike {:mvn/version "0.0.8"}
-         net.clojars.luchiniatwork/system-utils    {:mvn/version "0.0.6"}
+         net.clojars.luchiniatwork/system-datahike     {:mvn/version "0.0.8"}
+         net.clojars.luchiniatwork/system-utils        {:mvn/version "0.0.6"}
 
          ;; Saku Core
-         net.clojars.luchiniatwork/saku-core       {:mvn/version "23.8.1"}
+         net.clojars.luchiniatwork/saku-core           {:mvn/version "23.8.1"}
 
          ;; Utilities
-         metosin/malli                             {:mvn/version "0.11.0"}
-         camel-snake-kebab/camel-snake-kebab       {:mvn/version "0.4.3"}
-         luchiniatwork/ambiente                    {:mvn/version "0.1.4"}
-         net.clojars.luchiniatwork/anomalies       {:mvn/version "0.0.2"}
-         luchiniatwork/orzo                        {:mvn/version "23.2.5"}
+         metosin/malli                                 {:mvn/version "0.11.0"}
+         camel-snake-kebab/camel-snake-kebab           {:mvn/version "0.4.3"}
+         luchiniatwork/ambiente                        {:mvn/version "0.1.4"}
+         net.clojars.luchiniatwork/anomalies           {:mvn/version "0.0.2"}
+         luchiniatwork/orzo                            {:mvn/version "23.2.5"}
 
          ;; Logging
-         com.taoensso/timbre                       {:mvn/version "6.2.2"}
-         com.fzakaria/slf4j-timbre                 {:mvn/version "0.4.0"}}
+         dev.kwill/logger                              {:mvn/version "1.0.1"}
+         ch.qos.logback/logback-classic                {:mvn/version "1.4.11"}
+         net.logstash.logback/logstash-logback-encoder {:mvn/version "7.4"}}
 
  :aliases
  {:dev     {:extra-paths ["dev"]

@@ -3,7 +3,7 @@
     [integrant.core :as ig]
     [ring.adapter.jetty :as jetty]
     [saku.system.ring-handler]
-    [taoensso.timbre :as log]))
+    [kwill.logger :as log]))
 
 (defmethod ig/init-key :saku.system/server
   [_ {:keys [handler jetty-opts]}]
