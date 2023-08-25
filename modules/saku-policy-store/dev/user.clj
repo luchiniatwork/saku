@@ -3,7 +3,6 @@
             [integrant.core :as ig]
             [integrant.repl :refer [clear go halt prep init reset reset-all]]
             [saku.main]
-            [sc.api]
             [saku.dal-interface :as dal]
             [^:keep saku.dal-datalevin]
             [system-utils.initializer :as system]))
