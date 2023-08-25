@@ -148,6 +148,11 @@ class Client {
     }
 }
 
+/**
+ * Returns a new `Client` object for use in API calls.
+ * @param argm The client argument map.
+ * @param argm.url The host url for saku-policy-store
+ */
 export function client(argm: ClientArgm) {
     return new Client(argm)
 }
@@ -207,6 +212,12 @@ async function send<RequestData, ResponseData>(
     }
 }
 
+/**
+ * Returns the set of policies for `drns`.
+ *
+ * @param client the client for this api interaction
+ * @param argm
+ */
 export async function describePolicies(
     client: Client,
     argm: DescribePoliciesInput
@@ -217,6 +228,14 @@ export async function describePolicies(
     })
 }
 
+/**
+ * Updates or inserts the `policies` specified. If a policy exists, the policy
+ * data will be replaced with the data passed here. If the policy does not exist,
+ * a new policy will be created.
+ *
+ * @param client the client for this api interaction
+ * @param argm
+ */
 export async function upsertResourcePolicies(
     client: Client,
     argm: UpsertResourcePoliciesInput
@@ -233,6 +252,14 @@ export async function upsertResourcePolicies(
     })
 }
 
+/**
+ * Updates or inserts the `policies` specified. If a policy exists, the policy
+ * data will be replaced with the data passed here. If the policy does not exist,
+ * a new policy will be created.
+ *
+ * @param client the client for this api interaction
+ * @param argm
+ */
 export async function upsertIdentityPolicies(
     client: Client,
     argm: UpsertIdentityPoliciesInput
@@ -249,6 +276,15 @@ export async function upsertIdentityPolicies(
     })
 }
 
+/**
+ * Adds or updates statements for the specified `policy`. Statements without a
+ * `sid` will be added to the policy. Statements with a `sid` will be added if
+ * a statement with the `sid` does not already exist in the policy, otherwise
+ * the existing statement will be replaced.
+ *
+ * @param client the client for this api interaction
+ * @param argm
+ */
 export async function addIdentityStatements(
     client: Client,
     argm: AddIdentityStatementsInput
@@ -265,6 +301,15 @@ export async function addIdentityStatements(
     })
 }
 
+/**
+ * Adds or updates statements for the specified `policy`. Statements without a
+ * `sid` will be added to the policy. Statements with a `sid` will be added if
+ * a statement with the `sid` does not already exist in the policy, otherwise
+ * the existing statement will be replaced.
+ *
+ * @param client the client for this api interaction
+ * @param argm
+ */
 export async function addResourceStatements(
     client: Client,
     argm: AddResourceStatementsInput
@@ -281,6 +326,14 @@ export async function addResourceStatements(
     })
 }
 
+/**
+ * Removes statement IDs `sids` from the policy identified by `drn`. If the `sid`
+ * does not exist, nothing will happen. If the `sid` exists, it will be entirely
+ * removed from the policy.
+ *
+ * @param client the client for this api interaction
+ * @param argm
+ */
 export async function retractStatements(
     client: Client,
     argm: RetractStatementsInput
@@ -291,6 +344,12 @@ export async function retractStatements(
     })
 }
 
+/**
+ * Removes the policies identified by `drns`.
+ *
+ * @param client the client for this api interaction
+ * @param argm
+ */
 export async function retractPolicies(
     client: Client,
     argm: RetractPoliciesInput
@@ -301,6 +360,13 @@ export async function retractPolicies(
     })
 }
 
+/**
+ * Computes the effect for the given inputs.
+ * https://github.com/luchiniatwork/saku#effects
+ *
+ * @param client the client for this api interaction
+ * @param argm
+ */
 export async function evaluateOne(client: Client, argm: EvaluateOneInput) {
     return await send<EvaluateOneInput, EvaluateOneOutput>(client, {
         op: 'EvaluateOne',
@@ -308,6 +374,13 @@ export async function evaluateOne(client: Client, argm: EvaluateOneInput) {
     })
 }
 
+/**
+ * Computes the effect for the given inputs.
+ * https://github.com/luchiniatwork/saku#effects
+ *
+ * @param client the client for this api interaction
+ * @param argm
+ */
 export async function evaluateMany(client: Client, argm: EvaluateManyInput) {
     return await send<EvaluateManyInput, EvaluateManyOutput>(client, {
         op: 'EvaluateMany',
