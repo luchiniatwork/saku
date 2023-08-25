@@ -1,155 +1,92 @@
-import {
-  addIdentityStatements, addResourceStatements,
-  connect,
-  disconnect,
-  evaluateMany,
-  evaluateOne,
-  isIdentityPolicy,
-  isPolicyDocument,
-  isResourcePolicy,
-  policies,
-  PolicyDocument,
-  retractPolicies, retractStatements,
-  serverMeta,
-  upsertIdentityPolicies,
-  upsertResourcePolicies
-} from "saku-policy-store-client";
+import * as saku from "saku-policy-store-client";
 
-connect("http://localhost:8080/api");
+const client = saku.client({url: "http://localhost:8080"})
 
-// const meta = await serverMeta();
-// console.log(await serverMeta());
-
-// serverMeta().then((meta) => {
-//   console.log(`Connected to Saku Policy Store ${meta.version} on ${meta.environmentId}`);
-// });
-
-// upsertIdentityPolicies([{
-//   drn: "drn:policy:example:1",
-//   statements: [{
-//     effect: "ALLOW",
-//     actionIds: ["read"],
-//     resources: ["drn:resource:example:1"]
-//   }]
-// }]).then((result) => {
-//   console.log(`Upserted ${result.length} policies`);
-// }).catch((err) => {
-//   console.error("ERRRRRR", err);
-// });
-
-//upsertResourcePolicies
-
-Promise.all([
-  upsertIdentityPolicies([{
-    drn: "drn:identity:example:1",
-    statements: [{
-      effect: "ALLOW",
-      actionIds: ["read"],
-      resources: ["drn:resource:example:1"]
+const identityPolicy1 = await saku.upsertIdentityPolicies(client, {
+    policies: [{
+        drn: "drn:identity:example:1",
+        statements: [{
+            effect: "ALLOW",
+            actionIds: ["read"],
+            resources: ["drn:resource:example:1"]
+        }]
     }]
-  }]),
-  upsertResourcePolicies([{
-    drn: "drn:resource:example:1",
-    statements: [{
-      effect: "ALLOW",
-      actionIds: ["read"],
-      identities: ["drn:identity:example:1"]
-    }]
-  }]),
+})
+console.log("Identity policy", identityPolicy1)
 
-  addIdentityStatements({
-    drn: "drn:identity:example:1",
-    statements: [{
-      sid: "i1",
-      effect: "ALLOW",
-      actionIds: ["read"],
-      resources: ["drn:resource:example:2"]
+const resourcePolicy1 = await saku.upsertResourcePolicies(client, {
+    policies: [{
+        drn: "drn:resource:example:1",
+        statements: [{
+            effect: "ALLOW",
+            actionIds: ["read"],
+            identities: ["drn:identity:example:1"]
+        }]
     }]
-  }),
-  addResourceStatements({
-    drn: "drn:resource:example:2",
-    statements: [{
-      sid: "r1",
-      effect: "ALLOW",
-      actionIds: ["read"],
-      identities: ["drn:identity:example:1"]
-    }]
-  }),
-  retractStatements({
+})
+console.log("Resource policy", resourcePolicy1)
+
+const addIdentityStatement = await saku.addIdentityStatements(client, {
+    policy: {
+        drn: "drn:identity:example:1",
+        statements: [{
+            sid: "i1",
+            effect: "ALLOW",
+            actionIds: ["read"],
+            resources: ["drn:resource:example:2"]
+        }]
+    }
+})
+console.log("addIdentityStatement", addIdentityStatement)
+
+const addResourceStatement = await saku.addResourceStatements(client, {
+    policy: {
+        drn: "drn:resource:example:2",
+        statements: [{
+            sid: "r1",
+            effect: "ALLOW",
+            actionIds: ["read"],
+            identities: ["drn:identity:example:1"]
+        }]
+    }
+})
+console.log("addResourceStatement", addResourceStatement)
+
+const retractIdentityStatement = await saku.retractStatements(client, {
     drn: "drn:identity:example:1",
     statementIds: ["i1"]
-  }),
-  retractStatements({
+})
+console.log("retractIdentityStatement", retractIdentityStatement)
+
+const retractResourceStatement = await saku.retractStatements(client, {
     drn: "drn:resource:example:2",
     statementIds: ["r1"]
-  }),
+})
+console.log("retractResourceStatement", retractResourceStatement)
 
-
-  evaluateOne({
+const evaluateOneResourceAllow = await saku.evaluateOne(client, {
     drn: "drn:resource:example:1",
     actionId: "read",
     identities: ["drn:identity:example:1"]
-  }),
+})
+console.log("evaluateOneResourceAllow", evaluateOneResourceAllow)
 
-  evaluateOne({
+const evaluateOneResourceDeny = await saku.evaluateOne(client, {
     drn: "drn:resource:example:1",
     actionId: "read2",
     identities: ["drn:identity:example:1"]
-  }),
+})
+console.log("evaluateOneResourceDeny", evaluateOneResourceDeny)
 
-  evaluateMany({
+const evaluateManyResources = await saku.evaluateMany(client, {
     drns: ["drn:resource:example:1", "drn:resource:example:2"],
     actionId: "read2",
     identities: ["drn:identity:example:1"]
-  }),
-
-  policies(["drn:resource:example:1", "drn:identity:example:1"]),
-  // policies(["drn:policy:example:1", "drn:policy:example:2"]),
-  //retractPolicies(["drn:identity:example:1", "drn:resource:example:1"])
-]).then((data) => {
-    console.log("done", data);
-    console.log(JSON.stringify(data[data.length - 1], null, 2));
-
-    if (data[data.length - 1]) {
-      const my_policies = data[data.length - 1] as PolicyDocument[];
-      console.log("ummm", my_policies[0]);
-      const x = my_policies[0];
-      my_policies.map((p) => {
-        console.log("p", p, isPolicyDocument(p), isIdentityPolicy(p), isResourcePolicy(p));
-      });
-    }
-
-  }).catch((err) => {
-    console.error("ERRRRRR", err);
-  });
+})
+console.log("evaluateManyResources", evaluateManyResources)
 
 
-// Promise.all([
-//   upsertIdentityPolicies([{
-//     drn: "drn:identity:example:1",
-//     statements: [{
-//       effect: "ALLOW",
-//       actionIds: ["read"],
-//       resources: ["drn:resource:example:1"]
-//     }]
-//   }]),
-//   upsertResourcePolicies([{
-//     drn: "drn:resource:example:1",
-//     statements: [{
-//       effect: "ALLOW",
-//       actionIds: ["read"],
-//       identities: ["drn:identity:example:1"]
-//     }]
-//   }])
-// ]).then((data) => {
-//   console.log("done", data);
-// }).catch((err) => {
-//   console.error("ERRRRRR", err);
-// });
-
-
-// (async function () {  
-// })().then(() => {
-// });
-
-disconnect();
+const policies = await saku.describePolicies(client, {
+    drns: ["drn:resource:example:1", "drn:identity:example:1"]
+})
+console.log("policies", policies)

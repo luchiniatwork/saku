@@ -19,7 +19,7 @@
          net.clojars.luchiniatwork/system-utils        {:mvn/version "0.0.6"}
 
          ;; Saku Core
-         net.clojars.luchiniatwork/saku-core           {:mvn/version "23.8.1"}
+         net.clojars.luchiniatwork/saku-core           {:local/root "../saku-core"}
 
          ;; Utilities
          metosin/malli                                 {:mvn/version "0.11.0"}
