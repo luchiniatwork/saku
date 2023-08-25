@@ -143,16 +143,17 @@
    :description "Add request-id to the log mdc"
    :wrap        (fn [handler]
                   (fn [request]
-                    (log/with-context+ {:request_id (random-uuid)}
-                      (log/info {:msg            "Received request"
-                                 :uri            (:uri request)
-                                 :request-method (:request-method request)
-                                 :host           (get-in request [:headers "host"])
-                                 :user-agent     (get-in request [:headers "user-agent"])})
-                      (let [response (handler request)]
-                        (log/info {:msg    "Finished request"
-                                   :status (:status response)})
-                        response))))})
+                    (let [request-id (str (random-uuid))]
+                      (log/with-context+ {:request_id request-id}
+                        (log/info {:msg            "Received request"
+                                   :uri            (:uri request)
+                                   :request-method (:request-method request)
+                                   :host           (get-in request [:headers "host"])
+                                   :user-agent     (get-in request [:headers "user-agent"])})
+                        (let [response (handler request)]
+                          (log/info {:msg    "Finished request"
+                                     :status (:status response)})
+                          (assoc-in response [:headers "x-request-id"] request-id))))))})
 
 (defn exception-handler [message status exception request]
   (when (>= status 500)
