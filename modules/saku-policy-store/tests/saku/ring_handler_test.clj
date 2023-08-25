@@ -123,9 +123,9 @@
 
       (testing "RetractStatements"
         (is (= {:status      200
-                :body-params (assoc user1-policy
-                               :statements [(assoc user1-statement
-                                              :actionIds ["a5" "a6" "a8"])])}
+                :body-params {:policy (assoc user1-policy
+                                        :statements [(assoc user1-statement
+                                                       :actionIds ["a5" "a6" "a8"])])}}
               (req! handler
                 :op "RetractStatements"
                 :json {:drn          "user1"

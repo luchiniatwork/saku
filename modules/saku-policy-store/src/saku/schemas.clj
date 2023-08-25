@@ -166,7 +166,8 @@
    [:statementIds {:output-k :statement-ids} [:sequential string?]]])
 
 (def RetractStatementsOutput
-  IdentityOrResourcePolicyOutput)
+  [:map
+   [:policy IdentityOrResourcePolicyOutput]])
 
 (def DescribePoliciesInput
   [:map
