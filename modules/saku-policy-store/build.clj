@@ -2,7 +2,7 @@
   (:require [clojure.tools.build.api :as b]))
 
 (def class-dir "target/classes")
-(def basis (b/create-basis {:project "deps.edn"}))
+(def basis (b/create-basis {}))
 (def uber-file "target/saku-policy-store.jar")
 
 (defn clean [_]
@@ -10,7 +10,7 @@
 
 (defn uber [_]
   (clean nil)
-  (b/copy-dir {:src-dirs   ["src" "resources"]
+  (b/copy-dir {:src-dirs   ["src" "resources" "resources-prod"]
                :target-dir class-dir})
   (b/compile-clj {:basis     basis
                   :src-dirs  ["src"]

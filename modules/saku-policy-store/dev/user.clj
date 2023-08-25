@@ -2,6 +2,7 @@
   (:require [datalevin.core :as d]
             [integrant.core :as ig]
             [integrant.repl :refer [clear go halt prep init reset reset-all]]
+            [saku.main]
             [saku.dal-interface :as dal]
             [^:keep saku.dal-datalevin]
             [system-utils.initializer :as system]))
@@ -29,10 +30,10 @@
 
 
   
-  (dal/retract-policies (conn) ["1" "2" "drn2" "user1" "user2" "drn1"])
+  (dal/-retract-policies (conn) ["1" "2" "drn2" "user1" "user2" "drn1"])
 
 
-  (dal/get-policies (d/db (conn)) ["drn2" "drn1"])
+  (dal/-get-policies (d/db (conn)) ["drn2" "drn1"])
 
   (dal/get-resource-policies (d/db (conn)) ["drn2"])
 

@@ -1,62 +1,65 @@
 {:paths ["src" "resources"]
 
- :deps {org.clojure/clojure                             {:mvn/version "1.11.1"}
-        org.clojure/core.async                          {:mvn/version "1.5.648"}
+ :deps  {org.clojure/clojure                           {:mvn/version "1.11.1"}
 
-        ;; Database
-        datalevin/datalevin                             {:mvn/version "0.8.4"}
-        com.cognitect/transit-clj                       {:mvn/version "1.0.329"}
+         ;; Database
+         datalevin/datalevin                           {:mvn/version "0.8.19"}
+         com.cognitect/transit-clj                     {:mvn/version "1.0.333"}
 
-        ;; System components
-        net.clojars.luchiniatwork/system-datahike       {:mvn/version "0.0.7"}
-        net.clojars.luchiniatwork/system-utils          {:mvn/version "0.0.6"}
-        net.clojars.luchiniatwork/system-lacinia        {:mvn/version "0.0.5"}
+         ;; http
+         metosin/reitit-core                           {:mvn/version "0.7.0-alpha5"}
+         metosin/reitit-ring                           {:mvn/version "0.7.0-alpha5"}
+         metosin/reitit-malli                          {:mvn/version "0.7.0-alpha5"}
+         metosin/reitit-middleware                     {:mvn/version "0.7.0-alpha5"}
+         ring/ring-jetty-adapter                       {:mvn/version "1.10.0"}
 
-        ;; Saku Core
-        net.clojars.luchiniatwork/saku-core             {:mvn/version "23.8.1"}
 
-        ;; Utilities
-        com.walmartlabs/lacinia                         {:mvn/version "1.2.1"}
-        metosin/jsonista                                {:mvn/version "0.3.5"}
-        metosin/malli                                   {:mvn/version "0.10.1"}
-        camel-snake-kebab/camel-snake-kebab             {:mvn/version "0.4.2"}
-        borkdude/edamame                                {:mvn/version "0.0.19"}
-        luchiniatwork/ambiente                          {:mvn/version "0.1.4"}
-        net.clojars.luchiniatwork/anomalies             {:mvn/version "0.0.2"}
-        luchiniatwork/orzo                              {:mvn/version "23.2.5"}
-        com.taoensso/timbre                             {:mvn/version "6.1.0"}
-        com.fzakaria/slf4j-timbre                       {:mvn/version "0.3.21"}}
+         ;; System components
+         net.clojars.luchiniatwork/system-datahike     {:mvn/version "0.0.8"}
+         net.clojars.luchiniatwork/system-utils        {:mvn/version "0.0.6"}
+
+         ;; Saku Core
+         net.clojars.luchiniatwork/saku-core           {:local/root "../saku-core"}
+
+         ;; Utilities
+         metosin/malli                                 {:mvn/version "0.11.0"}
+         camel-snake-kebab/camel-snake-kebab           {:mvn/version "0.4.3"}
+         luchiniatwork/ambiente                        {:mvn/version "0.1.4"}
+         net.clojars.luchiniatwork/anomalies           {:mvn/version "0.0.2"}
+         luchiniatwork/orzo                            {:mvn/version "23.2.5"}
+
+         ;; Logging
+         dev.kwill/logger                              {:mvn/version "1.0.1"}
+         ch.qos.logback/logback-classic                {:mvn/version "1.4.11"}
+         net.logstash.logback/logstash-logback-encoder {:mvn/version "7.4"}}
 
  :aliases
- {:dev {:extra-paths ["dev"]
-        :extra-deps
-        {integrant/repl                                 {:mvn/version "0.3.2"}}}
+ {:dev     {:extra-paths ["dev"]
+            :extra-deps
+            {integrant/repl {:mvn/version "0.3.3"}}}
 
-  :build {:deps {io.github.clojure/tools.build {:mvn/version "0.9.4"}}
-          :ns-default build}
+  :build   {:deps       {io.github.clojure/tools.build {:mvn/version "0.9.5"}}
+            :ns-default build}
 
-  :run {:exec-fn system-utils.initializer/start-system
-        :jvm-opts ["--add-opens=java.base/java.nio=ALL-UNNAMED"
-                   "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED"]}
-
-  :gen-sdl {:extra-paths ["scripts"]
-            :main-opts
-            ["-m" "gen-sdl"]}
+  :run     {:exec-fn  system-utils.initializer/start-system
+            :jvm-opts ["--add-opens=java.base/java.nio=ALL-UNNAMED"
+                       "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED"]}
 
   :scripts {:extra-paths ["scripts"]
             :extra-deps
             {}}
 
-  :test {:extra-paths ["tests"]
-         :extra-deps
-         {lambdaisland/kaocha                           {:mvn/version "1.60.977"}
-          integrant/repl                                {:mvn/version "0.3.2"}}
-         :exec-fn kaocha.runner/exec-fn
-         :exec-args {}
-         :jvm-opts ["--add-opens=java.base/java.nio=ALL-UNNAMED"
-                    "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED"]}
+  :test    {:extra-paths ["tests"]
+            :extra-deps
+            {lambdaisland/kaocha        {:mvn/version "1.85.1342"}
+             integrant/repl             {:mvn/version "0.3.2"}
+             nubank/matcher-combinators {:mvn/version "3.8.6"}}
+            :exec-fn     kaocha.runner/exec-fn
+            :exec-args   {}
+            :jvm-opts    ["--add-opens=java.base/java.nio=ALL-UNNAMED"
+                          "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED"]}
 
   ;; To be used with -X:test:watch
-  :watch {:exec-args {:watch? true
-                      :randomize? false
-	              :fail-fast? true}}}}
+  :watch   {:exec-args {:watch?     true
+                        :randomize? false
+                        :fail-fast? true}}}}
