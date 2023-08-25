@@ -17,7 +17,7 @@
                            [fn-or-k-target v-src])]
         (-> m'
           (cond-> v (assoc k-target v))
-          (dissoc k-src))))
+          (cond-> (not= k-src k-target) (dissoc k-src)))))
     m kmap))
 
 (defn- -compile-rename-keys-transformer
