@@ -1,0 +1,2 @@
+{:aliases {:scripts {:extra-paths ["scripts"]
+                     :extra-deps {luchiniatwork/orzo {:mvn/version "23.2.5"}}}}}
