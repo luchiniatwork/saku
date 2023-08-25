@@ -54,13 +54,13 @@ console.log("addResourceStatement", addResourceStatement)
 
 const retractIdentityStatement = await saku.retractStatements(client, {
     drn: "drn:identity:example:1",
-    statementIds: ["i1"]
+    sids: ["i1"]
 })
 console.log("retractIdentityStatement", retractIdentityStatement)
 
 const retractResourceStatement = await saku.retractStatements(client, {
     drn: "drn:resource:example:2",
-    statementIds: ["r1"]
+    sids: ["r1"]
 })
 console.log("retractResourceStatement", retractResourceStatement)
 

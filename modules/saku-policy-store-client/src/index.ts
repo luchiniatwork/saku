@@ -94,7 +94,7 @@ export interface AddResourceStatementsOutput {
 
 export interface RetractStatementsInput {
     drn: Drn
-    statementIds: string[]
+    sids: string[]
 }
 
 export interface RetractStatementsOutput {

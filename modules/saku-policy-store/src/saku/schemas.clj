@@ -182,7 +182,7 @@
 (def RetractStatementsInput
   [:map
    [:drn {:output-k :policy/drn} string?]
-   [:statementIds {:output-k :statement-ids} [:sequential string?]]])
+   [:sids [:sequential string?]]])
 
 (def RetractStatementsOutput
   [:map

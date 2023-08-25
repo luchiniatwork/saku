@@ -141,7 +141,7 @@
               (req! handler
                 :op "RetractStatements"
                 :json {:drn          "user1"
-                       :statementIds ["s2"]}))
+                       :sids         ["s2"]}))
           "should retract the s1 statement"))
 
       (testing "DescribePolicies"

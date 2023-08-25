@@ -56,13 +56,13 @@
        :drns       (map :policy/drn policies)})))
 
 (defn tx-fn-retract-statements-from-policy
-  [db {:keys [policy/drn statement-ids]}]
+  [db {:keys [policy/drn sids]}]
   (let [eids-to-retract (d/q '[:find ?s
                                :in $ ?policy [?statement-id ...]
                                :where
                                [?policy :policy/statements ?s]
                                [?s :statement/sid ?statement-id]]
-                          db [:policy/drn drn] statement-ids)]
+                          db [:policy/drn drn] sids)]
     (map (fn [[eid]] [:db/retractEntity eid]) eids-to-retract)))
 
 (defmethod interface/-add-statements :datalevin [{:keys [dal-obj]} add-statements-input]
@@ -71,8 +71,8 @@
         retract-sids (into [] (keep :statement/sid) statements)
         retract-tx (when (seq retract-sids)
                      [:db.fn/call tx-fn-retract-statements-from-policy
-                      {:policy/drn    drn
-                       :statement-ids retract-sids}])
+                      {:policy/drn drn
+                       :sids       retract-sids}])
         tx-data (into (cond-> [] retract-tx (conj retract-tx))
                   (map (fn [statement]
                          {:policy/drn        drn
@@ -135,6 +135,6 @@
 
   (dal/retract-policies ctx {:drns ["user1"]})
 
-  (dal/retract-statements ctx {:policy/drn    "user1"
-                               :statement-ids ["s1"]})
+  (dal/retract-statements ctx {:policy/drn "user1"
+                               :sids       ["s1"]})
   )
