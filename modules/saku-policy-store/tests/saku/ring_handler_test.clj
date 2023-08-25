@@ -1,8 +1,9 @@
 (ns saku.ring-handler-test
   (:require
-    [clojure.test :refer :all]
-    [saku.system.ring-handler :as ring-handler]
     [clojure.data.json :as json]
+    [clojure.test :refer :all]
+    [matcher-combinators.test]
+    [saku.system.ring-handler :as ring-handler]
     [saku.test-utils :as tu]))
 
 (defn req!
@@ -93,6 +94,17 @@
                   :op "UpsertPolicies"
                   :json {:policyType "Identity"
                          :policies   [user1-policy]}))
+            "should entirely replace the policy on second call"))
+
+        (testing "Duplicate `sid`s in policy fails"
+          (is (match? {:status      400
+                       :body-params {:humanized {:policies [{:statements ["policy must have unique statement ids, got duplicate `sid`s: s1, s1"]}]}
+                                     :in        ["request" "body-params"]
+                                     :type      "reitit.coercion/request-coercion"}}
+                (req! handler
+                  :op "UpsertPolicies"
+                  :json {:policyType "Identity"
+                         :policies   [(update user1-policy :statements conj user1-statement)]}))
             "should entirely replace the policy on second call")))
 
       (testing "AddStatements"
