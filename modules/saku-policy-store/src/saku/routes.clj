@@ -88,52 +88,38 @@
     (sets/rename-keys {:policy/drn        :drn
                        :policy/statements :statements})))
 
-(defn evaluate-one [{:keys [dal-obj]} evaluate-one-input]
-  (let [{:keys [drn identities actionId]} evaluate-one-input
-        db (dal/db dal-obj)
-        ctx {:dal-obj dal-obj :db db}
-        resource-policy (-> (dal/get-policies ctx {:drns [drn] :policyType "Resource"})
-                          first
-                          ->evaluate-policy)
-        identity-policies (map ->evaluate-policy (dal/get-policies ctx {:drns identities :policyType "Identity"}))
-        identity-policies-map (into {}
-                                (map (fn [identity-drn]
-                                       [identity-drn (some #(when (= identity-drn (:drn %)) %)
-                                                       identity-policies)]))
-                                identities)]
-    (core/evaluate-one {:drn                   drn
-                        :action                actionId
-                        :resource-policy       resource-policy
-                        :identity-policies-map identity-policies-map})))
-
-
-(defn evaluate-many [{:keys [dal-obj]} evaluate-many-input]
+(defn evaluate-many
+  [{:keys [dal-obj]} evaluate-many-input]
   (let [{:keys [drns identities actionId]} evaluate-many-input
         db (dal/db dal-obj)
         ctx {:dal-obj dal-obj :db db}
         resource-policies (mapv ->evaluate-policy (dal/get-policies ctx {:drns drns :policyType "Resource"}))
-        identity-policies (mapv ->evaluate-policy (dal/get-policies ctx {:drns drns :policyType "Identity"}))
-        identity-policies-map (->> identities
-                                (reduce (fn [a i]
-                                          (assoc a i (some #(when (= i (:drn %)) %)
-                                                       identity-policies)))
-                                  {}))]
-    (->> drns
-      (reduce (fn [c drn]
-                (let [resource-policy (some #(when (= drn (:drn %)) %)
-                                        resource-policies)]
-                  (conj c {:drn    drn
-                           :result (core/evaluate-one {:drn                   drn
-                                                       :action                actionId
-                                                       :resource-policy       resource-policy
-                                                       :identity-policies-map identity-policies-map})})))
-        []))))
+        drn->resource-policy (into {} (map (juxt :drn identity)) resource-policies)
+        identity-policies (mapv ->evaluate-policy (dal/get-policies ctx {:drns identities :policyType "Identity"}))
+        drn->identity-policy (into {} (map (juxt :drn identity)) identity-policies)]
+    (into []
+      (map (fn [drn]
+             (let [resource-policy (drn->resource-policy drn)
+                   evaluate-argm {:drn                   drn
+                                  :action                actionId
+                                  :resource-policy       resource-policy
+                                  :identity-policies-map drn->identity-policy}
+                   result (core/evaluate-one evaluate-argm)]
+               (log/info (assoc evaluate-argm
+                           :result result
+                           :msg "Evaluating effect..."))
+               {:drn drn :result result})))
+      drns)))
 
 (defn evaluate-one-handler
   [request]
   (let [{:saku/keys [ctx]
          :keys      [parameters]} request
-        result (evaluate-one {:dal-obj (:dal-obj ctx)} (:body parameters))]
+        many-result (evaluate-many {:dal-obj (:dal-obj ctx)}
+                      (-> (:body parameters)
+                        (update :drn vector)
+                        (sets/rename-keys {:drn :drns})))
+        result (-> many-result first :result)]
     {:status 200
      :body   result}))
 
