@@ -1,6 +1,5 @@
 (ns saku.core
-  (:require [saku.utils :as utils]
-            [kwill.logger :as log]))
+  (:require [saku.utils :as utils]))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -11,7 +10,6 @@
                                           drn
                                           resource-policy
                                           identity-policies-map] :as request}]
-  (log/debug {:msg "Evaluating explicit deny"})
   (or (some (fn [{:keys [actions identities effect]:as statement}]
               (and (= :DENY (keyword effect))
                    (utils/star-match-one-to-many action actions)
@@ -29,12 +27,6 @@
                                                drn
                                                resource-policy
                                                identity-policies-map] :as request}]
-  (log/debug {:msg                   "Evaluating resource-based explicit allow"
-              :action                action
-              :drn                   drn
-              :resource-policy       resource-policy
-              :identity-drns         (keys identity-policies-map)
-              :identity-policies-map identity-policies-map})
   (some (fn [{:keys [actions identities effect]:as statement}]
           (and (= :ALLOW (keyword effect))
                (utils/star-match-one-to-many action actions)
@@ -45,12 +37,6 @@
                                                drn
                                                resource-policy
                                                identity-policies-map] :as request}]
-  (log/debug {:msg                   "Evaluating identity-based explicit allow"
-              :action                action
-              :drn                   drn
-              :resource-policy       resource-policy
-              :identity-drns         (keys identity-policies-map)
-              :identity-policies-map identity-policies-map})
   (some (fn [[identity-drn identity-policy]]
           (some (fn [{:keys [actions resources effect]:as statement}]
                   (and (= :ALLOW (keyword effect))
@@ -60,32 +46,19 @@
         identity-policies-map))
 
 ;; returns :ALLOW or :DENY (final effect) of desired action over target drn
-(defn evaluate-one [{:keys [action
-                            drn
-                            resource-policy
-                            identity-policies-map] :as request}]
-  (log/debug {:msg                   "Evaluating effect"
-              :action                action
-              :drn                   drn
-              :identity-drns         (keys identity-policies-map)
-              :resource-policy       resource-policy
-              :identity-policies-map identity-policies-map})
+(defn evaluate-one [request]
   (cond
     (deny-evaluation? request)
-    (do (log/debug {:msg "Effect: explicit DENY" :effect :DENY :nature :EXPLICIT})
-        {:effect :DENY :nature :EXPLICIT})
+    {:effect :DENY :nature :EXPLICIT}
 
     (resource-based-allow? request)
-    (do (log/debug {:msg "Effect: explicit resource-based ALLOW" :effect :ALLOW :nature :EXPLICIT})
-        {:effect :ALLOW :nature :EXPLICIT})
+    {:effect :ALLOW :nature :EXPLICIT}
 
     (identity-based-allow? request)
-    (do (log/debug {:msg "Effect: explicit identity-based ALLOW" :effect :ALLOW :nature :EXPLICIT})
-        {:effect :ALLOW :nature :EXPLICIT})
+    {:effect :ALLOW :nature :EXPLICIT}
 
     :else
-    (do (log/debug {:msg "Effect: implicit DENY" :effect :DENY :nature :IMPLICIT})
-        {:effect :DENY :nature :IMPLICIT})))
+    {:effect :DENY :nature :IMPLICIT}))
 
 (defn evaluate-many [{:keys [action
                              drn
