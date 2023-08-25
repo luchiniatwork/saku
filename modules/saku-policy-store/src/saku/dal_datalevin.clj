@@ -85,7 +85,9 @@
 
 (defmethod interface/-retract-statements :datalevin [{:keys [dal-obj]} retract-statements-input]
   (let [{:keys [db-after]} (d/transact! (:db-conn dal-obj) [[:db.fn/call tx-fn-retract-statements-from-policy retract-statements-input]])]
-    {:policy (first (dal/get-policies {:dal-obj dal-obj :db db-after} {:drns [(:policy/drn retract-statements-input)]}))}))
+    {:policy (-> (dal/get-policies {:dal-obj dal-obj :db db-after} {:drns [(:policy/drn retract-statements-input)]})
+               first
+               (or {}))}))
 
 (defmethod interface/-retract-policies :datalevin [{:keys [dal-obj]} {:keys [drns]}]
   (let [tx (reduce (fn [c drn]
