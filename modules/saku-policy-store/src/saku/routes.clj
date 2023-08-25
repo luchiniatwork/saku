@@ -163,7 +163,10 @@
                                  :request-method (:request-method request)
                                  :host           (get-in request [:headers "host"])
                                  :user-agent     (get-in request [:headers "user-agent"])})
-                      (handler request))))})
+                      (let [response (handler request)]
+                        (log/info {:msg    "Finished request"
+                                   :status (:status response)})
+                        response))))})
 
 (defn exception-handler [message status exception request]
   (when (>= status 500)
