@@ -158,6 +158,11 @@
    :wrap        (fn [handler]
                   (fn [request]
                     (log/with-context+ {:request_id (random-uuid)}
+                      (log/info {:msg            "Received request"
+                                 :uri            (:uri request)
+                                 :request-method (:request-method request)
+                                 :host           (get-in request [:headers "host"])
+                                 :user-agent     (get-in request [:headers "user-agent"])})
                       (handler request))))})
 
 (defn exception-handler [message status exception request]
@@ -205,34 +210,35 @@
 
 (defn api-routes
   [{:saku.system.dal/keys [dal-obj]}]
-  [["/api" (route-data {:dal-obj dal-obj})
-    ["/health" {:get health-handler}]
+  [["" (route-data {:dal-obj dal-obj})
+    ["/api"
+     ["/health" {:get health-handler}]
 
-    ;; Mutation
-    ["/UpsertPolicies" {:middleware [[wrap-transformed {:input-schema  schemas/UpsertPoliciesInput
-                                                        :output-schema schemas/UpsertPoliciesOutput}]]
-                        :post       upsert-policies-handler
-                        :parameters {:body schemas/UpsertPoliciesInput}}]
-    ["/RetractPolicies" {:middleware [[wrap-transformed {:input-schema  schemas/RetractPoliciesInput
-                                                         :output-schema schemas/RetractPoliciesOutput}]]
-                         :post       retract-policies-handler
-                         :parameters {:body schemas/RetractPoliciesInput}}]
-    ["/AddStatements" {:middleware [[wrap-transformed {:input-schema  schemas/AddStatementsInput
-                                                       :output-schema schemas/AddStatementsOutput}]]
-                       :post       add-statements-handler
-                       :parameters {:body schemas/AddStatementsInput}}]
-    ["/RetractStatements" {:middleware [[wrap-transformed {:input-schema  schemas/RetractStatementsInput
-                                                           :output-schema schemas/RetractStatementsOutput}]]
-                           :post       retract-statements-handler
-                           :parameters {:body schemas/RetractStatementsInput}}]
-    ;; Query
-    ["/DescribePolicies" {:middleware [[wrap-transformed {:input-schema  schemas/DescribePoliciesInput
-                                                          :output-schema schemas/DescribePoliciesOutput}]]
-                          :post       describe-policies-handler
-                          :parameters {:body schemas/DescribePoliciesInput}}]
+     ;; Mutation
+     ["/UpsertPolicies" {:middleware [[wrap-transformed {:input-schema  schemas/UpsertPoliciesInput
+                                                         :output-schema schemas/UpsertPoliciesOutput}]]
+                         :post       upsert-policies-handler
+                         :parameters {:body schemas/UpsertPoliciesInput}}]
+     ["/RetractPolicies" {:middleware [[wrap-transformed {:input-schema  schemas/RetractPoliciesInput
+                                                          :output-schema schemas/RetractPoliciesOutput}]]
+                          :post       retract-policies-handler
+                          :parameters {:body schemas/RetractPoliciesInput}}]
+     ["/AddStatements" {:middleware [[wrap-transformed {:input-schema  schemas/AddStatementsInput
+                                                        :output-schema schemas/AddStatementsOutput}]]
+                        :post       add-statements-handler
+                        :parameters {:body schemas/AddStatementsInput}}]
+     ["/RetractStatements" {:middleware [[wrap-transformed {:input-schema  schemas/RetractStatementsInput
+                                                            :output-schema schemas/RetractStatementsOutput}]]
+                            :post       retract-statements-handler
+                            :parameters {:body schemas/RetractStatementsInput}}]
+     ;; Query
+     ["/DescribePolicies" {:middleware [[wrap-transformed {:input-schema  schemas/DescribePoliciesInput
+                                                           :output-schema schemas/DescribePoliciesOutput}]]
+                           :post       describe-policies-handler
+                           :parameters {:body schemas/DescribePoliciesInput}}]
 
-    ;; Policy evaluation
-    ["/EvaluateOne" {:post       evaluate-one-handler
-                     :parameters {:body schemas/EvaluateOneInput}}]
-    ["/EvaluateMany" {:post       evaluate-many-handler
-                      :parameters {:body schemas/EvaluateManyInput}}]]])
+     ;; Policy evaluation
+     ["/EvaluateOne" {:post       evaluate-one-handler
+                      :parameters {:body schemas/EvaluateOneInput}}]
+     ["/EvaluateMany" {:post       evaluate-many-handler
+                       :parameters {:body schemas/EvaluateManyInput}}]]]])
