@@ -1,7 +1,7 @@
 (ns saku.system.datalevin
-  (:require [integrant.core :as ig]
-            [taoensso.timbre :refer [debug info warn error fatal report] :as timbre]
-            [datalevin.core :as d]))
+  (:require [datalevin.core :as d]
+            [integrant.core :as ig]
+            [kwill.logger :as log]))
 
 (def db-seed
   "Data necessary for Saku to function."
@@ -9,33 +9,33 @@
    {:effect :allow}])
 
 (defn schema []
-  {:effect {:db/valueType :db.type/keyword
-            :db/unique :db.unique/identity}
+  {:effect               {:db/valueType :db.type/keyword
+                          :db/unique    :db.unique/identity}
 
-   :policy/drn {:db/valueType :db.type/string
-                :db/unique :db.unique/identity}
+   :policy/drn           {:db/valueType :db.type/string
+                          :db/unique    :db.unique/identity}
 
-   :policy/statements {:db/isComponent true
-                       :db/valueType :db.type/ref
-                       :db/cardinality :db.cardinality/many}
-
-   :statement/actions {:db/valueType :db.type/string
-                       :db/cardinality :db.cardinality/many}
-
-   :statement/effect {:db/valueType :db.type/ref
-                      :db/cardinality :db.cardinality/one}
-
-   :statement/identities {:db/valueType :db.type/string
+   :policy/statements    {:db/isComponent true
+                          :db/valueType   :db.type/ref
                           :db/cardinality :db.cardinality/many}
 
-   :statement/resources {:db/valueType :db.type/string
-                         :db/cardinality :db.cardinality/many}
+   :statement/actions    {:db/valueType   :db.type/string
+                          :db/cardinality :db.cardinality/many}
 
-   :statement/sid {:db/valueType   :db.type/string
-                   :db/cardinality :db.cardinality/one}})
+   :statement/effect     {:db/valueType   :db.type/ref
+                          :db/cardinality :db.cardinality/one}
+
+   :statement/identities {:db/valueType   :db.type/string
+                          :db/cardinality :db.cardinality/many}
+
+   :statement/resources  {:db/valueType   :db.type/string
+                          :db/cardinality :db.cardinality/many}
+
+   :statement/sid        {:db/valueType   :db.type/string
+                          :db/cardinality :db.cardinality/one}})
 
 (defmethod ig/init-key ::schema [_ _]
-  (info {:msg "Initializing Dataleving Schema"})
+  (log/info {:msg "Initializing Dataleving Schema"})
   (schema))
 
 
@@ -46,11 +46,11 @@
 
 
 (defmethod ig/init-key ::conn [_ {:keys [schema url]}]
-  (info {:msg "Initializing Datalevin Connection"
-         :url url})
+  (log/info {:msg "Initializing Datalevin Connection"
+             :url url})
   (conn url schema db-seed))
 
 
 (defmethod ig/halt-key! ::conn [_ conn]
-  (info {:msg "Closing Datalevin Connection"})
+  (log/info {:msg "Closing Datalevin Connection"})
   (d/close conn))
